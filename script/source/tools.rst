@@ -97,7 +97,7 @@ Following are the most important command line commands for cabal (all prefixed w
     If your package defines executables and you build them using ``cabal build`` to avoid polluting cabals user binary directory you can use this command to conveniently invoke the locally installed executable.
     Should your package contain only one executable you can omit the ``[executable]`` name.
 
-.. _cabal-sandboxes:
+.. _cabal-sandbox:
 
 Sandboxes
 """""""""
@@ -144,6 +144,10 @@ Stack
 
 Stack is a build tool very similar to cabal.
 In fact, under the hood, stack uses cabal as a library to read the project configuration, calculate build order etc.
+
+
+Aside: Recommended Editors and development environments
+-------------------------------------------------------
 
 
 

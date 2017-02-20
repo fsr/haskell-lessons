@@ -11,6 +11,7 @@ Welcome to Haskell Lessons's documentation!
    :caption: Contents:
 
    tools
+   syntax
 
 
 
