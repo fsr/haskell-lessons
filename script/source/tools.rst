@@ -18,15 +18,45 @@ In this course we will use optional extensions of the Haskell language which not
 I therefore highly recommend using the GHC as your Haskell compiler.
 
 For more information about the various parts of the GHC see the `compiler reference pages <https://downloads.haskell.org/~ghc/latest/docs/html/users_guide/>`__.
-There you will find information on `compiler flags <https://downloads.haskell.org/~ghc/latest/docs/html/users_guide/flags.html>`__, the `interactive prompt GHCi <https://downloads.haskell.org/~ghc/latest/docs/html/users_guide/ghci.html>`__, including the `debugger <https://downloads.haskell.org/~ghc/latest/docs/html/users_guide/ghci.html#the-ghci-debugger>`__, `profiling <https://downloads.haskell.org/~ghc/latest/docs/html/users_guide/profiling.html>`__, and the `GHC Haskell extensions <https://downloads.haskell.org/~ghc/latest/docs/html/users_guide/glasgow_exts.html#syntactic-extensions>`__.
+There you will find information on `compiler flags <https://downloads.haskell.org/~ghc/latest/docs/html/users_guide/flags.html>`__, the `interactive prompt GHCi <ghci reference pages>`_, including the `debugger <https://downloads.haskell.org/~ghc/latest/docs/html/users_guide/ghci.html#the-ghci-debugger>`__, `profiling <https://downloads.haskell.org/~ghc/latest/docs/html/users_guide/profiling.html>`__, and the `GHC Haskell extensions <https://downloads.haskell.org/~ghc/latest/docs/html/users_guide/glasgow_exts.html#syntactic-extensions>`__.
 We will discuss all these topics in the future.
 
 We will rarely interact directly with the compiler, as there are very nice :ref:`build tools` out there which we will make use of instead.
+
+.. _ghci reference pages: https://downloads.haskell.org/~ghc/latest/docs/html/users_guide/ghci.html
 
 .. _GHCi:
 
 The interactive Interpreter (GHCi)
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+The GHC also supports the interpreted execution of code.
+For one this allows you to directly run a Haskell source file with the ``runghc`` or ``runhaskell`` program.
+Furthermore any standard installation of GHC includes a program in which you can interactively type Haskell code, inspect it and run it.
+The program is called GHCi (``ghci`` is the executable name) which stands for "GHC interpreter". (`ghci reference pages`_)
+GHCi is very simlar to programs like the python or ruby interpreter with the notable difference that the code you type is type checked, like normal Haskell programs, before it is executed.
+The GHCi also includes a debugger for Haskell code (like `gdb <https://www.sourceware.org/gdb/>`__) which we will :ref:`study in a later chapter <ghci-debugger>`.
+
+We first use GHCi to explore some Haskell code before we get started with source files.
+
+Some notable ways to interact with GHCi are:
+
+``expr``
+    Simply submitting a Haskell expression evaluates the code and tries to print the result value.
+
+``let name = expr``
+    Binding a name (we will learn about this :ref:`later <bindings>`) to the value of an expression.
+
+``:browse <module>``
+    Displays the contents of the module with the entered name.
+
+``:type <expr>``
+    Prints the type of the expression ``expr``.
+
+``:info <name>``
+    Displays information about the name, such as the source module of type if it is a function.
+
+Some, but not all, of these commands also work in a shortened form (``:t`` for ``:type`` for instance)
 
 .. _build tools:
 
@@ -120,6 +150,7 @@ Also all libraries and executables created by ``cabal install``, be those from d
 You can use ``cabal run`` to run executables which were installed into the sandbox.
 
 .. admonition:: Caveats
+    
     Despite the usefulness of sandboxes there are some drawbacks.
 
     #. Redundancy and Space

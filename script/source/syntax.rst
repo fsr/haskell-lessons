@@ -110,7 +110,7 @@ Bindings must always start with a lowercase letter.
 Then, like the types, it may contain word characters, digits, the underscore and the apostrope. [#naming-convention]_
 
 There are several ways to bind a value.
-The first one we will learn is called ``let`` with the concrete syntax ``let name = value``.
+The first one we will learn (because it is the way to bind values in GHCi) is called ``let`` with the concrete syntax ``let name = value``.
 
 ::
 
