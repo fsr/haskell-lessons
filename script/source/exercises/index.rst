@@ -1,0 +1,10 @@
+Haskell exercises
+=================
+
+
+.. toctree::
+    :maxdepth: 1
+    :caption: Contents:
+    :numbered:
+
+    tools

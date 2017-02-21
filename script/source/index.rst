@@ -12,6 +12,7 @@ Welcome to Haskell Lessons's documentation!
 
    tools
    syntax
+   exercises/index
 
 
 

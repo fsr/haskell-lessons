@@ -163,7 +163,7 @@ Special types
 ^^^^^^^^^^^^^
 
 There are some notable exceptions to the type naming rule above.
-Those are the **list type**, which is ``[]`` or ``[a]`` which means "a list containing elements of type ``a``" and the **tuple type** ``(a,b)`` for "a 2-tuple containing a value of type ``a``and a value of type ``b``".
+Those are the **list type**, which is ``[]`` or ``[a]`` which means "a list containing elements of type ``a``" and the **tuple type** ``(a,b)`` for "a 2-tuple containing a value of type ``a`` and a value of type ``b``".
 There are also larger tuples ``(a,b,c)``, ``(a,b,c,d)`` etc. [#tuple-size]_
 These tuples are simply grouped data and very common in mathematics for instance.
 Should you not be familiar with the mathematical notion of tuples it may help to think of it as an unnamed struct where the fields are accessed by "index".
@@ -241,6 +241,11 @@ We first consume the first parameter and return a function.
 This second function is then applied to the second parameter returning the final value.
 The two versions ``\x _ -> x`` and ``\x -> \_ -> x`` and their type signatures are equivalent in Haskell, hence the same type.
 
+.. _user defined types:
+
+User defined types
+------------------
+
 .. rubric:: footnotes
 
 .. [#tuple-size] 
@@ -258,7 +263,8 @@ The two versions ``\x _ -> x`` and ``\x -> \_ -> x`` and their type signatures a
     Meaning in each identifier (type variable, type or binding) all words composing the name are chained directly, with each new word starting with an upper case letter, except for the first word, who's case is determined by the syntax contstraints (upper case for types, lower case for type variables and bindings).
 
 .. [#rebinding]
-    Note that in GHCi, as in many Haskell constructs you may also **rebind** and a binding.
-    This may look like you have altered the binding, however this is not the case. It creates a wholly new binding, which simply shadows the older binding in the current scope.
+    Note that in GHCi, as in many Haskell constructs you may also **rebind** a binding.
+    This may look like you have altered the binding, however this is not the case. 
+    It creates a wholly new binding, which simply shadows the older binding in the current scope.
     When the scope is exited the value stored for this name remains the old value.
     You will also know that it is a new binding by the fact that the new binding can have a different type than the old one.
