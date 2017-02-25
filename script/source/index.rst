@@ -10,8 +10,9 @@ Welcome to Haskell Lessons's documentation!
    :maxdepth: 2
    :caption: Contents:
 
-   tools
+   compiler
    syntax
+   build-tools
    exercises/index
 
 

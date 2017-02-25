@@ -1,67 +1,7 @@
-Haskell tooling
-===============
-
-Haskell is a compiled language. 
-As such you do not require any special tooling at runtime.
-However do develop and build Haskell projects you will require a compiler to generate an executable binary file from your code.
-Furthermore you will most likely require a library management tool, since the Haskell "base" library, which is bundeled with the compile will most likely not be sufficient for most tasks [#base-sucks]_.
-
-.. _GHC:
-
-The compiler (GHC)
-------------------
-
-There are many Haskell compilers out there, however very few are well maintained.
-As such the Glasgow Haskell Compiler, or GHC for short, has developed as the de-facto standard Haskell compiler.
-It is by far the most mature, stable and feature rich Haskell compiler.
-In this course we will use optional extensions of the Haskell language which not every compiler implements.
-I therefore highly recommend using the GHC as your Haskell compiler.
-
-For more information about the various parts of the GHC see the `compiler reference pages <https://downloads.haskell.org/~ghc/latest/docs/html/users_guide/>`__.
-There you will find information on `compiler flags <https://downloads.haskell.org/~ghc/latest/docs/html/users_guide/flags.html>`__, the `interactive prompt GHCi <ghci reference pages>`_, including the `debugger <https://downloads.haskell.org/~ghc/latest/docs/html/users_guide/ghci.html#the-ghci-debugger>`__, `profiling <https://downloads.haskell.org/~ghc/latest/docs/html/users_guide/profiling.html>`__, and the `GHC Haskell extensions <https://downloads.haskell.org/~ghc/latest/docs/html/users_guide/glasgow_exts.html#syntactic-extensions>`__.
-We will discuss all these topics in the future.
-
-We will rarely interact directly with the compiler, as there are very nice :ref:`build tools` out there which we will make use of instead.
-
-.. _ghci reference pages: https://downloads.haskell.org/~ghc/latest/docs/html/users_guide/ghci.html
-
-.. _GHCi:
-
-The interactive Interpreter (GHCi)
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
-The GHC also supports the interpreted execution of code.
-For one this allows you to directly run a Haskell source file with the ``runghc`` or ``runhaskell`` program.
-Furthermore any standard installation of GHC includes a program in which you can interactively type Haskell code, inspect it and run it.
-The program is called GHCi (``ghci`` is the executable name) which stands for "GHC interpreter". (`ghci reference pages`_)
-GHCi is very simlar to programs like the python or ruby interpreter with the notable difference that the code you type is type checked, like normal Haskell programs, before it is executed.
-The GHCi also includes a debugger for Haskell code (like `gdb <https://www.sourceware.org/gdb/>`__) which we will :ref:`study in a later chapter <ghci-debugger>`.
-
-We first use GHCi to explore some Haskell code before we get started with source files.
-
-Some notable ways to interact with GHCi are:
-
-``expr``
-    Simply submitting a Haskell expression evaluates the code and tries to print the result value.
-
-``let name = expr``
-    Binding a name (we will learn about this :ref:`later <bindings>`) to the value of an expression.
-
-``:browse <module>``
-    Displays the contents of the module with the entered name.
-
-``:type <expr>``
-    Prints the type of the expression ``expr``.
-
-``:info <name>``
-    Displays information about the name, such as the source module of type if it is a function.
-
-Some, but not all, of these commands also work in a shortened form (``:t`` for ``:type`` for instance)
-
-.. _build tools:
+.. _build tool:
 
 Build tools
------------
+===========
 
 There are many ways to manage your Haskell builds.
 Bare bones tools such as ``make``, or, if you want to use haskell for the makefile, a library called `shake <https://hackage.haskell.org/package/shake>`__.
@@ -72,7 +12,7 @@ Two major tools are available here, where the second one uses the first and make
 .. _cabal-tool:
 
 Cabal
-^^^^^
+-----
 
 `The Cabal <cabal>`_ is the older of the two tools.
 It is 
@@ -130,7 +70,7 @@ Following are the most important command line commands for cabal (all prefixed w
 .. _cabal-sandbox:
 
 Sandboxes
-"""""""""
+^^^^^^^^^
 
 Per default cabal installs the dependencies of your packages in a user-global directory (``$HOME/.cabal/lib`` on UNIX) and for each library it installs only one version.
 This means all packages you develop (or install) share the same pool of libraries and versions.
@@ -162,7 +102,7 @@ You can use ``cabal run`` to run executables which were installed into the sandb
 
         Many (real world) Haskell packages have a large stock of dependencies and the GHC is quite slow (compared to, for instance the go compiler).
         The first ``cabal install`` after setting up the sandbox takes a very long time.
-        This may be tolerable for projects on which you work for a while, but is very annoying if you just want to quickly check out someone else's project.
+        This may be tolerable for projects on which you work for a while, but is very annoying if you just want to quickly check out someone else's code.
     
     Because of these issues I recommend using :ref:`stack` instead.
     It uses the same project configuration (the cabal file), has very similar(ly working) commands and avoids the aforementioned issues to a large degree.
@@ -187,8 +127,3 @@ Aside: Recommended Editors and development environments
 .. _cargo: https://doc.rust-lang.org/1.5.0/book/hello-cargo.html 
 .. _maven: https://maven.apache.org/
 .. _leinigen: https://leiningen.org/
-
-
-.. rubric:: Footnotes
-
-.. [#base-sucks] This is one of the unfortunate things about Haskell, that the base library lacks many desirable things.
