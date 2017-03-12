@@ -1,5 +1,5 @@
-Haskell sources and the compiler
-================================
+Sources and the compiler
+========================
 
 Haskell is a compiled language. 
 As such you do not require any special tooling at runtime.

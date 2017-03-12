@@ -1,8 +1,8 @@
 
 .. _syntax:
 
-Haskell Syntax
-==============
+Syntax basics
+=============
 
 .. _comments:
 
@@ -15,8 +15,8 @@ There are two types of comments in Haskell.
 
 .. _types:
 
-Types
------
+Type literals
+-------------
 
 In Haskell type literals always start with an uppercase letter.
 Examples from Haskell's base library are:
@@ -39,7 +39,7 @@ Examples from Haskell's base library are:
 ``Bool``
     A boolean.
 
-After that the allowed characters are word character, digits, the underscore ``_`` and the apostrope ``'`` (often called *"prime"*).
+After that the allowed characters are word character, digits, the underscore ``_`` and the apostrope ``'`` (often called *"prime"*).[#type-operators]
 Therefore a name such as ``Isn't_4_bool`` is a valid type name.
 
 In general Haskell is a type inferred language, meaning you rarley have to specify the type of a value or expression (although it is common practice to annotate top level types and values with type signatures).
@@ -47,7 +47,7 @@ You can hovever annotate any value and expression you want with a type signature
 The special operator ``::`` can be used to achieve this (see also next section for examples).
 This is particularly useful when chasing down the source of type errors as you can fix expressions to a certain type you expect them to be.
 
-Literal values
+Value literals
 --------------
 
 Supported literals are:
@@ -91,10 +91,8 @@ Tuples
 
     More on the tuple type in the next section.
 
-Data literals
-    For instance the boolean literals ``True`` and ``False``.
-
-    We will come back to this in more depth when we learn about :ref:`user defined types`.
+Note that there are not *special* literals for booleans in Haskell as they are just a regular :ref:`data structure <user defined datatypes>`.
+The literals for ``Bool`` are ``True`` and ``False``.
 
 .. _bindings:
 
@@ -129,122 +127,7 @@ In the ``let`` construct you may also, optionally, specify a type signature for 
 Note that the second occurrence of ``myInt`` must be properly indented.
 We will explore the indentation rules in more detail later.
 
-.. _type variables:
 
-3. Type variables and special types
------------------------------------
-
-Types in Haskell may be parameterized over another type, which is not known at the time of defining the former type.
-This system is very similar to generics in many languages, but much more powerful as the type information is fully preserved.
-
-The naming rules for type variables are the same as for :ref:`bindings`. [#naming-convention]_
-
-The whole type is then written as first the type name followed by a space and then followed by the parameters, also space separated.
-This is also called juxtaposition.
-
-As an example for a parameterized type is the ``Either a b`` type. 
-The name of the type is ``Either`` and it is parameterized by a type variable ``a`` and a type variable ``b``.
-Note that there is no special significance to the name of the type variables themselves. 
-It would be semantically equivalent to call the type ``Either one the_other``.
-Only if we were to name both variables the same would we change the meaning, because ``Either a a`` would mean **both** types ``Either`` is parameterized over are the **same** type.
-
-We have now seen the type in its generic form.
-By instantiating the type variables we can create a concrete form.
-For instance ``Either Int String`` or ``Either Bool Char``.
-Note that ``Either a b`` does not mean that ``a`` and ``b`` **have** to be distinct, but they are allowed to.
-``Either Int Int`` is also a perfectly valid concrete form of ``Either a b``.
-
-At compile time all of the type parameters must be known, i.e. only concrete form of types are allowed.
-The compiler will infer the concrete values of the type variables for you.
-
-.. _special types:
-
-Special types
-^^^^^^^^^^^^^
-
-There are some notable exceptions to the type naming rule above.
-Those are the **list type**, which is ``[]`` or ``[a]`` which means "a list containing elements of type ``a``" and the **tuple type** ``(a,b)`` for "a 2-tuple containing a value of type ``a`` and a value of type ``b``".
-There are also larger tuples ``(a,b,c)``, ``(a,b,c,d)`` etc. [#tuple-size]_
-These tuples are simply grouped data and very common in mathematics for instance.
-Should you not be familiar with the mathematical notion of tuples it may help to think of it as an unnamed struct where the fields are accessed by "index".
-And the last special type is the **function type** ``a -> b``, which reads "a function taking as input a value of type ``a`` and producing a value of type ``b``.
-
-Some examples for concrete instances of special types:
-
-::
-
-    let myIntBoolTriple :: (Int, Int, Bool)
-        myIntBoolTriple = (5, 9, False)
-    
-    let aWordList = ["Hello", "Foo", "bar"] :: [String] -- Note: A different way to annotate the type
-
-    -- Note: we can also nest these types
-    let listOfTuples :: [(Int, String)]
-        listOfTuples = 
-            [ (1, "Marco")
-            , (9, "Janine")
-            ]
-
-.. _functions:
-
-Functions
----------
-
-Function literals in Haskell are also often called **lambda functions**.
-The syntax is a slash ``\`` followed by a list of space separated paramters, follwed by an ASCII arrow ``->`` upon which follows the body of the function.
-Function bodies in Haskell are always an expression, and as such require no ``return`` keyword.
-
-::
-
-    \ param -> param
-
-Here for instance we have a function which takes one parameter as input and return it.
-This function is also known as ``id``.
-
-::
-
-    -- we often call an unspecified parameter 'x'
-    let id = \x -> x
-
-Haskell is a functional language. 
-As such functions may be used just like any other value including being assigned to bindings.
-The type of our binding is now the function type.
-
-:: 
-
-    let id :: a -> a
-        id = \x -> x
-
-.. todo:: Function application
-
-Lets look at another example:
-
-::
-
-    let const :: a -> b -> a
-        const = \x _ -> x
-    
-The const function takes a first parameter ``x`` and a second parameter, which we ignore.
-The underscore ``_`` as a parameter or binding name is used to indicate that we ignore the value.
-And finally the function returns the first parameter.
-
-Note that the type of the function is now ``a -> b -> a``.
-We see here that the function type ``->`` occurs twice and this is deliberate because we may rewrite our function as follows:
-
-::
-
-    let const :: a -> (b -> a)
-        const = \x -> \_ -> x
-
-Now we can see the analogy. 
-We first consume the first parameter and return a function.
-This second function is then applied to the second parameter returning the final value.
-The two versions ``\x _ -> x`` and ``\x -> \_ -> x`` and their type signatures are equivalent in Haskell, hence the same type.
-
-.. _user defined types:
-
-User defined types
-------------------
 
 .. rubric:: footnotes
 
@@ -268,3 +151,6 @@ User defined types
     It creates a wholly new binding, which simply shadows the older binding in the current scope.
     When the scope is exited the value stored for this name remains the old value.
     You will also know that it is a new binding by the fact that the new binding can have a different type than the old one.
+
+.. [#type-operators]
+    GHC also allows you to define `data constructors and types <https://downloads.haskell.org/~ghc/latest/docs/html/users_guide/glasgow_exts.html#infix-type-constructors-classes-and-type-variables>`__ as operators.

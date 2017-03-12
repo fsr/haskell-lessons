@@ -3,15 +3,18 @@
    You can adapt this file completely to your liking, but it should at least
    contain the root `toctree` directive.
 
-Welcome to Haskell Lessons's documentation!
-===========================================
+The Haskell Lessons's script
+============================
 
 .. toctree::
    :maxdepth: 2
-   :caption: Contents:
+   :caption: Capters:
+   :numbered:
 
    compiler
    syntax
+   functions
+   types
    build-tools
    exercises/index
 

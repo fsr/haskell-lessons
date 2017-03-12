@@ -1,5 +1,5 @@
-Haskell exercises
-=================
+Exercises
+=========
 
 
 .. toctree::
