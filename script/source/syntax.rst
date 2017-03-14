@@ -91,7 +91,7 @@ Tuples
 
     More on the tuple type in the next section.
 
-Note that there are not *special* literals for booleans in Haskell as they are just a regular :ref:`data structure <user defined datatypes>`.
+Note that there are not *special* literals for booleans in Haskell as they are just a regular :ref:`data structure <user defined types>`.
 The literals for ``Bool`` are ``True`` and ``False``.
 
 .. _bindings:
@@ -126,6 +126,24 @@ In the ``let`` construct you may also, optionally, specify a type signature for 
 
 Note that the second occurrence of ``myInt`` must be properly indented.
 We will explore the indentation rules in more detail later.
+
+
+.. _if:
+
+``if`` expressions
+------------------
+
+In Haskell ``if`` is not a statement, but in expression, meaning that it returns a value.
+Therefore ``if`` always has a type, and also always has an ``else`` case, which must return a value of the same type.
+For instance we can assign the result of ``if`` to a binding.
+
+::
+
+    let aBool = False
+
+    let anInt = if aBool then 8 else 9
+
+Parentheses are not required and one may write any expression on the branches and for the condition of an ``if``.
 
 
 

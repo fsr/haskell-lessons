@@ -1,3 +1,4 @@
+.. _types:
 
 Types
 =====
@@ -132,7 +133,7 @@ if we used a ``type`` alias the user could simply pass a ``String`` to the ``sen
 The ``case`` construct
 ----------------------
 
-The ``case`` construct together with function application basically comprise everything which you can do with Haskell at runtime.
+The ``case`` construct together with function application basically comprises everything which you can do in Haskell.
 The ``case`` construct is used to deconstruct a type and gain access to the data contained withtin.
 
 
@@ -296,5 +297,68 @@ Some examples for concrete instances of special types:
 Record syntax
 -------------
 
+For convenience reasons there is some extra syntax for defining data types which also automatically creates some field accessor functions.
+
+We can write the following:
+
+::
+
+    data TyType = 
+        Constructor { field1 :: Int
+                    , field2 :: String
+                    }
+
+This defines the type the same way as the other ``data`` construct.
+Meaning we can pattern match as usual on the constructor.
+
+
+::
+
+    data MyType = Constructor Int String
+
+    let theData = Constructor 9 "hello" :: MyType
+    let theInt = case theData of
+                    Constructor i _ -> i
+    
+    theInt == 9
+
+But additionally it also defines two functions ``field1`` and ``field2`` for accessing the fields.
+
+Aka it generates code similar to the following:
+
+::
+
+    data MyType = Constructor Int String
+
+    field1 :: MyType -> Int
+    field1 (Constructor i _) = i
+
+    field2 :: MyType -> String
+    field2 (Constructor _ s) = s
+
+Also the two accessor functions ``field1`` and ``field2`` may be used in a special *record update syntax* to create a new record from an old one with altered field contents.
+Additionally the record may be created with a special record creation syntax.
+
+::
+
+    data TyType = 
+        Constructor { field1 :: Int
+                    , field2 :: String
+                    }
+
+    let v1 = Constructor 9 "Hello" :: MyType
+    
+    -- record creation syntax
+    let v2 = Constructor { field2 = "World", field1 = 4 } :: MyType
+
+    -- update syntax
+    let v3 = v2 { field1 = 9 }
+    -- updating multiple fields at once
+    let v4 = v2 { field1 = 9, field2 "Hello" }
+
+    v1 == v4
+
+    -- old records are unchanged
+    v2 /= v3 /= v4
 
 

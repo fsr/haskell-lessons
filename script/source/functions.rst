@@ -39,7 +39,7 @@ Ergo ``Int -> Bool`` applied to ``Int`` gives a ``Bool``.
 Similarly ``a -> a`` applied to ``Int`` gives an ``Int`` again.
 An ``a -> a`` applied to a ``Bool`` gives a ``Bool``.
 
-To apply a function we ise the simplest synta of all, juxtaposition.
+To apply a function we use the simplest syntax of all, juxtaposition.
 Also called *postfix notation* or "the function followed by the arguments, all space separated".
 
 ::
@@ -155,5 +155,5 @@ Instead we may write
     myFunction (Constr2 v2) = ...
 
 .. note:: 
-    Here we must use parentheses around the match clauses to distinguish the clauses for several arguments.
+    Here we must use parentheses around the match clauses to distinguish the clauses for the different arguments.
 
