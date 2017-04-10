@@ -9,8 +9,9 @@ makeScript = do
     callProcess "make" ["latexpdf"]
 
 moveScript = do
-    whenM (doesDirectoryExist "docs") $ removeDirectoryRecursive "docs"
-    renameDirectory "script/build/html" "docs"
+    whenM (doesDirectoryExist "docs/script") $ removeDirectoryRecursive "docs/script"
+    renameDirectory "script/build/html" "docs/script"
+    
     renameFile "script/build/latex/HaskellLessons.pdf" "docs/script.pdf"
 
 main = do
