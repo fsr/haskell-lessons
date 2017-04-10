@@ -46,8 +46,9 @@ main = shakeArgs shakeOptions $ do
 
     (slidesOutputDirectory </> "*.html") %> \out -> do
         let sourceFile = "slides" </> makeRelative slidesOutputDirectory out -<.> ".md"
-        need [sourceFile]
+            templateFile = "slides/template.html"
+        need [sourceFile, templateFile]
         getDirectoryFiles "reveal.js/lib" ["css/*.css", "font/*/*.css", "js/*.js"] >>= need . map ((revealResourcesDirectory </> "lib") </>)
         need $ map (revealResourcesDirectory </>) ["css/reveal.css", "js/reveal.js", "lib/font/source-sans-pro/source-sans-pro.css"]
         getDirectoryFiles "reveal.js/css/theme" ["*.css"] >>= need . map ((revealResourcesDirectory </> "css/theme") </>)
-        cmd "pandoc" [sourceFile, "--slide-level", "2", "-o", out, "-t", "revealjs", "-s", "--variable=theme:white"]
+        cmd "pandoc" [sourceFile, "--slide-level", "2", "-o", out, "-t", "revealjs", "-s", "--variable=theme:white", "--template", templateFile]

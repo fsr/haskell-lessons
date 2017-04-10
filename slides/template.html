@@ -231,6 +231,14 @@ $endif$
           { src: '$revealjs-url$/plugin/notes/notes.js', async: true }
         ]
       });
+Reveal.configure({
+    keyboard: {
+      75: 'prev',
+      38: 'prev',
+      74: 'next',
+      40: 'next'
+    }
+    });
     </script>
   $for(include-after)$
   $include-after$
