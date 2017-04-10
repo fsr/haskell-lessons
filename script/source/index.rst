@@ -11,11 +11,8 @@ The Haskell Lessons's script
    :caption: Capters:
    :numbered:
 
-   compiler
+   tools
    syntax
-   functions
-   types
-   build-tools
    exercises/index
 
 

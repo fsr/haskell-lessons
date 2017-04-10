@@ -1,8 +1,16 @@
 
 .. _syntax:
 
-Syntax basics
-=============
+Fundamentals of the Haskell syntax
+==================================
+
+This lesson contains gets us started with the basics of Haskell syntax.
+Haskell is an old language (older than Java) and also one with which people like to experiment.
+As a result a lot of extra syntax has accumulated in over the years.
+Some of it in regular use, some of it more obscure and not well known.
+Most of this extra syntax is hidden behind language extensions.
+We mway come to learn some of it in future lessons, however for now we will simply start with the ML style core of the Haskell syntax.
+
 
 .. _comments:
 
@@ -62,7 +70,9 @@ Characters
 
     ``'a'``, ``'H'``, ``'5'``, ``'.'``.
 
-    The escape character ``\`` is used to produce special values, such as the newline character (``\n``).
+    The escape character ``\`` is used to produce special values, such as the newline character (``'\n'``)
+    For a literal ``\`` character use ``'\\'``.
+    For a literal ``'`` character use ``'\''``.
 
 Strings
     String literals are constructed by surrounding a sequence of characters or escape sequences with double quotes.
@@ -133,7 +143,7 @@ We will explore the indentation rules in more detail later.
 ``if`` expressions
 ------------------
 
-In Haskell ``if`` is not a statement, but in expression, meaning that it returns a value.
+In Haskell ``if`` is not a statement, but an expression, meaning that it returns a value.
 Therefore ``if`` always has a type, and also always has an ``else`` case, which must return a value of the same type.
 For instance we can assign the result of ``if`` to a binding.
 
