@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="generator" content="pandoc">
+  <title>The tools we will need</title>
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
+  <link rel="stylesheet" href="reveal.js/css/reveal.css">
+  <style type="text/css">code{white-space: pre;}</style>
+  <link rel="stylesheet" href="reveal.js/css/theme/white.css" id="theme">
+  <!-- Printing and PDF exports -->
+  <script>
+    var link = document.createElement( 'link' );
+    link.rel = 'stylesheet';
+    link.type = 'text/css';
+    link.href = window.location.search.match( /print-pdf/gi ) ? 'reveal.js/css/print/pdf.css' : 'reveal.js/css/print/paper.css';
+    document.getElementsByTagName( 'head' )[0].appendChild( link );
+  </script>
+  <!--[if lt IE 9]>
+  <script src="reveal.js/lib/js/html5shiv.js"></script>
+  <![endif]-->
+</head>
+<body>
+  <div class="reveal">
+    <div class="slides">
+
+<section>
+  <h1 class="title">The tools we will need</h1>
+</section>
+
+<section class="slide level1">
+
+<p>This fist lesson is all about the various tools we will use to develop Haskell code.</p>
+</section>
+<section id="the-compiler-ghc" class="slide level1">
+<h1>The compiler (GHC)</h1>
+<p>Haskell is a compiled language. As such you do not require any special tooling at runtime. However do develop and build Haskell projects you will require a compiler to generate an executable binary file from your code. Furthermore you will most likely require a library management tool, since the Haskell &quot;base&quot; library, which is bundeled with the compile will most likely not be sufficient for most tasks <a href="#/fn1" class="footnoteRef" id="fnref1"><sup>1</sup></a>.</p>
+<p>There are several Haskell compilers out there, however very few are well maintained. As such the Glasgow Haskell Compiler, or GHC for short, has developed as the de-facto standard Haskell compiler. It is by far the most mature, stable and feature rich Haskell compiler. In this course we will use optional extensions of the Haskell language which not every compiler implements. I therefore highly recommend using the GHC as your Haskell compiler.</p>
+<p>For more information about the various parts of the GHC see the <a href="https://downloads.haskell.org/~ghc/latest/docs/html/users_guide/">compiler reference pages</a>. There you will find information on <a href="https://downloads.haskell.org/~ghc/latest/docs/html/users_guide/flags.html">compiler flags</a>, the <a href="ghci-reference-pages">interactive prompt GHCi</a>, including the <a href="https://downloads.haskell.org/~ghc/latest/docs/html/users_guide/ghci.html#the-ghci-debugger">debugger</a>, <a href="https://downloads.haskell.org/~ghc/latest/docs/html/users_guide/profiling.html">profiling</a>, and the <a href="https://downloads.haskell.org/~ghc/latest/docs/html/users_guide/glasgow_exts.html#syntactic-extensions">GHC Haskell extensions</a>. We will discuss all these topics in the future.</p>
+<p>We will rarely interact directly with the compiler, as there are very nice build tools out there which we will make use of instead.</p>
+<h2 id="the-interactive-interpreter-ghci">The interactive Interpreter (GHCi)</h2>
+<p>The GHC also supports the interpreted execution of code. For one this allows you to directly run a Haskell source file with the <code>runghc</code> or <code>runhaskell</code> program. Furthermore any standard installation of GHC includes a program in which you can interactively type Haskell code, inspect it and run it. The program is called GHCi (<code>ghci</code> is the executable name) which stands for &quot;GHC interpreter&quot;. (<a href="ghci-reference-pages">ghci reference pages</a>) GHCi is very simlar to programs like the python or ruby interpreter with the notable difference that the code you type is type checked, like normal Haskell programs, before it is executed. The GHCi also includes a debugger for Haskell code (similar to <a href="https://www.sourceware.org/gdb/">gdb</a>) which we will study in a later chapter &lt;ghci-debugger&gt;.</p>
+<p>We first use GHCi to explore some Haskell code before we get started with source files.</p>
+<p>Some notable ways to interact with GHCi are:</p>
+<dl>
+<dt><code>&lt;expr&gt;</code></dt>
+<dd><p>Simply submitting a Haskell expression evaluates the code and tries to print the result value.</p>
+</dd>
+<dt><code>let &lt;name&gt; = &lt;expr&gt;</code></dt>
+<dd><p>Binding the value of an expression to a name (we will learn about this later &lt;bindings&gt;).</p>
+</dd>
+<dt><code>:?</code></dt>
+<dd><p>Probably the most important command. Displays the help menu. The help menu lists available commands (a selection of which will follow here) and what they do.</p>
+</dd>
+<dt><code>:browse &lt;module&gt;</code></dt>
+<dd><p>Displays the contents of the module with the entered name.</p>
+</dd>
+<dt><code>:type &lt;expr&gt;</code></dt>
+<dd><p>Prints the type of the expression <code>expr</code>.</p>
+</dd>
+<dt><code>:info &lt;name&gt;</code></dt>
+<dd><p>Displays information about the name, such as the source module, or the type if it is a function.</p>
+</dd>
+</dl>
+<p>Some, but not all, of these commands also work in a shortened form (<code>:t</code> for <code>:type</code> for instance)</p>
+</section>
+<section id="documentation-resources" class="slide level1">
+<h1>Documentation resources</h1>
+<p>The standard Haskell tool suite includes a tool called &quot;haddock&quot; which can be used to generate documentation for your source code from special in line comments. This documentation is available online for published packages.</p>
+<h2 id="hackage">Hackage</h2>
+<p><a href="hackage">Hackage</a> is the de-facto standard online Haskell package database. Anyone can make an account and start uploading their own Haskell packages. My username for instance is <a href="hackage.haskell.org/user/justus">justus</a>.</p>
+<p>On hackage you may search for packages, browse the different versions available for each package, see a packages dependencies and also browse the generated haddock documentation.</p>
+<h2 id="hoogle">Hoogle</h2>
+<p><a href="hoogle">Hoogle</a> is a search engine for the hackage documentation. Whereas on hackage you may only search the database by package name on hoogle you can search the contents more directly by searching for function names, module names, package names and even <em>type signatures</em>.</p>
+<h2 id="stackage">Stackage</h2>
+<p>The stackage_ site, which host resources to be used with the tool <code>stack</code> functions similarly to a combination of Hackage and Hoogle. It hosts the documentation, including a Hoogle search, for each package snapshot. I therefore recommend to use stackage to browse haskell packages and documentation, unless the package you want information on is not on Stackage.</p>
+</section>
+<section id="editors" class="slide level1">
+<h1>Editors</h1>
+<p>Any text editor is fine for Haskell development. Though it is desirable to have at least some Haskell source code highlighting. Many editors also offer extra features via one of the Haskell ide servers <code>ghc-mod</code> and <code>intero</code>.</p>
+<p>I personally use <em>visual studio code</em>, becuase it is clean and fast and becuase I maintain its Haskell highlighting plugin and constantly improve it. However I have heard that the editor best supporting Haskell is supposedly emacs. Atom also has good Haskell support because of the <a href="https://atom-haskell.github.io/">atom-haskell</a> group on github.</p>
+<p>For those who wish to go hard on Haskell, there is a graphical editor written in Haskell itself, called <a href="http://leksah.org">leksah</a> as well as a command line editor called <a href="http://yi-editor.github.io/">yi</a>. Also a special mention is to be given to <a href="http://haskellformac.com">Haskell for Mac</a> a particularly beautiful graphical Haskell IDE with native stack support for OSX and tailored towards learning Haskell.</p>
+<p>Ald lastly I want to mention <a href="https://www.stackage.org/lts-8.9/package/ghcid">ghcid</a>. Its a very simple, command line based program which simply attempts to load your code into the interpreter an shows you the errors it encouters. It automatically refreshes whenever you save a source file. This gives you some very bare bones ide features. The big advantage is that, unlike the other ide programs, <code>ghcid</code> is incredibly reliable.</p>
+</section>
+<section id="structure-of-source-files" class="slide level1">
+<h1>Structure of source files</h1>
+<p>Haskell code is structured into units which are called <strong>modules</strong>. Modules are the unit of distribution when it comes to connecting different pieces of Haskell code. Maining each bit of Haskell code is part of a module and to attain access to it you must import the module.</p>
+<p>Each module has a corresponding source file, which contains the code the module is to contain. Source files (except the <code>Main</code> file) always start in the folowing way:</p>
+<pre><code>module MyModule (function1, function3, DataTypeA(Constructor), constant6) where
+
+-- here follows the code</code></pre>
+<p>The individual parts mean:</p>
+<pre><code>module MyModule -- module name
+    (function1, function3, DataTypeA(Constructor), constant6) -- export list
+    where
+
+-- module contents</code></pre>
+<p>The <strong>module name</strong> must begin with an upper case letter followed by any number of upper and lower case letters, numbers and the underscore. The <strong>export list</strong> is a comma separated list of identifiers which will be accessible</p>
+<p>The default source file extension is <code>.hs</code> or <code>.lhs</code>. The latter stands for <em>&quot;literate Haskell&quot;</em>, which means that by default everything in the file is interpreted as a comment, only lines which are prefixed with <code>&gt;</code> are interpreted as code.</p>
+<p><strong>Footnotes</strong></p>
+</section>
+<section class="footnotes">
+<hr />
+<ol>
+<li id="fn1"><p>One of the unfortunate things about Haskell is that the base library lacks many desirable things.<a href="#/fnref1">↩</a></p></li>
+</ol>
+</section>
+    </div>
+  </div>
+
+  <script src="reveal.js/lib/js/head.min.js"></script>
+  <script src="reveal.js/js/reveal.js"></script>
+
+  <script>
+
+      // Full list of configuration options available at:
+      // https://github.com/hakimel/reveal.js#configuration
+      Reveal.initialize({
+
+        // Optional reveal.js plugins
+        dependencies: [
+          { src: 'reveal.js/lib/js/classList.js', condition: function() { return !document.body.classList; } },
+          { src: 'reveal.js/plugin/zoom-js/zoom.js', async: true },
+          { src: 'reveal.js/plugin/notes/notes.js', async: true }
+        ]
+      });
+    </script>
+    </body>
+</html>
