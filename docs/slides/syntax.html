@@ -64,111 +64,85 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
     <div class="slides">
 
 
-<section><section id="tools" class="titleslide slide level1"><h1>Tools</h1></section></section>
-<section><section id="ghc" class="titleslide slide level1"><h1>GHC</h1></section><section class="slide level2">
+<section><section id="syntax-basics" class="titleslide slide level1"><h1>Syntax basics</h1></section></section>
+<section><section id="comments" class="titleslide slide level1"><h1>Comments</h1></section><section class="slide level2">
 
 <ul>
-<li class="fragment">(Glorious) Glasgow Haskell Compiler is de-facto standard</li>
-<li class="fragment">generates native machine code</li>
-<li class="fragment">statically linked libraries</li>
-<li class="fragment">binaries include a small runtime (3 MB)</li>
+<li><code>--</code> line comment</li>
+<li><code>{-</code> block comment <code>-}</code></li>
 </ul>
-</section><section id="targets" class="slide level2">
-<h1>Targets</h1>
+</section></section>
+<section><section id="literals" class="titleslide slide level1"><h1>Literals</h1></section><section id="types" class="slide level2">
+<h1>Types</h1>
 <ul>
-<li class="fragment">Native</li>
-<li class="fragment">The browser (GHCJS)</li>
-<li class="fragment">The JVM (&quot;eta&quot; and GHCVM) (new)</li>
+<li><p>Always start with <strong>upper case</strong> letter</p></li>
+<li><code>Int</code> A fixed size integer</li>
+<li><code>Integer</code> An unbounded integer.</li>
+<li><code>Float</code> A floating point number.</li>
+<li><code>Char</code> A character.</li>
+<li><code>String</code> A sequence of characters.</li>
+<li><p><code>Bool</code> A boolean.</p></li>
 </ul>
-</section><section id="compiler-reference" class="slide level2">
-<h1>Compiler Reference</h1>
-<p>https://downloads.haskell.org/~ghc/latest/docs/html/users_guide/</p>
-</section><section id="ghci" class="slide level2">
-<h1>GHCi</h1>
-<ul>
-<li>allows interactive execution and inspection of code</li>
-<li>useful for debugging</li>
-<li>code is (as always) typechecked</li>
-</ul>
-</section><section class="slide level2">
-
+</section><section id="values" class="slide level2">
+<h1>Values</h1>
 <dl>
-<dt><code>:?</code></dt>
-<dd><p>Probably the most important command. Displays the help menu. The help menu lists available commands (a selection of which will follow here) and what they do.</p>
-</dd>
-<dt><code>&lt;expr&gt;</code></dt>
-<dd><p>Simply submitting a Haskell expression evaluates the code and tries to print the result value.</p>
+<dt>Numbers</dt>
+<dd><p><code>1</code>, <code>3.0</code> can be overloaded and may have to be annotated <code>(3 :: Int)</code>, <code>(3 :: Integer)</code> or <code>(3.5 :: Float)</code>, <code>(3.5 :: Double)</code>.</p>
 </dd>
 </dl>
 </section><section class="slide level2">
 
 <dl>
-<dt><code>let &lt;name&gt; = &lt;expr&gt;</code></dt>
-<dd><p>Binding the value of an expression to a name.</p>
+<dt>Characters</dt>
+<dd><p><code>'a'</code>, <code>'H'</code>, <code>'5'</code>, <code>'.'</code>, <code>'\n'</code>, <code>'\\'</code></p>
 </dd>
-<dt><code>:browse &lt;module&gt;</code></dt>
-<dd><p>Displays the contents of the module with the entered name.</p>
+<dt>Strings</dt>
+<dd><p><code>&quot;Hello World&quot;</code>, <code>&quot;Foo\nBar&quot;</code>, <code>&quot;with \&quot;quotes\&quot;&quot;</code></p>
 </dd>
 </dl>
 </section><section class="slide level2">
 
 <dl>
-<dt><code>:type &lt;expr&gt;</code></dt>
-<dd><p>Prints the type of the expression <code>expr</code>.</p>
+<dt>Lists</dt>
+<dd><p><code>[1,2,3,4]</code>, <code>[&quot;Hello&quot;, &quot;World&quot;]</code></p>
 </dd>
-<dt><code>:info &lt;name&gt;</code></dt>
-<dd><p>Displays information about the name, such as the source module, or the type if it is a function.</p>
+<dt>Tuples</dt>
+<dd><p><code>(5, &quot;A string&quot;, 'c')</code></p>
 </dd>
 </dl>
-</section></section>
-<section><section id="documentation-resources" class="titleslide slide level1"><h1>Documentation resources</h1></section><section id="hackage" class="slide level2">
-<h1>Hackage</h1>
-<p>https://hackage.haskell.org</p>
 </section><section class="slide level2">
 
 <ul>
-<li>browsing of documentation</li>
-<li>listing dependencies</li>
-<li>searching for packages by names, keywords and tags</li>
-<li>anyone can create an account and upload packages</li>
-</ul>
-</section><section id="hoogle" class="slide level2">
-<h1>Hoogle</h1>
-<ul>
-<li>search multiple packages simultaneously</li>
-<li>search for names, types, modules and type signatures</li>
-</ul>
-</section><section id="stackage" class="slide level2">
-<h1>Stackage</h1>
-<ul>
-<li>A hackage + hoogle for fixed package set</li>
-<li>I recommend using this rather than hackage (when possible)</li>
+<li>No special literals for booleans</li>
+<li>Regular data constructors: <code>True</code> and <code>False</code></li>
 </ul>
 </section></section>
-<section><section id="editors" class="titleslide slide level1"><h1>Editors</h1></section><section class="slide level2">
+<section><section id="bindings" class="titleslide slide level1"><h1>Bindings</h1></section><section class="slide level2">
 
 <ul>
-<li>http://leksah.org</li>
-<li>http://yi-editor.github.io/</li>
-<li><p>http://haskellformac.com</p></li>
-<li><p>https://www.stackage.org/lts-8.9/package/ghcid</p></li>
+<li>start with <strong>lower case</strong> letter</li>
+<li>immutable but shadowing allowed</li>
 </ul>
-</section></section>
-<section><section id="structure-of-source-files" class="titleslide slide level1"><h1>Structure of source files</h1></section><section class="slide level2">
-
-<ul>
-<li>functions and data types are bundled into modules</li>
-<li>one source file per module</li>
-</ul>
-<div class="sourceCode"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="kw">module</span> <span class="dt">MyModule</span> (function1, function3, <span class="dt">DataTypeA</span>(<span class="dt">Constructor</span>), constant6) <span class="kw">where</span>
-
-<span class="co">-- here follows the code</span></code></pre></div>
 </section><section class="slide level2">
 
+<div class="sourceCode"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="kw">let</span> myInt <span class="fu">=</span> <span class="dv">5</span>
+<span class="kw">let</span> aBool <span class="fu">=</span> <span class="dt">False</span>
+<span class="kw">let</span> someString <span class="fu">=</span> <span class="st">&quot;Hello World&quot;</span></code></pre></div>
+</section><section class="slide level2">
+
+<p>``haskell let myInt :: Int myInt = 5 ```</p>
+</section></section>
+<section><section id="if-expressions" class="titleslide slide level1"><h1><code>if</code> expressions</h1></section><section class="slide level2">
+
 <ul>
-<li>not everything must be exported</li>
-<li>items from other modules and whole other modules can be exported</li>
+<li>not a statement but an expression</li>
+<li>has type, returns a value</li>
 </ul>
+</section><section class="slide level2">
+
+<div class="sourceCode"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="kw">let</span> aBool <span class="fu">=</span> <span class="dt">False</span>
+
+<span class="kw">let</span> anInt <span class="fu">=</span> <span class="kw">if</span> aBool <span class="kw">then</span> <span class="dv">8</span> <span class="kw">else</span> <span class="dv">9</span></code></pre></div>
 </section></section>
     </div>
   </div>
