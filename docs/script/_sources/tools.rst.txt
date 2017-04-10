@@ -10,8 +10,8 @@ The compiler (GHC)
 
 Haskell is a compiled language. 
 As such you do not require any special tooling at runtime.
-However do develop and build Haskell projects you will require a compiler to generate an executable binary file from your code.
-Furthermore you will most likely require a library management tool, since the Haskell "base" library, which is bundeled with the compile will most likely not be sufficient for most tasks [#base-sucks]_.
+However to develop and build Haskell projects you will require a compiler to generate an executable binary file from your code.
+Furthermore you will most likely require a library management tool, since the Haskell "base" library, which is bundeled with the compiler will most likely not be sufficient for most tasks [#base-sucks]_.
 
 There are several Haskell compilers out there, however very few are well maintained.
 As such the Glasgow Haskell Compiler, or GHC for short, has developed as the de-facto standard Haskell compiler.
@@ -107,13 +107,21 @@ Many editors also offer extra features via one of the Haskell ide servers ``ghc-
 
 I personally use *visual studio code*, becuase it is clean and fast and becuase I maintain its Haskell highlighting plugin and constantly improve it.
 However I have heard that the editor best supporting Haskell is supposedly emacs.
-Atom also has good Haskell support because of the `atom-haskell <https://atom-haskell.github.io/>`__ group on github.
+Atom also has good Haskell support because of the `atom-haskell`_ group on github.
+
+For those who wish to go hard on Haskell, there is a graphical editor written in Haskell itself, called `leksah`_ as well as a command line editor called `yi`_.
+Also a special mention is to be given to `Haskell for Mac`_ a particularly beautiful graphical Haskell IDE with native stack support for OSX and tailored towards learning Haskell.
+
+.. _leksah: http://leksah.org
+.. _yi: http://yi-editor.github.io/
+.. _Haskell for Mac: http://haskellformac.com
+.. _atom-haskell: https://atom-haskell.github.io/
 
 Ald lastly I want to mention `ghcid <https://www.stackage.org/lts-8.9/package/ghcid>`__. 
 Its a very simple, command line based program which simply attempts to load your code into the interpreter an shows you the errors it encouters.
 It automatically refreshes whenever you save a source file.
 This gives you some very bare bones ide features.
-The big advantage is that unlike the other ide programs ``ghcid`` is incredibly reliable.
+The big advantage is that, unlike the other ide programs, ``ghcid`` is incredibly reliable.
 
 .. _source structure:
 

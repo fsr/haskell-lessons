@@ -29,7 +29,7 @@ main = shakeArgs shakeOptions $ do
 
     phony "script" $ need [scriptOutputDirectory </> "index.html", outputDirectory </> "script.pdf"]
 
-    phony "slides" $ getDirectoryFiles "slides" ["*.rst"] >>= need . map ((-<.> "html") . (slidesOutputDirectory </>))
+    phony "slides" $ getDirectoryFiles "slides" ["*.md"] >>= need . map ((-<.> "html") . (slidesOutputDirectory </>))
 
     (scriptOutputDirectory </> "index.html") %> \out' -> do
         let out = takeDirectory out'
@@ -45,7 +45,9 @@ main = shakeArgs shakeOptions $ do
     "/reveal.js/**" %> const (unit $ cmd "git" ["submodule", "update"])
 
     (slidesOutputDirectory </> "*.html") %> \out -> do
+        let sourceFile = "slides" </> makeRelative slidesOutputDirectory out -<.> ".md"
+        need [sourceFile]
         getDirectoryFiles "reveal.js/lib" ["css/*.css", "font/*/*.css", "js/*.js"] >>= need . map ((revealResourcesDirectory </> "lib") </>)
         need $ map (revealResourcesDirectory </>) ["css/reveal.css", "js/reveal.js", "lib/font/source-sans-pro/source-sans-pro.css"]
         getDirectoryFiles "reveal.js/css/theme" ["*.css"] >>= need . map ((revealResourcesDirectory </> "css/theme") </>)
-        cmd "pandoc" ["slides" </> makeRelative slidesOutputDirectory out -<.> ".rst", "-o", out, "-t", "revealjs", "-s", "--variable=theme:white"]
+        cmd "pandoc" [sourceFile, "--slide-level", "2", "-o", out, "-t", "revealjs", "-s", "--variable=theme:white"]

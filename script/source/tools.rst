@@ -10,8 +10,8 @@ The compiler (GHC)
 
 Haskell is a compiled language. 
 As such you do not require any special tooling at runtime.
-However do develop and build Haskell projects you will require a compiler to generate an executable binary file from your code.
-Furthermore you will most likely require a library management tool, since the Haskell "base" library, which is bundeled with the compile will most likely not be sufficient for most tasks [#base-sucks]_.
+However to develop and build Haskell projects you will require a compiler to generate an executable binary file from your code.
+Furthermore you will most likely require a library management tool, since the Haskell "base" library, which is bundeled with the compiler will most likely not be sufficient for most tasks [#base-sucks]_.
 
 There are several Haskell compilers out there, however very few are well maintained.
 As such the Glasgow Haskell Compiler, or GHC for short, has developed as the de-facto standard Haskell compiler.

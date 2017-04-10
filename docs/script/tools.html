@@ -50,8 +50,8 @@
 <span id="ghc"></span><h2>1.1. The compiler (GHC)<a class="headerlink" href="#the-compiler-ghc" title="Permalink to this headline">¶</a></h2>
 <p>Haskell is a compiled language.
 As such you do not require any special tooling at runtime.
-However do develop and build Haskell projects you will require a compiler to generate an executable binary file from your code.
-Furthermore you will most likely require a library management tool, since the Haskell &#8220;base&#8221; library, which is bundeled with the compile will most likely not be sufficient for most tasks <a class="footnote-reference" href="#base-sucks" id="id1">[1]</a>.</p>
+However to develop and build Haskell projects you will require a compiler to generate an executable binary file from your code.
+Furthermore you will most likely require a library management tool, since the Haskell &#8220;base&#8221; library, which is bundeled with the compiler will most likely not be sufficient for most tasks <a class="footnote-reference" href="#base-sucks" id="id1">[1]</a>.</p>
 <p>There are several Haskell compilers out there, however very few are well maintained.
 As such the Glasgow Haskell Compiler, or GHC for short, has developed as the de-facto standard Haskell compiler.
 It is by far the most mature, stable and feature rich Haskell compiler.
@@ -121,11 +121,13 @@ Many editors also offer extra features via one of the Haskell ide servers <code 
 <p>I personally use <em>visual studio code</em>, becuase it is clean and fast and becuase I maintain its Haskell highlighting plugin and constantly improve it.
 However I have heard that the editor best supporting Haskell is supposedly emacs.
 Atom also has good Haskell support because of the <a class="reference external" href="https://atom-haskell.github.io/">atom-haskell</a> group on github.</p>
+<p>For those who wish to go hard on Haskell, there is a graphical editor written in Haskell itself, called <a class="reference external" href="http://leksah.org">leksah</a> as well as a command line editor called <a class="reference external" href="http://yi-editor.github.io/">yi</a>.
+Also a special mention is to be given to <a class="reference external" href="http://haskellformac.com">Haskell for Mac</a> a particularly beautiful graphical Haskell IDE with native stack support for OSX and tailored towards learning Haskell.</p>
 <p>Ald lastly I want to mention <a class="reference external" href="https://www.stackage.org/lts-8.9/package/ghcid">ghcid</a>.
 Its a very simple, command line based program which simply attempts to load your code into the interpreter an shows you the errors it encouters.
 It automatically refreshes whenever you save a source file.
 This gives you some very bare bones ide features.
-The big advantage is that unlike the other ide programs <code class="docutils literal"><span class="pre">ghcid</span></code> is incredibly reliable.</p>
+The big advantage is that, unlike the other ide programs, <code class="docutils literal"><span class="pre">ghcid</span></code> is incredibly reliable.</p>
 </div>
 <div class="section" id="structure-of-source-files">
 <span id="source-structure"></span><h2>1.4. Structure of source files<a class="headerlink" href="#structure-of-source-files" title="Permalink to this headline">¶</a></h2>
