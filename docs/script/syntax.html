@@ -1,0 +1,295 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>2. Fundamentals of the Haskell syntax &#8212; Haskell Lessons 0.1 documentation</title>
+    
+    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '0.1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="3. Exercises" href="exercises/index.html" />
+    <link rel="prev" title="1. The tools we will need" href="tools.html" />
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head>
+  <body role="document">
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="fundamentals-of-the-haskell-syntax">
+<span id="syntax"></span><h1>2. Fundamentals of the Haskell syntax<a class="headerlink" href="#fundamentals-of-the-haskell-syntax" title="Permalink to this headline">¶</a></h1>
+<p>This lesson contains gets us started with the basics of Haskell syntax.
+Haskell is an old language (older than Java) and also one with which people like to experiment.
+As a result a lot of extra syntax has accumulated in over the years.
+Some of it in regular use, some of it more obscure and not well known.
+Most of this extra syntax is hidden behind language extensions.
+We mway come to learn some of it in future lessons, however for now we will simply start with the ML style core of the Haskell syntax.</p>
+<div class="section" id="comments">
+<span id="id1"></span><h2>2.1. Comments<a class="headerlink" href="#comments" title="Permalink to this headline">¶</a></h2>
+<p>There are two types of comments in Haskell.
+<strong>Line comments</strong> start with a double dash <code class="docutils literal"><span class="pre">--</span></code> (must be followed by a space or word character) and extends to the end of the current line.
+<strong>Block comments</strong> start with the sequence <code class="docutils literal"><span class="pre">{-</span></code> and extend until the end sequence <code class="docutils literal"><span class="pre">-}</span></code>.</p>
+</div>
+<div class="section" id="type-literals">
+<span id="types"></span><h2>2.2. Type literals<a class="headerlink" href="#type-literals" title="Permalink to this headline">¶</a></h2>
+<p>In Haskell type literals always start with an uppercase letter.
+Examples from Haskell&#8217;s base library are:</p>
+<dl class="docutils">
+<dt><code class="docutils literal"><span class="pre">Int</span></code></dt>
+<dd>A fixed size integer</dd>
+<dt><code class="docutils literal"><span class="pre">Integer</span></code></dt>
+<dd>An unbounded integer.</dd>
+<dt><code class="docutils literal"><span class="pre">Float</span></code></dt>
+<dd>A floating point number.</dd>
+<dt><code class="docutils literal"><span class="pre">Char</span></code></dt>
+<dd>A character.</dd>
+<dt><code class="docutils literal"><span class="pre">String</span></code></dt>
+<dd>A string of characters.</dd>
+<dt><code class="docutils literal"><span class="pre">Bool</span></code></dt>
+<dd>A boolean.</dd>
+</dl>
+<p>After that the allowed characters are word character, digits, the underscore <code class="docutils literal"><span class="pre">_</span></code> and the apostrope <code class="docutils literal"><span class="pre">'</span></code> (often called <em>&#8220;prime&#8221;</em>).[#type-operators]
+Therefore a name such as <code class="docutils literal"><span class="pre">Isn't_4_bool</span></code> is a valid type name.</p>
+<p>In general Haskell is a type inferred language, meaning you rarley have to specify the type of a value or expression (although it is common practice to annotate top level types and values with type signatures).
+You can hovever annotate any value and expression you want with a type signature.
+The special operator <code class="docutils literal"><span class="pre">::</span></code> can be used to achieve this (see also next section for examples).
+This is particularly useful when chasing down the source of type errors as you can fix expressions to a certain type you expect them to be.</p>
+</div>
+<div class="section" id="value-literals">
+<h2>2.3. Value literals<a class="headerlink" href="#value-literals" title="Permalink to this headline">¶</a></h2>
+<p>Supported literals are:</p>
+<dl class="docutils">
+<dt>Numbers</dt>
+<dd><code class="docutils literal"><span class="pre">1</span></code>, <code class="docutils literal"><span class="pre">3.0</span></code> etc.
+These are however overloaded, meaning depending on the inferred type a literal <code class="docutils literal"><span class="pre">3</span></code> can be an <code class="docutils literal"><span class="pre">Int</span></code> or <code class="docutils literal"><span class="pre">Integer</span></code> for instance.
+If you wish to specify the type you can annotate the literal like so <code class="docutils literal"><span class="pre">(3</span> <span class="pre">::</span> <span class="pre">Int)</span></code>, <code class="docutils literal"><span class="pre">(3</span> <span class="pre">::</span> <span class="pre">Integer)</span></code> or <code class="docutils literal"><span class="pre">(3.5</span> <span class="pre">::</span> <span class="pre">Float)</span></code>, <code class="docutils literal"><span class="pre">(3.5</span> <span class="pre">::</span> <span class="pre">Double)</span></code>.</dd>
+<dt>Characters</dt>
+<dd><p class="first">Character literals are constructed by surrounding a character or excape sequence with single quotes.</p>
+<p><code class="docutils literal"><span class="pre">'a'</span></code>, <code class="docutils literal"><span class="pre">'H'</span></code>, <code class="docutils literal"><span class="pre">'5'</span></code>, <code class="docutils literal"><span class="pre">'.'</span></code>.</p>
+<p class="last">The escape character <code class="docutils literal"><span class="pre">\</span></code> is used to produce special values, such as the newline character (<code class="docutils literal"><span class="pre">'\n'</span></code>)
+For a literal <code class="docutils literal"><span class="pre">\</span></code> character use <code class="docutils literal"><span class="pre">'\\'</span></code>.
+For a literal <code class="docutils literal"><span class="pre">'</span></code> character use <code class="docutils literal"><span class="pre">'\''</span></code>.</p>
+</dd>
+<dt>Strings</dt>
+<dd><p class="first">String literals are constructed by surrounding a sequence of characters or escape sequences with double quotes.</p>
+<p><code class="docutils literal"><span class="pre">&quot;Hello</span> <span class="pre">World&quot;</span></code>, <code class="docutils literal"><span class="pre">&quot;Foo\nBar&quot;</span></code></p>
+<p class="last">The same escape sequences as for characters apply with addition of the excaped double quotes <code class="docutils literal"><span class="pre">\&quot;</span></code>.
+<a class="footnote-reference" href="#overloaded-strings" id="id2">[2]</a></p>
+</dd>
+<dt>Lists</dt>
+<dd><p class="first">List literals are a sequence of comma separated values surrounded by square brackets.</p>
+<p><code class="docutils literal"><span class="pre">[1,2,3,4]</span></code></p>
+<p>All elements of a list must have the same type.</p>
+<p class="last">More on the list type in the next section.</p>
+</dd>
+<dt>Tuples</dt>
+<dd><p class="first">Tuples are a sequence of comma separated values surrounded by parentheses.</p>
+<p><code class="docutils literal"><span class="pre">(5,</span> <span class="pre">&quot;A</span> <span class="pre">string&quot;,</span> <span class="pre">'c')</span></code></p>
+<p>Unlike lists the elements of a tuple can have different types.</p>
+<p class="last">More on the tuple type in the next section.</p>
+</dd>
+</dl>
+<p>Note that there are not <em>special</em> literals for booleans in Haskell as they are just a regular <a class="reference internal" href="types.html#user-defined-types"><span class="std std-ref">data structure</span></a>.
+The literals for <code class="docutils literal"><span class="pre">Bool</span></code> are <code class="docutils literal"><span class="pre">True</span></code> and <code class="docutils literal"><span class="pre">False</span></code>.</p>
+</div>
+<div class="section" id="bindings">
+<span id="id3"></span><h2>2.4. Bindings<a class="headerlink" href="#bindings" title="Permalink to this headline">¶</a></h2>
+<p>Bindings (often also called variables) are names referring to pieces of data.
+It is similar to the concept of variables in other languages, however in Haskell bindings are <strong>always</strong> immutable.
+Since these ergo they are <strong>not</strong> &#8220;variable&#8221; (they cannot vary).
+This is why I prefer the name &#8220;binding&#8221; as it <strong>binds</strong> a value to an identifier, not a variable, as it cannot &#8220;vary&#8221;.</p>
+<p>Bindings must always start with a lowercase letter.
+Then, like the types, it may contain word characters, digits, the underscore and the apostrope. <a class="footnote-reference" href="#naming-convention" id="id4">[4]</a></p>
+<p>There are several ways to bind a value.
+The first one we will learn (because it is the way to bind values in GHCi) is called <code class="docutils literal"><span class="pre">let</span></code> with the concrete syntax <code class="docutils literal"><span class="pre">let</span> <span class="pre">name</span> <span class="pre">=</span> <span class="pre">value</span></code>.</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">let</span> <span class="n">myInt</span> <span class="o">=</span> <span class="mi">5</span>
+<span class="n">let</span> <span class="n">aBool</span> <span class="o">=</span> <span class="kc">False</span>
+<span class="n">let</span> <span class="n">someString</span> <span class="o">=</span> <span class="s2">&quot;Hello World&quot;</span>
+</pre></div>
+</div>
+<p>You can use <code class="docutils literal"><span class="pre">let</span></code> in GHCi to bind a value and then print it by simply entering the name again and pressing enter. <a class="footnote-reference" href="#rebinding" id="id5">[5]</a>
+In the <code class="docutils literal"><span class="pre">let</span></code> construct you may also, optionally, specify a type signature for the binding.</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">let</span> <span class="n">myInt</span> <span class="p">::</span> <span class="n">Int</span>
+    <span class="n">myInt</span> <span class="o">=</span> <span class="mi">5</span>
+</pre></div>
+</div>
+<p>Note that the second occurrence of <code class="docutils literal"><span class="pre">myInt</span></code> must be properly indented.
+We will explore the indentation rules in more detail later.</p>
+</div>
+<div class="section" id="if-expressions">
+<span id="if"></span><h2>2.5. <code class="docutils literal"><span class="pre">if</span></code> expressions<a class="headerlink" href="#if-expressions" title="Permalink to this headline">¶</a></h2>
+<p>In Haskell <code class="docutils literal"><span class="pre">if</span></code> is not a statement, but an expression, meaning that it returns a value.
+Therefore <code class="docutils literal"><span class="pre">if</span></code> always has a type, and also always has an <code class="docutils literal"><span class="pre">else</span></code> case, which must return a value of the same type.
+For instance we can assign the result of <code class="docutils literal"><span class="pre">if</span></code> to a binding.</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">let</span> <span class="n">aBool</span> <span class="o">=</span> <span class="kc">False</span>
+
+<span class="n">let</span> <span class="n">anInt</span> <span class="o">=</span> <span class="k">if</span> <span class="n">aBool</span> <span class="n">then</span> <span class="mi">8</span> <span class="k">else</span> <span class="mi">9</span>
+</pre></div>
+</div>
+<p>Parentheses are not required and one may write any expression on the branches and for the condition of an <code class="docutils literal"><span class="pre">if</span></code>.</p>
+</div>
+<div class="section" id="function-application">
+<h2>2.6. Function Application<a class="headerlink" href="#function-application" title="Permalink to this headline">¶</a></h2>
+<p>The syntax for applying functions to arguments in Haskell is the simplest imaginable.
+Its called <em>juxtaposition</em> or somethimes <em>prefix notation</em>.
+Meaning we simply write the function and follow it up by the arguments separated by whitespace.
+Optionally we can surround the whole construct with parentheses.
+This is especially useful when we need the result of a function call as an argument.</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">succ</span> <span class="mi">5</span> <span class="o">==</span> <span class="mi">6</span>
+<span class="n">takeDirectory</span> <span class="s2">&quot;/etc/hosts&quot;</span> <span class="o">==</span> <span class="s2">&quot;/etc&quot;</span>
+<span class="n">elem</span> <span class="p">(</span><span class="n">pred</span> <span class="mi">6</span><span class="p">)</span> <span class="p">[</span><span class="mf">1.</span><span class="o">.</span><span class="mi">10</span><span class="p">]</span>
+<span class="ow">not</span> <span class="kc">True</span> <span class="o">==</span> <span class="kc">False</span>
+</pre></div>
+</div>
+<p>Haskell also supports binary operators.
+For instance the addition operator <code class="docutils literal"><span class="pre">(+)</span></code> and the equality operator <code class="docutils literal"><span class="pre">(==)</span></code>.
+Note that to apply the operator we use its bare form <code class="docutils literal"><span class="pre">+</span></code>, however if we mean a reference to the function we surround it <em>directly</em> with parentheses.</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="mi">4</span> <span class="o">+</span> <span class="mi">5</span> <span class="o">==</span> <span class="mi">9</span>
+<span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">]</span> <span class="o">++</span> <span class="p">[</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">6</span><span class="p">]</span> <span class="o">==</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">6</span><span class="p">]</span>
+
+<span class="nb">map</span> <span class="p">(</span><span class="n">uncurry</span> <span class="p">(</span><span class="o">+</span><span class="p">))</span> <span class="p">[(</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">),</span> <span class="p">(</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">)]</span>
+</pre></div>
+</div>
+<p>Infix operators can also be used in the prefix notation by surrounding them with parentheses <code class="docutils literal"><span class="pre">(+)</span></code>.
+And prefix functions can also be used like infix operators by surrounding them with backticks <code class="docutils literal"><span class="pre">4</span> <span class="pre">`elem`</span> <span class="pre">[1..10]</span></code>.</p>
+<p>Function application <em>always binds stronger</em> to its arguments than operator application.
+For operators users may define a prescedence in which they are applied.
+Thus <code class="docutils literal"><span class="pre">(+)</span></code> for instance is applied before <code class="docutils literal"><span class="pre">(==)</span></code>.</p>
+<p class="rubric">footnotes</p>
+<table class="docutils footnote" frame="void" id="tuple-size" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label">[1]</td><td>The <a class="reference external" href="https://hackage.haskell.org/package/ghc-prim-0.5.0.0/docs/src/GHC.Tuple.html#%28%2C%2C%2C%2C%2C%2C%2C%2C%2C%2C%2C%2C%2C%2C%2C%2C%2C%2C%2C%2C%2C%2C%2C%2C%2C%2C%2C%2C%2C%2C%2C%2C%2C%2C%2C%2C%2C%2C%2C%2C%2C%2C%2C%2C%2C%2C%2C%2C%2C%2C%2C%2C%2C%2C%2C%2C%2C%2C%2C%2C%2C%29">source file for tuples in GHC</a> defined tuples with up to 62 elements.
+Below the last declaration is a large block of perhaps 20 more declarations which is commented out, with a note above saying &#8220;Manuel says: Including one more declaration gives a segmentation fault.&#8221;</td></tr>
+</tbody>
+</table>
+<table class="docutils footnote" frame="void" id="overloaded-strings" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label"><a class="fn-backref" href="#id2">[2]</a></td><td>There is a language extension in GHC which allows overloading of strings (much like the numeric literals), see <a class="reference internal" href="overloaded-lits.html#overloaded-strings"><span class="std std-ref">Overloaded Strings</span></a>.</td></tr>
+</tbody>
+</table>
+<table class="docutils footnote" frame="void" id="overloaded-lists" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label">[3]</td><td>There is a language extension in GHC which allows overloading of lists (much like the numeric literals), see <a class="reference internal" href="overloaded-lits.html#overloaded-lists"><span class="std std-ref">Overloaded Lists</span></a>.</td></tr>
+</tbody>
+</table>
+<table class="docutils footnote" frame="void" id="naming-convention" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label"><a class="fn-backref" href="#id4">[4]</a></td><td>The naming convention in Haskell is camel case.
+Meaning in each identifier (type variable, type or binding) all words composing the name are chained directly, with each new word starting with an upper case letter, except for the first word, who&#8217;s case is determined by the syntax contstraints (upper case for types, lower case for type variables and bindings).</td></tr>
+</tbody>
+</table>
+<table class="docutils footnote" frame="void" id="rebinding" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label"><a class="fn-backref" href="#id5">[5]</a></td><td>Note that in GHCi, as in many Haskell constructs you may also <strong>rebind</strong> a binding.
+This may look like you have altered the binding, however this is not the case.
+It creates a wholly new binding, which simply shadows the older binding in the current scope.
+When the scope is exited the value stored for this name remains the old value.
+You will also know that it is a new binding by the fact that the new binding can have a different type than the old one.</td></tr>
+</tbody>
+</table>
+<table class="docutils footnote" frame="void" id="type-operators" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label">[6]</td><td>GHC also allows you to define <a class="reference external" href="https://downloads.haskell.org/~ghc/latest/docs/html/users_guide/glasgow_exts.html#infix-type-constructors-classes-and-type-variables">data constructors and types</a> as operators.</td></tr>
+</tbody>
+</table>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">2. Fundamentals of the Haskell syntax</a><ul>
+<li><a class="reference internal" href="#comments">2.1. Comments</a></li>
+<li><a class="reference internal" href="#type-literals">2.2. Type literals</a></li>
+<li><a class="reference internal" href="#value-literals">2.3. Value literals</a></li>
+<li><a class="reference internal" href="#bindings">2.4. Bindings</a></li>
+<li><a class="reference internal" href="#if-expressions">2.5. <code class="docutils literal"><span class="pre">if</span></code> expressions</a></li>
+<li><a class="reference internal" href="#function-application">2.6. Function Application</a></li>
+</ul>
+</li>
+</ul>
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a><ul>
+      <li>Previous: <a href="tools.html" title="previous chapter">1. The tools we will need</a></li>
+      <li>Next: <a href="exercises/index.html" title="next chapter">3. Exercises</a></li>
+  </ul></li>
+</ul>
+</div>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/syntax.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2017, Justus Adam.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.5.1</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.9</a>
+      
+      |
+      <a href="_sources/syntax.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

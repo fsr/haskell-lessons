@@ -1,0 +1,185 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Sources and the compiler &#8212; Haskell Lessons 0.1 documentation</title>
+    
+    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '0.1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head>
+  <body role="document">
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="sources-and-the-compiler">
+<h1>Sources and the compiler<a class="headerlink" href="#sources-and-the-compiler" title="Permalink to this headline">¶</a></h1>
+<p>Haskell is a compiled language.
+As such you do not require any special tooling at runtime.
+However do develop and build Haskell projects you will require a compiler to generate an executable binary file from your code.
+Furthermore you will most likely require a library management tool, since the Haskell &#8220;base&#8221; library, which is bundeled with the compile will most likely not be sufficient for most tasks <a class="footnote-reference" href="#base-sucks" id="id1">[1]</a>.</p>
+<div class="section" id="structure-of-source-files">
+<span id="source-structure"></span><h2>Structure of source files<a class="headerlink" href="#structure-of-source-files" title="Permalink to this headline">¶</a></h2>
+<p>Haskell code is structured into packages which are called <strong>modules</strong>.
+Modules are the unit of distribution when it comes to connecting different pieces of Haskell code.
+Maining each bit of Haskell code is part of a module and to attain access to it you must import the module.</p>
+<p>Each module has a corresponding source file, which contains the code the module is to contain.
+Source files (except the <code class="docutils literal"><span class="pre">Main</span></code> file) always start in the folowing way:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">module</span> <span class="n">MyModule</span> <span class="p">(</span><span class="n">function1</span><span class="p">,</span> <span class="n">function3</span><span class="p">,</span> <span class="n">DataTypeA</span><span class="p">(</span><span class="n">Constructor</span><span class="p">),</span> <span class="n">constant6</span><span class="p">)</span> <span class="n">where</span>
+
+<span class="o">--</span> <span class="n">here</span> <span class="n">follows</span> <span class="n">the</span> <span class="n">code</span>
+</pre></div>
+</div>
+<p>The individual parts mean:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">module</span> <span class="n">MyModule</span> <span class="o">--</span> <span class="n">module</span> <span class="n">name</span>
+    <span class="p">(</span><span class="n">function1</span><span class="p">,</span> <span class="n">function3</span><span class="p">,</span> <span class="n">DataTypeA</span><span class="p">(</span><span class="n">Constructor</span><span class="p">),</span> <span class="n">constant6</span><span class="p">)</span> <span class="o">--</span> <span class="n">export</span> <span class="nb">list</span>
+    <span class="n">where</span>
+
+<span class="o">--</span> <span class="n">module</span> <span class="n">contents</span>
+</pre></div>
+</div>
+<p>The <strong>module name</strong> must begin with an upper case letter followed by any number of upper and lower case letters, numbers and the underscore.
+The <strong>export list</strong> is a comma separated list of identifiers which will be accessible</p>
+<p>The default source file extension is <code class="docutils literal"><span class="pre">.hs</span></code> or <code class="docutils literal"><span class="pre">.lhs</span></code>.
+The latter stands for <em>&#8220;literate Haskell&#8221;</em>, which means that by default everything in the file is interpreted as a comment, only lines which are prefixed with <code class="docutils literal"><span class="pre">&gt;</span></code> are interpreted as code.</p>
+</div>
+<div class="section" id="the-compiler-ghc">
+<span id="ghc"></span><h2>The compiler (GHC)<a class="headerlink" href="#the-compiler-ghc" title="Permalink to this headline">¶</a></h2>
+<p>There are many Haskell compilers out there, however very few are well maintained.
+As such the Glasgow Haskell Compiler, or GHC for short, has developed as the de-facto standard Haskell compiler.
+It is by far the most mature, stable and feature rich Haskell compiler.
+In this course we will use optional extensions of the Haskell language which not every compiler implements.
+I therefore highly recommend using the GHC as your Haskell compiler.</p>
+<p>For more information about the various parts of the GHC see the <a class="reference external" href="https://downloads.haskell.org/~ghc/latest/docs/html/users_guide/">compiler reference pages</a>.
+There you will find information on <a class="reference external" href="https://downloads.haskell.org/~ghc/latest/docs/html/users_guide/flags.html">compiler flags</a>, the <a class="reference external" href="ghci-reference-pages">interactive prompt GHCi</a>, including the <a class="reference external" href="https://downloads.haskell.org/~ghc/latest/docs/html/users_guide/ghci.html#the-ghci-debugger">debugger</a>, <a class="reference external" href="https://downloads.haskell.org/~ghc/latest/docs/html/users_guide/profiling.html">profiling</a>, and the <a class="reference external" href="https://downloads.haskell.org/~ghc/latest/docs/html/users_guide/glasgow_exts.html#syntactic-extensions">GHC Haskell extensions</a>.
+We will discuss all these topics in the future.</p>
+<p>We will rarely interact directly with the compiler, as there are very nice <span class="xref std std-ref">build tools</span> out there which we will make use of instead.</p>
+<div class="section" id="the-interactive-interpreter-ghci">
+<span id="ghci"></span><h3>The interactive Interpreter (GHCi)<a class="headerlink" href="#the-interactive-interpreter-ghci" title="Permalink to this headline">¶</a></h3>
+<p>The GHC also supports the interpreted execution of code.
+For one this allows you to directly run a Haskell source file with the <code class="docutils literal"><span class="pre">runghc</span></code> or <code class="docutils literal"><span class="pre">runhaskell</span></code> program.
+Furthermore any standard installation of GHC includes a program in which you can interactively type Haskell code, inspect it and run it.
+The program is called GHCi (<code class="docutils literal"><span class="pre">ghci</span></code> is the executable name) which stands for &#8220;GHC interpreter&#8221;. (<a class="reference external" href="ghci-reference-pages">ghci reference pages</a>)
+GHCi is very simlar to programs like the python or ruby interpreter with the notable difference that the code you type is type checked, like normal Haskell programs, before it is executed.
+The GHCi also includes a debugger for Haskell code (similar to <a class="reference external" href="https://www.sourceware.org/gdb/">gdb</a>) which we will <span class="xref std std-ref">study in a later chapter</span>.</p>
+<p>We first use GHCi to explore some Haskell code before we get started with source files.</p>
+<p>Some notable ways to interact with GHCi are:</p>
+<dl class="docutils">
+<dt><code class="docutils literal"><span class="pre">&lt;expr&gt;</span></code></dt>
+<dd>Simply submitting a Haskell expression evaluates the code and tries to print the result value.</dd>
+<dt><code class="docutils literal"><span class="pre">let</span> <span class="pre">&lt;name&gt;</span> <span class="pre">=</span> <span class="pre">&lt;expr&gt;</span></code></dt>
+<dd>Binding the value of an expression to a name (we will learn about this <a class="reference internal" href="syntax.html#bindings"><span class="std std-ref">later</span></a>).</dd>
+<dt><code class="docutils literal"><span class="pre">:?</span></code></dt>
+<dd>Probably the most important command.
+Displays the help menu.
+The help menu lists available commands (a selection of which will follow here) and what they do.</dd>
+<dt><code class="docutils literal"><span class="pre">:browse</span> <span class="pre">&lt;module&gt;</span></code></dt>
+<dd>Displays the contents of the module with the entered name.</dd>
+<dt><code class="docutils literal"><span class="pre">:type</span> <span class="pre">&lt;expr&gt;</span></code></dt>
+<dd>Prints the type of the expression <code class="docutils literal"><span class="pre">expr</span></code>.</dd>
+<dt><code class="docutils literal"><span class="pre">:info</span> <span class="pre">&lt;name&gt;</span></code></dt>
+<dd>Displays information about the name, such as the source module, or the type if it is a function.</dd>
+</dl>
+<p>Some, but not all, of these commands also work in a shortened form (<code class="docutils literal"><span class="pre">:t</span></code> for <code class="docutils literal"><span class="pre">:type</span></code> for instance)</p>
+<p class="rubric">Footnotes</p>
+<table class="docutils footnote" frame="void" id="base-sucks" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label"><a class="fn-backref" href="#id1">[1]</a></td><td>One of the unfortunate things about Haskell is that the base library lacks many desirable things.</td></tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Sources and the compiler</a><ul>
+<li><a class="reference internal" href="#structure-of-source-files">Structure of source files</a></li>
+<li><a class="reference internal" href="#the-compiler-ghc">The compiler (GHC)</a><ul>
+<li><a class="reference internal" href="#the-interactive-interpreter-ghci">The interactive Interpreter (GHCi)</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a><ul>
+  </ul></li>
+</ul>
+</div>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/compiler.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2017, Justus Adam.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.5.1</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.9</a>
+      
+      |
+      <a href="_sources/compiler.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

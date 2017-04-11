@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="generator" content="pandoc">
+  <meta name="author" content="Justus Adam">
+  <title>Hello Haskell</title>
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
+  <link rel="stylesheet" href="../reveal.js/css/reveal.css">
+  <style type="text/css">code{white-space: pre;}</style>
+  <style type="text/css">
+div.sourceCode { overflow-x: auto; }
+table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
+  margin: 0; padding: 0; vertical-align: baseline; border: none; }
+table.sourceCode { width: 100%; line-height: 100%; }
+td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
+td.sourceCode { padding-left: 5px; }
+code > span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code > span.dt { color: #902000; } /* DataType */
+code > span.dv { color: #40a070; } /* DecVal */
+code > span.bn { color: #40a070; } /* BaseN */
+code > span.fl { color: #40a070; } /* Float */
+code > span.ch { color: #4070a0; } /* Char */
+code > span.st { color: #4070a0; } /* String */
+code > span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code > span.ot { color: #007020; } /* Other */
+code > span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code > span.fu { color: #06287e; } /* Function */
+code > span.er { color: #ff0000; font-weight: bold; } /* Error */
+code > span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+code > span.cn { color: #880000; } /* Constant */
+code > span.sc { color: #4070a0; } /* SpecialChar */
+code > span.vs { color: #4070a0; } /* VerbatimString */
+code > span.ss { color: #bb6688; } /* SpecialString */
+code > span.im { } /* Import */
+code > span.va { color: #19177c; } /* Variable */
+code > span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code > span.op { color: #666666; } /* Operator */
+code > span.bu { } /* BuiltIn */
+code > span.ex { } /* Extension */
+code > span.pp { color: #bc7a00; } /* Preprocessor */
+code > span.at { color: #7d9029; } /* Attribute */
+code > span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code > span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code > span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+  </style>
+  <link rel="stylesheet" href="../reveal.js/css/theme/white.css" id="theme">
+  <!-- Printing and PDF exports -->
+  <script>
+    var link = document.createElement( 'link' );
+    link.rel = 'stylesheet';
+    link.type = 'text/css';
+    link.href = window.location.search.match( /print-pdf/gi ) ? '../reveal.js/css/print/pdf.css' : '../reveal.js/css/print/paper.css';
+    document.getElementsByTagName( 'head' )[0].appendChild( link );
+  </script>
+  <!--[if lt IE 9]>
+  <script src="../reveal.js/lib/js/html5shiv.js"></script>
+  <![endif]-->
+</head>
+<body>
+  <div class="reveal">
+    <div class="slides">
+
+<section>
+  <h1 class="title">Hello Haskell</h1>
+  <h2 class="author">Justus Adam</h2>
+  <h3 class="date">13.04.2017</h3>
+</section>
+
+<section><section id="prologue" class="titleslide slide level1"><h1>Prologue</h1></section><section id="language" class="slide level2">
+<h1>Language</h1>
+<p>English | German ?</p>
+</section><section id="links" class="slide level2">
+<h1>Links</h1>
+<ul>
+<li><a href="http://fsr.github.io/haskell-lessons/script/">fsr.github.io/haskell-lessons/script/</a></li>
+<li><a href="http://fsr.github.io/haskell-lessons/script.pdf">fsr.github.io/haskell-lessons/script.pdf</a></li>
+<li><a href="https://github.com/fsr/haskell-lessons">github.com/fsr/haskell-lessons</a></li>
+<li><a href="https://www.ifsr.de/kurse/course/37/">www.ifsr.de/kurse/course/37/</a></li>
+</ul>
+</section><section class="slide level2">
+
+<p>I apologize in advance for the many spelling mistakes I make.</p>
+<p>You can use the issue section in <a href="https://github.com/fsr/haskell-lessons">github.com/fsr/haskell-lessons</a> to correct my mistakes or leave feedback on the course. Alternatively shoot me an email.</p>
+<aside class="notes">
+<ul>
+<li>tell me if I talk too fast!</li>
+<li>don't hesitate to ask questions for there are no stupid questions!</li>
+</ul>
+</aside>
+</section><section id="who-am-i" class="slide level2">
+<h1>Who am I</h1>
+<p>Justus Adam</p>
+<p>Master Computer Science 2nd Semester</p>
+<ul>
+<li><script type="text/javascript">
+<!--
+h='&#106;&#x75;&#x73;&#116;&#x75;&#x73;&#46;&#x73;&#x63;&#x69;&#x65;&#110;&#x63;&#x65;';a='&#64;';n='&#x6d;&#x65;';e=n+a+h;
+document.write('<a h'+'ref'+'="ma'+'ilto'+':'+e+'" clas'+'s="em' + 'ail">'+e+'<\/'+'a'+'>');
+// -->
+</script><noscript>&#x6d;&#x65;&#32;&#x61;&#116;&#32;&#106;&#x75;&#x73;&#116;&#x75;&#x73;&#32;&#100;&#x6f;&#116;&#32;&#x73;&#x63;&#x69;&#x65;&#110;&#x63;&#x65;</noscript></li>
+<li><a href="http://justus.science">justus.science</a></li>
+<li><a href="https://github.com/JustusAdam">github.com/JustusAdam</a></li>
+<li><a href="https://twitter.com/justusadam_">twitter.com/justusadam_</a></li>
+</ul>
+</section></section>
+<section><section id="why-you-should-learn-haskell" class="titleslide slide level1"><h1>Why you should learn Haskell</h1></section><section class="slide level2">
+
+<p>First off, well done for choosing this course! 😁</p>
+</section></section>
+<section><section id="safety" class="titleslide slide level1"><h1>Safety</h1></section><section class="slide level2">
+
+<p>A strong and versatile typesystem enables very expressive code:</p>
+<div class="sourceCode"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="ot">(+) ::</span> <span class="dt">Int</span> <span class="ot">-&gt;</span> <span class="dt">Int</span> <span class="ot">-&gt;</span> <span class="dt">Int</span>
+readFile<span class="ot"> ::</span> FilePath <span class="ot">-&gt;</span> <span class="dt">IO</span> <span class="dt">String</span>
+<span class="ot">getUser ::</span> <span class="dt">UserId</span> <span class="ot">-&gt;</span> <span class="dt">PostgresM</span> <span class="dt">User</span>
+<span class="ot">clear ::</span> <span class="dt">MutableVector</span> a <span class="ot">-&gt;</span> <span class="dt">ST</span> s ()
+<span class="ot">generateBinding ::</span> <span class="dt">State</span> <span class="dt">Generators</span> <span class="dt">Binding</span></code></pre></div>
+</section></section>
+<section><section id="expressive-code" class="titleslide slide level1"><h1>Expressive code</h1></section><section class="slide level2">
+
+<div class="sourceCode"><pre class="sourceCode haskell"><code class="sourceCode haskell">filter (elem <span class="ch">&#39;a&#39;</span>) [<span class="st">&quot;Marc&quot;</span>, <span class="st">&quot;Frank&quot;</span>, <span class="st">&quot;Tobias&quot;</span>]
+sum [<span class="dv">0</span><span class="fu">..</span><span class="dv">10</span>]</code></pre></div>
+</section><section id="higher-order-functions" class="slide level2">
+<h1>Higher order functions</h1>
+<div class="sourceCode"><pre class="sourceCode haskell"><code class="sourceCode haskell">filter (elem <span class="ch">&#39;a&#39;</span>) [<span class="st">&quot;Marc&quot;</span>, <span class="st">&quot;Frank&quot;</span>, <span class="st">&quot;Tobias&quot;</span>]
+map (<span class="fu">+</span><span class="dv">1</span>) [<span class="dv">4</span>,<span class="dv">5</span>,<span class="dv">8</span>]
+zipWith (<span class="fu">-</span>) [<span class="dv">0</span>,<span class="dv">8</span>,<span class="dv">6</span>] [<span class="dv">4</span>,<span class="dv">4</span>,<span class="dv">7</span>]
+withFile <span class="st">&quot;file.txt&quot;</span> <span class="dt">AppendMode</span> (<span class="ot">`hPutChar`</span> <span class="ch">&#39;c&#39;</span>)</code></pre></div>
+</section><section id="composition" class="slide level2">
+<h1>Composition</h1>
+<div class="sourceCode"><pre class="sourceCode haskell"><code class="sourceCode haskell">not <span class="fu">.</span> (<span class="fu">==</span> <span class="dv">7</span>)
+filter (takeExtension <span class="fu">&gt;&gt;&gt;</span> (<span class="fu">==</span> <span class="st">&quot;exe&quot;</span>)) <span class="fu">&gt;&gt;&gt;</span> map dropExtension</code></pre></div>
+</section></section>
+<section><section id="imutability" class="titleslide slide level1"><h1>Imutability</h1></section><section class="slide level2">
+
+<div class="sourceCode"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="kw">let</span> l1 <span class="fu">=</span> [<span class="dv">4</span>]
+<span class="kw">let</span> l2 <span class="fu">=</span> <span class="dv">5</span><span class="fu">:</span>l1
+l1 <span class="fu">==</span> l2</code></pre></div>
+<ul>
+<li>Makes it very easy to write parallel applications</li>
+<li>Functions cannot implicitly manipulate your datastructures</li>
+</ul>
+</section></section>
+<section><section id="concurrency" class="titleslide slide level1"><h1>Concurrency</h1></section><section class="slide level2">
+
+<div class="sourceCode"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="co">-- sequential</span>
+<span class="kw">do</span>
+    content <span class="ot">&lt;-</span> readFile f
+    writeFile g (modify content)
+
+<span class="co">-- make it asynchronus</span>
+a <span class="ot">&lt;-</span> async <span class="fu">$</span> <span class="kw">do</span>
+    content <span class="ot">&lt;-</span> readFile f
+    writeFile g (modify content)
+wait a</code></pre></div>
+</section></section>
+<section><section id="dsls" class="titleslide slide level1"><h1>DSL's</h1></section></section>
+    </div>
+  </div>
+
+  <script src="../reveal.js/lib/js/head.min.js"></script>
+  <script src="../reveal.js/js/reveal.js"></script>
+
+  <script>
+
+      // Full list of configuration options available at:
+      // https://github.com/hakimel/reveal.js#configuration
+      Reveal.initialize({
+
+        // Optional reveal.js plugins
+        dependencies: [
+          { src: '../reveal.js/lib/js/classList.js', condition: function() { return !document.body.classList; } },
+          { src: '../reveal.js/plugin/zoom-js/zoom.js', async: true },
+          { src: '../reveal.js/plugin/notes/notes.js', async: true }
+        ]
+      });
+Reveal.configure({
+    keyboard: {
+      75: 'prev',
+      38: 'prev',
+      74: 'next',
+      40: 'next'
+    }
+    });
+    </script>
+    </body>
+</html>

@@ -6,6 +6,7 @@ import Control.Monad.Extra
 import Development.Shake
 import System.IO
 import Data.Foldable
+import Debug.Trace
 
 outputDirectory :: FilePath
 outputDirectory = "docs"
@@ -33,9 +34,10 @@ buildSlideWithTheme :: String -> FilePath -> Action ()
 buildSlideWithTheme theme out = do
     let sourceFile = "slides" </> takeFileName out -<.> ".md"
         templateFile = "slides/template.html"
+        revealPath = (++ "reveal.js") $ joinPath $ map (const "../") $ filter (/= ".") $ splitPath $ takeDirectory $ makeRelative slidesOutputDirectory out
     need [sourceFile, templateFile]
     -- getDirectoryFiles "slides/img" ["*.png"] >>= need . map ((slidesOutputDirectory </> "img") </>)
-    cmd "pandoc" [sourceFile, "--slide-level", "2", "-o", out, "-t", "revealjs", "-s", "--variable=theme:" ++ theme, "--template", templateFile]
+    cmd "pandoc" [sourceFile, "--slide-level", "2", "-o", out, "-t", "revealjs", "-s", "--variable=theme:" ++ theme, "--template", templateFile, "--variable=revealjs-url:" ++ revealPath]
 
 main :: IO ()
 main = shakeArgs shakeOptions $ do
@@ -49,10 +51,11 @@ main = shakeArgs shakeOptions $ do
         need $ map (slidesOutputDirectory </>) $ htmls ++ map ("white" </>) htmls
 
     phony "clean" $ do 
-        removeFilesAfter outputDirectory ["*.html"]
+        removeFilesAfter outputDirectory ["*.pdf"]
+        removeFilesAfter slidesOutputDirectory ["*.html"]
         whenM (doesDirectoryExist scriptOutputDirectory) $
             liftIO $ removeDirectoryRecursive scriptOutputDirectory
-        mapM_ (liftIO . removeDirectoryRecursive) . filter (/= "reveal.js") =<< filterM doesDirectoryExist =<< getDirectoryContents slidesOutputDirectory
+        mapM_ (liftIO . removeDirectoryRecursive) =<< filterM doesDirectoryExist =<< map (slidesOutputDirectory </>) . filter (/= "reveal.js") <$> getDirectoryContents slidesOutputDirectory
 
     "**/.nojekyll" %> \out -> liftIO $ withFile out AppendMode (`hPutChar` ' ')
 
