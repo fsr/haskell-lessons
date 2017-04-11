@@ -91,7 +91,7 @@ filter (takeExtension >>> (== "exe")) >>> map dropExtension
 ```haskell
 let l1 = [4]
 let l2 = 5:l1
-l1 == l2 -- is this true?
+l1 == l2
 ```
 
 
@@ -114,3 +114,7 @@ a <- async $ do
     writeFile g (modify content)
 wait a
 ```
+
+# DSL's
+
+

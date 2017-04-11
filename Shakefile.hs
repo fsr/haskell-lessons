@@ -1,6 +1,6 @@
 #!/usr/bin/env stack runhaskell -- 
 
-import System.Directory hiding (doesDirectoryExist)
+import System.Directory hiding (doesDirectoryExist, getDirectoryContents)
 import System.FilePath
 import Control.Monad.Extra
 import Development.Shake
@@ -33,11 +33,7 @@ buildSlideWithTheme :: String -> FilePath -> Action ()
 buildSlideWithTheme theme out = do
     let sourceFile = "slides" </> takeFileName out -<.> ".md"
         templateFile = "slides/template.html"
-        revealDir = takeDirectory out </> "reveal.js"
     need [sourceFile, templateFile]
-    getDirectoryFiles "reveal.js/lib" ["css/*.css", "font/*/*.css", "js/*.js"] >>= need . map ((revealDir </> "lib") </>)
-    need $ map (revealDir </>) ["css/reveal.css", "js/reveal.js", "lib/font/source-sans-pro/source-sans-pro.css"]
-    need [revealDir </> "css/theme" </> theme <.> "css"]
     -- getDirectoryFiles "slides/img" ["*.png"] >>= need . map ((slidesOutputDirectory </> "img") </>)
     cmd "pandoc" [sourceFile, "--slide-level", "2", "-o", out, "-t", "revealjs", "-s", "--variable=theme:" ++ theme, "--template", templateFile]
 
@@ -53,9 +49,10 @@ main = shakeArgs shakeOptions $ do
         need $ map (slidesOutputDirectory </>) $ htmls ++ map ("white" </>) htmls
 
     phony "clean" $ do 
-        removeFilesAfter outputDirectory ["*"]
-        for_ [scriptOutputDirectory, slidesOutputDirectory] $ \dir ->
-            whenM (doesDirectoryExist dir) $ liftIO $ removeDirectoryRecursive dir
+        removeFilesAfter outputDirectory ["*.html"]
+        liftIO $ removeDirectoryRecursive scriptOutputDirectory
+        mapM_ (liftIO . removeDirectoryRecursive) . filter (/= "reveal.js") =<< filterM doesDirectoryExist =<< getDirectoryContents slidesOutputDirectory
+        mapM_ (liftIO . removeDirectoryRecursive) =<< filterM doesDirectoryExist [scriptOutputDirectory, slidesOutputDirectory]
 
     "**/.nojekyll" %> \out -> liftIO $ withFile out AppendMode (`hPutChar` ' ')
 
@@ -70,9 +67,6 @@ main = shakeArgs shakeOptions $ do
         needRstSources
         unit $ cmd "make" ["latexpdf"] (Cwd "script")
         liftIO $ renameFile "script/build/latex/HaskellLessons.pdf" out
-
-    map ((outputDirectory </> "**/reveal.js") </>) ["js/*.js", "css/**/*.css", "lib/**/*.js", "lib/**/*.css"] |%> copyFromReveal
-    "/reveal.js/**" %> const (unit $ cmd "git" ["submodule", "update"])
 
     (slidesOutputDirectory </> "img" </> "*") %> liftIO . (copyFile <$> ("slides/img" </>) . takeFileName <*> id)
 
