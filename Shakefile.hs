@@ -29,13 +29,28 @@ copyFromReveal out =
 needRstSources :: Action ()
 needRstSources = getDirectoryFiles "script/source" ["*.rst", "exercises/*.rst"] >>= need . map ("script/source" </>)
 
+buildSlideWithTheme :: String -> FilePath -> Action ()
+buildSlideWithTheme theme out = do
+    let sourceFile = "slides" </> takeFileName out -<.> ".md"
+        templateFile = "slides/template.html"
+    need [sourceFile, templateFile]
+    getDirectoryFiles "reveal.js/lib" ["css/*.css", "font/*/*.css", "js/*.js"] >>= need . map ((revealResourcesDirectory </> "lib") </>)
+    need $ map (revealResourcesDirectory </>) ["css/reveal.css", "js/reveal.js", "lib/font/source-sans-pro/source-sans-pro.css"]
+    getDirectoryFiles "reveal.js/css/theme" ["*.css"] >>= need . map ((revealResourcesDirectory </> "css/theme") </>)
+    -- getDirectoryFiles "slides/img" ["*.png"] >>= need . map ((slidesOutputDirectory </> "img") </>)
+    cmd "pandoc" [sourceFile, "--slide-level", "2", "-o", out, "-t", "revealjs", "-s", "--variable=theme:" ++ theme, "--template", templateFile]
+
 main :: IO ()
 main = shakeArgs shakeOptions $ do
     want ["script", "slides", outputDirectory </> ".nojekyll"]
 
     phony "script" $ need [scriptOutputDirectory </> "index.html", outputDirectory </> "script.pdf"]
 
-    phony "slides" $ getDirectoryFiles "slides" ["*.md"] >>= need . map ((-<.> "html") . (slidesOutputDirectory </>))
+    phony "slides" $ do 
+        slideMds <- getDirectoryFiles "slides" ["*.md"]
+        let htmls = map (-<.> "html") slideMds
+        let whiteHtmls = map ("white" </>) htmls
+        need $ map (slidesOutputDirectory </>) $ htmls ++ whiteHtmls
 
     phony "clean" $ do 
         removeFilesAfter outputDirectory ["*"]
@@ -61,12 +76,5 @@ main = shakeArgs shakeOptions $ do
 
     (slidesOutputDirectory </> "img" </> "*") %> liftIO . (copyFile <$> ("slides/img" </>) . takeFileName <*> id)
 
-    (slidesOutputDirectory </> "*.html") %> \out -> do
-        let sourceFile = "slides" </> makeRelative slidesOutputDirectory out -<.> ".md"
-            templateFile = "slides/template.html"
-        need [sourceFile, templateFile]
-        getDirectoryFiles "reveal.js/lib" ["css/*.css", "font/*/*.css", "js/*.js"] >>= need . map ((revealResourcesDirectory </> "lib") </>)
-        need $ map (revealResourcesDirectory </>) ["css/reveal.css", "js/reveal.js", "lib/font/source-sans-pro/source-sans-pro.css"]
-        getDirectoryFiles "reveal.js/css/theme" ["*.css"] >>= need . map ((revealResourcesDirectory </> "css/theme") </>)
-        -- getDirectoryFiles "slides/img" ["*.png"] >>= need . map ((slidesOutputDirectory </> "img") </>)
-        cmd "pandoc" [sourceFile, "--slide-level", "2", "-o", out, "-t", "revealjs", "-s", "--variable=theme:black", "--template", templateFile]
+    (slidesOutputDirectory </> "*.html") %> buildSlideWithTheme "black"
+    (slidesOutputDirectory </> "white/*.html") %> buildSlideWithTheme "white"

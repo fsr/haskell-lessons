@@ -16,13 +16,26 @@ English | German ?
 - [github.com/fsr/haskell-lessons](https://github.com/fsr/haskell-lessons)
 - [www.ifsr.de/kurse/course/37/](https://www.ifsr.de/kurse/course/37/)
 
+---
+
+I apologize in advance for the many spelling mistakes I make.
+
+You can use the issue section in [github.com/fsr/haskell-lessons](https://github.com/fsr/haskell-lessons) to correct my mistakes or leave feedback on the course.
+Alternatively shoot me an email.
+
+<aside class="notes">
+- tell me if I talk too fast!
+- don't hesitate to ask questions for there are no stupid questions!
+</aside>
+
 ## Who am I
 
 Justus Adam
 
 Master Computer Science 2nd Semester
 
-- me@justus.science
+- [me@justus.science](mailto:me@justus.science)
+- [justus.science](http://justus.science)
 - [github.com/JustusAdam](https://github.com/JustusAdam)
 - [twitter.com/justusadam_](https://twitter.com/justusadam_)
 
