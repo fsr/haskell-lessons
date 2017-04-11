@@ -1,3 +1,8 @@
+---
+title: Hello Haskell
+author: Justus Adam
+date: 13.04.2017
+---
 # Prologue
 
 ## Language
@@ -56,6 +61,7 @@ sum [0..10]
 filter (elem 'a') ["Marc", "Frank", "Tobias"]
 map (+1) [4,5,8]
 zipWith (-) [0,8,6] [4,4,7]
+withFile "file.txt" AppendMode (`hPutChar` 'c')
 ```
 
 ## Composition

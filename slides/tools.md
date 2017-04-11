@@ -1,4 +1,8 @@
-# Tools
+---
+title: Tools
+author: Justus Adam
+date: 13.04.2017
+---
 
 # GHC
 
@@ -17,7 +21,7 @@
 
 ## Compiler Reference
 
-https://downloads.haskell.org/~ghc/latest/docs/html/users_guide/
+[downloads.haskell.org/~ghc/latest /docs/html/users_guide/](https://downloads.haskell.org/~ghc/latest /docs/html/users_guide/)
 
 ## GHCi
 
@@ -65,7 +69,7 @@ https://downloads.haskell.org/~ghc/latest/docs/html/users_guide/
 
 ## Hackage
 
-https://hackage.haskell.org
+[hackage.haskell.org](https://hackage.haskell.org)
 
 --- 
 
@@ -88,26 +92,11 @@ https://hackage.haskell.org
 
 ---
 
-- http://leksah.org
-- http://yi-editor.github.io/
-- http://haskellformac.com
-
-- https://www.stackage.org/lts-8.9/package/ghcid
-
-# Structure of source files
+- [leksah.org](http://leksah.org)
+- [yi-editor.github.io](http://yi-editor.github.io/)
+- [haskellformac.com](http://haskellformac.com)
 
 ---
 
-- functions and data types are bundled into modules
-- one source file per module
-
-```haskell
-module MyModule (function1, function3, DataTypeA(Constructor), constant6) where
-
--- here follows the code
-```
-
----
-
-- not everything must be exported
-- items from other modules and whole other modules can be exported
+- [www.stackage.org/lts-8.9/package/ghcid](https://www.stackage.org/lts-8.9/package/ghcid)
+- [github.com/tonsky/FiraCode](https://github.com/tonsky/FiraCode)

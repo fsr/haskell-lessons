@@ -154,6 +154,34 @@ For instance we can assign the result of <code class="docutils literal"><span cl
 </pre></div>
 </div>
 <p>Parentheses are not required and one may write any expression on the branches and for the condition of an <code class="docutils literal"><span class="pre">if</span></code>.</p>
+</div>
+<div class="section" id="function-application">
+<h2>2.6. Function Application<a class="headerlink" href="#function-application" title="Permalink to this headline">¶</a></h2>
+<p>The syntax for applying functions to arguments in Haskell is the simplest imaginable.
+Its called <em>juxtaposition</em> or somethimes <em>prefix notation</em>.
+Meaning we simply write the function and follow it up by the arguments separated by whitespace.
+Optionally we can surround the whole construct with parentheses.
+This is especially useful when we need the result of a function call as an argument.</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">succ</span> <span class="mi">5</span> <span class="o">==</span> <span class="mi">6</span>
+<span class="n">takeDirectory</span> <span class="s2">&quot;/etc/hosts&quot;</span> <span class="o">==</span> <span class="s2">&quot;/etc&quot;</span>
+<span class="n">elem</span> <span class="p">(</span><span class="n">pred</span> <span class="mi">6</span><span class="p">)</span> <span class="p">[</span><span class="mf">1.</span><span class="o">.</span><span class="mi">10</span><span class="p">]</span>
+<span class="ow">not</span> <span class="kc">True</span> <span class="o">==</span> <span class="kc">False</span>
+</pre></div>
+</div>
+<p>Haskell also supports binary operators.
+For instance the addition operator <code class="docutils literal"><span class="pre">(+)</span></code> and the equality operator <code class="docutils literal"><span class="pre">(==)</span></code>.
+Note that to apply the operator we use its bare form <code class="docutils literal"><span class="pre">+</span></code>, however if we mean a reference to the function we surround it <em>directly</em> with parentheses.</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="mi">4</span> <span class="o">+</span> <span class="mi">5</span> <span class="o">==</span> <span class="mi">9</span>
+<span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">]</span> <span class="o">++</span> <span class="p">[</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">6</span><span class="p">]</span> <span class="o">==</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">6</span><span class="p">]</span>
+
+<span class="nb">map</span> <span class="p">(</span><span class="n">uncurry</span> <span class="p">(</span><span class="o">+</span><span class="p">))</span> <span class="p">[(</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">),</span> <span class="p">(</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">)]</span>
+</pre></div>
+</div>
+<p>Infix operators can also be used in the prefix notation by surrounding them with parentheses <code class="docutils literal"><span class="pre">(+)</span></code>.
+And prefix functions can also be used like infix operators by surrounding them with backticks <code class="docutils literal"><span class="pre">4</span> <span class="pre">`elem`</span> <span class="pre">[1..10]</span></code>.</p>
+<p>Function application <em>always binds stronger</em> to its arguments than operator application.
+For operators users may define a prescedence in which they are applied.
+Thus <code class="docutils literal"><span class="pre">(+)</span></code> for instance is applied before <code class="docutils literal"><span class="pre">(==)</span></code>.</p>
 <p class="rubric">footnotes</p>
 <table class="docutils footnote" frame="void" id="tuple-size" rules="none">
 <colgroup><col class="label" /><col /></colgroup>
@@ -214,6 +242,7 @@ You will also know that it is a new binding by the fact that the new binding can
 <li><a class="reference internal" href="#value-literals">2.3. Value literals</a></li>
 <li><a class="reference internal" href="#bindings">2.4. Bindings</a></li>
 <li><a class="reference internal" href="#if-expressions">2.5. <code class="docutils literal"><span class="pre">if</span></code> expressions</a></li>
+<li><a class="reference internal" href="#function-application">2.6. Function Application</a></li>
 </ul>
 </li>
 </ul>

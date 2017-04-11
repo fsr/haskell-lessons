@@ -3,7 +3,8 @@
 <head>
   <meta charset="utf-8">
   <meta name="generator" content="pandoc">
-  <title></title>
+  <meta name="author" content="Justus Adam">
+  <title>Syntax basics</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
@@ -46,7 +47,7 @@ code > span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Ann
 code > span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
 code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
   </style>
-  <link rel="stylesheet" href="reveal.js/css/theme/white.css" id="theme">
+  <link rel="stylesheet" href="reveal.js/css/theme/black.css" id="theme">
   <!-- Printing and PDF exports -->
   <script>
     var link = document.createElement( 'link' );
@@ -63,8 +64,12 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
   <div class="reveal">
     <div class="slides">
 
+<section>
+  <h1 class="title">Syntax basics</h1>
+  <h2 class="author">Justus Adam</h2>
+  <h3 class="date">13.04.2017</h3>
+</section>
 
-<section><section id="syntax-basics" class="titleslide slide level1"><h1>Syntax basics</h1></section></section>
 <section><section id="comments" class="titleslide slide level1"><h1>Comments</h1></section><section class="slide level2">
 
 <ul>
@@ -143,6 +148,39 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <div class="sourceCode"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="kw">let</span> aBool <span class="fu">=</span> <span class="dt">False</span>
 
 <span class="kw">let</span> anInt <span class="fu">=</span> <span class="kw">if</span> aBool <span class="kw">then</span> <span class="dv">8</span> <span class="kw">else</span> <span class="dv">9</span></code></pre></div>
+</section></section>
+<section><section id="function-application" class="titleslide slide level1"><h1>Function application</h1></section><section class="slide level2">
+
+<ul>
+<li>simple <em>juxtaposition</em> or <em>prefix notation</em></li>
+<li>function followed by arguments separated by whitespace</li>
+</ul>
+<div class="sourceCode"><pre class="sourceCode haskell"><code class="sourceCode haskell">succ <span class="dv">5</span> <span class="fu">==</span> <span class="dv">6</span>
+takeDirectory <span class="st">&quot;/etc/hosts&quot;</span>
+elem (pred <span class="dv">6</span>) [<span class="dv">1</span><span class="fu">..</span><span class="dv">10</span>]
+not <span class="dt">True</span></code></pre></div>
+</section><section class="slide level2">
+
+<ul>
+<li>binary operators</li>
+<li>examples: <code>(+)</code>, <code>(==)</code></li>
+<li>bare form for application <code>+</code></li>
+<li>refernce form with parentheses <code>(+)</code></li>
+</ul>
+</section><section class="slide level2">
+
+<div class="sourceCode"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="dv">4</span> <span class="fu">+</span> <span class="dv">5</span>
+[<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">3</span>] <span class="fu">++</span> [<span class="dv">4</span>,<span class="dv">5</span>,<span class="dv">6</span>]
+
+map (uncurry (<span class="fu">+</span>)) [(<span class="dv">1</span>,<span class="dv">2</span>), (<span class="dv">4</span>,<span class="dv">5</span>)]</code></pre></div>
+</section><section class="slide level2">
+
+<ul>
+<li>prefix functions as infox operators: <code>4 `elem` [1..10]</code>.</li>
+<li>infix operators as prefix functions: <code>(+)</code>.</li>
+<li>Function application <em>always binds stronger</em> than operator application.</li>
+<li>user defined operator prescedence</li>
+</ul>
 </section></section>
     </div>
   </div>

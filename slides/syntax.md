@@ -1,4 +1,8 @@
-# Syntax basics
+---
+title: Syntax basics
+author: Justus Adam
+date: 13.04.2017
+---
 
 # Comments
 
@@ -88,3 +92,40 @@ let aBool = False
 
 let anInt = if aBool then 8 else 9
 ```
+
+# Function application
+
+---
+
+- simple *juxtaposition* or *prefix notation*
+- function followed by arguments separated by whitespace
+
+```haskell
+succ 5 == 6
+takeDirectory "/etc/hosts"
+elem (pred 6) [1..10]
+not True
+```
+
+---
+
+- binary operators
+- examples: `(+)`, `(==)`
+- bare form for application `+`
+- refernce form with parentheses `(+)`
+
+---
+
+```haskell
+4 + 5
+[1,2,3] ++ [4,5,6]
+
+map (uncurry (+)) [(1,2), (4,5)]
+```
+
+--- 
+
+- prefix functions as infox operators: ``4 `elem` [1..10]``.
+- infix operators as prefix functions: `(+)`.
+- Function application *always binds stronger* than operator application.
+- user defined operator prescedence

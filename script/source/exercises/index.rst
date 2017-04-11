@@ -8,3 +8,4 @@ Exercises
     :numbered:
 
     tools
+    basics

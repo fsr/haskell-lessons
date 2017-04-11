@@ -86,7 +86,7 @@ type MyMap = HashMap
 They are richer than datatypes from other laguages such as Java classes or C structs in that each type can have more (or less) than one representation.
 Some modern languages such as Rust and Swift also support those types of data.
 They call them Enums.</p>
-<p>A type is defined using the <code class="docutils literal"><span class="pre">data</span></code> keyword, followed by the name of the type, which must begin with an upper case letter (see also <a class="reference internal" href="#types"><span class="std std-ref">here</span></a>), followed by an equal sign.
+<p>A type is defined using the <code class="docutils literal"><span class="pre">data</span></code> keyword, followed by the name of the type, which must begin with an upper case letter (see also <a class="reference internal" href="syntax.html#types"><span class="std std-ref">here</span></a>), followed by an equal sign.
 This is followed by any number of <code class="docutils literal"><span class="pre">|</span></code> separated <em>constructor definitions</em>.</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">data</span> <span class="n">Coordinates</span> <span class="o">=</span> <span class="n">LongAndLat</span> <span class="n">Int</span> <span class="n">Int</span>
 
@@ -94,7 +94,7 @@ This is followed by any number of <code class="docutils literal"><span class="pr
 </pre></div>
 </div>
 <p>A constructor definition takes the form of first the constructor itself, followed by any number of type arguments, which are the types of the fields in the constructor.
-The naming constraints for the constructor are the same as for <a class="reference internal" href="#types"><span class="std std-ref">Types</span></a>.[#type-operators]</p>
+The naming constraints for the constructor are the same as for <a class="reference internal" href="syntax.html#types"><span class="std std-ref">Type literals</span></a>.[#type-operators]</p>
 <p>Constructors serve two purposes.</p>
 <ol class="arabic">
 <li><dl class="first docutils">

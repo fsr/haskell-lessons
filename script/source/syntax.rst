@@ -155,6 +155,39 @@ For instance we can assign the result of ``if`` to a binding.
 
 Parentheses are not required and one may write any expression on the branches and for the condition of an ``if``.
 
+Function Application
+--------------------
+
+The syntax for applying functions to arguments in Haskell is the simplest imaginable.
+Its called *juxtaposition* or somethimes *prefix notation*.
+Meaning we simply write the function and follow it up by the arguments separated by whitespace.
+Optionally we can surround the whole construct with parentheses.
+This is especially useful when we need the result of a function call as an argument.
+
+::
+
+    succ 5 == 6
+    takeDirectory "/etc/hosts" == "/etc"
+    elem (pred 6) [1..10]
+    not True == False
+
+Haskell also supports binary operators.
+For instance the addition operator ``(+)`` and the equality operator ``(==)``.
+Note that to apply the operator we use its bare form ``+``, however if we mean a reference to the function we surround it *directly* with parentheses.
+
+::
+
+    4 + 5 == 9
+    [1,2,3] ++ [4,5,6] == [1,2,3,4,5,6]
+
+    map (uncurry (+)) [(1,2), (4,5)]
+
+Infix operators can also be used in the prefix notation by surrounding them with parentheses ``(+)``.
+And prefix functions can also be used like infix operators by surrounding them with backticks ``4 `elem` [1..10]``.
+
+Function application *always binds stronger* to its arguments than operator application.
+For operators users may define a prescedence in which they are applied.
+Thus ``(+)`` for instance is applied before ``(==)``.
 
 
 .. rubric:: footnotes

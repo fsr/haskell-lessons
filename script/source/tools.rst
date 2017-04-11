@@ -117,49 +117,8 @@ Also a special mention is to be given to `Haskell for Mac`_ a particularly beaut
 .. _Haskell for Mac: http://haskellformac.com
 .. _atom-haskell: https://atom-haskell.github.io/
 
-Ald lastly I want to mention `ghcid <https://www.stackage.org/lts-8.9/package/ghcid>`__. 
+And lastly I want to mention `ghcid <https://www.stackage.org/lts-8.9/package/ghcid>`__. 
 Its a very simple, command line based program which simply attempts to load your code into the interpreter an shows you the errors it encouters.
 It automatically refreshes whenever you save a source file.
 This gives you some very bare bones ide features.
 The big advantage is that, unlike the other ide programs, ``ghcid`` is incredibly reliable.
-
-.. _source structure:
-
-Structure of source files
--------------------------
-
-Haskell code is structured into units which are called **modules**.
-Modules are the unit of distribution when it comes to connecting different pieces of Haskell code.
-Maining each bit of Haskell code is part of a module and to attain access to it you must import the module.
-
-Each module has a corresponding source file, which contains the code the module is to contain.
-Source files (except the ``Main`` file) always start in the folowing way:
-
-::
-
-    module MyModule (function1, function3, DataTypeA(Constructor), constant6) where
-
-    -- here follows the code
-
-The individual parts mean:
-
-::
-
-    module MyModule -- module name
-        (function1, function3, DataTypeA(Constructor), constant6) -- export list
-        where
-
-    -- module contents
-
-
-The **module name** must begin with an upper case letter followed by any number of upper and lower case letters, numbers and the underscore.
-The **export list** is a comma separated list of identifiers which will be accessible 
-
-The default source file extension is ``.hs`` or ``.lhs``.
-The latter stands for *"literate Haskell"*, which means that by default everything in the file is interpreted as a comment, only lines which are prefixed with ``>`` are interpreted as code.
-
-
-
-.. rubric:: Footnotes
-
-.. [#base-sucks] One of the unfortunate things about Haskell is that the base library lacks many desirable things.
