@@ -21,7 +21,7 @@ revealResourcesDirectory = slidesOutputDirectory </> "reveal.js"
 
 copyFromReveal :: FilePath -> Action ()
 copyFromReveal out = 
-    let originalFile = slidesOutputDirectory `makeRelative` out
+    let originalFile = joinPath $ dropWhile (/= "reveal.js/") $ splitPath $ slidesOutputDirectory `makeRelative` out
     in do 
         need [originalFile]
         liftIO $ copyFile originalFile out
@@ -33,10 +33,11 @@ buildSlideWithTheme :: String -> FilePath -> Action ()
 buildSlideWithTheme theme out = do
     let sourceFile = "slides" </> takeFileName out -<.> ".md"
         templateFile = "slides/template.html"
+        revealDir = takeDirectory out </> "reveal.js"
     need [sourceFile, templateFile]
-    getDirectoryFiles "reveal.js/lib" ["css/*.css", "font/*/*.css", "js/*.js"] >>= need . map ((revealResourcesDirectory </> "lib") </>)
-    need $ map (revealResourcesDirectory </>) ["css/reveal.css", "js/reveal.js", "lib/font/source-sans-pro/source-sans-pro.css"]
-    getDirectoryFiles "reveal.js/css/theme" ["*.css"] >>= need . map ((revealResourcesDirectory </> "css/theme") </>)
+    getDirectoryFiles "reveal.js/lib" ["css/*.css", "font/*/*.css", "js/*.js"] >>= need . map ((revealDir </> "lib") </>)
+    need $ map (revealDir </>) ["css/reveal.css", "js/reveal.js", "lib/font/source-sans-pro/source-sans-pro.css"]
+    need [revealDir </> "css/theme" </> theme <.> "css"]
     -- getDirectoryFiles "slides/img" ["*.png"] >>= need . map ((slidesOutputDirectory </> "img") </>)
     cmd "pandoc" [sourceFile, "--slide-level", "2", "-o", out, "-t", "revealjs", "-s", "--variable=theme:" ++ theme, "--template", templateFile]
 
@@ -71,7 +72,7 @@ main = shakeArgs shakeOptions $ do
         unit $ cmd "make" ["latexpdf"] (Cwd "script")
         liftIO $ renameFile "script/build/latex/HaskellLessons.pdf" out
 
-    map (revealResourcesDirectory </>) ["js/*.js", "css/**/*.css", "lib/**/*.js", "lib/**/*.css"] |%> copyFromReveal
+    map ((outputDirectory </> "**/reveal.js") </>) ["js/*.js", "css/**/*.css", "lib/**/*.js", "lib/**/*.css"] |%> copyFromReveal
     "/reveal.js/**" %> const (unit $ cmd "git" ["submodule", "update"])
 
     (slidesOutputDirectory </> "img" </> "*") %> liftIO . (copyFile <$> ("slides/img" </>) . takeFileName <*> id)
