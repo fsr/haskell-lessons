@@ -9,11 +9,11 @@ date: 13.04.2017
 
 English | German ?
 
-## Important links
+## Links
 
-- [justus.science/haskel-lessons/script](http://justus.science/haskel-lessons/script)
-- [justus.science/haskel-lessons/script.pdf](http://justus.science/haskel-lessons/script.pdf)
-- [github.com/JustusAdam/haskell-lessons](https://github.com/JustusAdam/haskell-lessons)
+- [fsr.github.io/haskell-lessons/script/](http://fsr.github.io/haskell-lessons/script/)
+- [fsr.github.io/haskell-lessons/script.pdf](http://fsr.github.io/haskell-lessons/script.pdf)
+- [github.com/fsr/haskell-lessons](https://github.com/fsr/haskell-lessons)
 - [www.ifsr.de/kurse/course/37/](https://www.ifsr.de/kurse/course/37/)
 
 ## Who am I

@@ -12,6 +12,7 @@ Function literals
 Function literals in Haskell are also often called **lambda functions**.
 The syntax is a slash ``\`` followed by a list of space separated paramters, follwed by an ASCII arrow ``->`` upon which follows the body of the function.
 Function bodies in Haskell are always an expression, and as such require no ``return`` keyword.
+Think of an implicit ``return`` at the beginning of the function body, this will help you understand better how to write these functions.
 
 ::
 
@@ -27,7 +28,7 @@ This function is also known as ``id``.
 
 Haskell is a functional language. 
 As such functions may be used just like any other value including being assigned to bindings.
-The type of our binding is now the function type.
+The type of our binding is now the function type ``->``.
 
 :: 
 
@@ -87,7 +88,7 @@ Partial application is best described using examples:
 ::
 
     let const :: a -> b -> a
-        const x _ = x
+        const = \x _ -> x
 
         alwaysFive = const 5
     
