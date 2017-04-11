@@ -1,3 +1,26 @@
+# Prologue
+
+## Language
+
+English | German ?
+
+## Important links
+
+- [justus.science/haskel-lessons/script](http://justus.science/haskel-lessons/script)
+- [justus.science/haskel-lessons/script.pdf](http://justus.science/haskel-lessons/script.pdf)
+- [github.com/JustusAdam/haskell-lessons](https://github.com/JustusAdam/haskell-lessons)
+- [www.ifsr.de/kurse/course/37/](https://www.ifsr.de/kurse/course/37/)
+
+## Who am I
+
+Justus Adam
+
+Master Computer Science 2nd Semester
+
+- me@justus.science
+- [github.com/JustusAdam](https://github.com/JustusAdam)
+- [twitter.com/justusadam_](https://twitter.com/justusadam_)
+
 # Why you should learn Haskell
 
 ---

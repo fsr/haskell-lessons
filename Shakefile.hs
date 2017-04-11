@@ -1,9 +1,11 @@
 #!/usr/bin/env stack runhaskell -- 
 
-import System.Directory
+import System.Directory hiding (doesDirectoryExist)
 import System.FilePath
 import Control.Monad.Extra
 import Development.Shake
+import System.IO
+import Data.Foldable
 
 outputDirectory :: FilePath
 outputDirectory = "docs"
@@ -25,11 +27,18 @@ copyFromReveal out =
 
 main :: IO ()
 main = shakeArgs shakeOptions $ do
-    want ["script", "slides"]
+    want ["script", "slides", outputDirectory </> ".nojekyll"]
 
     phony "script" $ need [scriptOutputDirectory </> "index.html", outputDirectory </> "script.pdf"]
 
     phony "slides" $ getDirectoryFiles "slides" ["*.md"] >>= need . map ((-<.> "html") . (slidesOutputDirectory </>))
+
+    phony "clean" $ do 
+        removeFilesAfter outputDirectory ["*"]
+        for_ [scriptOutputDirectory, slidesOutputDirectory] $ \dir ->
+            whenM (doesDirectoryExist dir) $ liftIO $ removeDirectoryRecursive dir
+
+    "**/.nojekyll" %> \out -> liftIO $ withFile out AppendMode (`hPutChar` ' ')
 
     (scriptOutputDirectory </> "index.html") %> \out' -> do
         let out = takeDirectory out'
