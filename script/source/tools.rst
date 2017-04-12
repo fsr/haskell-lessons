@@ -122,3 +122,9 @@ Its a very simple, command line based program which simply attempts to load your
 It automatically refreshes whenever you save a source file.
 This gives you some very bare bones ide features.
 The big advantage is that, unlike the other ide programs, ``ghcid`` is incredibly reliable.
+
+.. rubric:: Footnotes		
+ 
+.. [#base-sucks] 
+    This is one of the unfortunate things about Haskell, that the base library lacks many desirable things. 
+    Examples of good standard libraries would be those of python and go.

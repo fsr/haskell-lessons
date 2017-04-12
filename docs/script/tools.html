@@ -51,7 +51,7 @@
 <p>Haskell is a compiled language.
 As such you do not require any special tooling at runtime.
 However to develop and build Haskell projects you will require a compiler to generate an executable binary file from your code.
-Furthermore you will most likely require a library management tool, since the Haskell &#8220;base&#8221; library, which is bundeled with the compiler will most likely not be sufficient for most tasks <a href="#id6"><span class="problematic" id="id7"><span id="id1"></span>[#base-sucks]_</span></a>.</p>
+Furthermore you will most likely require a library management tool, since the Haskell &#8220;base&#8221; library, which is bundeled with the compiler will most likely not be sufficient for most tasks <a class="footnote-reference" href="#base-sucks" id="id1">[1]</a>.</p>
 <p>There are several Haskell compilers out there, however very few are well maintained.
 As such the Glasgow Haskell Compiler, or GHC for short, has developed as the de-facto standard Haskell compiler.
 It is by far the most mature, stable and feature rich Haskell compiler.
@@ -128,6 +128,14 @@ Its a very simple, command line based program which simply attempts to load your
 It automatically refreshes whenever you save a source file.
 This gives you some very bare bones ide features.
 The big advantage is that, unlike the other ide programs, <code class="docutils literal"><span class="pre">ghcid</span></code> is incredibly reliable.</p>
+<p class="rubric">Footnotes</p>
+<table class="docutils footnote" frame="void" id="base-sucks" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label"><a class="fn-backref" href="#id1">[1]</a></td><td>This is one of the unfortunate things about Haskell, that the base library lacks many desirable things.
+Examples of good standard libraries would be those of python and go.</td></tr>
+</tbody>
+</table>
 </div>
 </div>
 
