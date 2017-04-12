@@ -24,7 +24,7 @@ This function is also known as ``id``.
 ::
 
     -- we often call an unspecified parameter 'x'
-    let id = \x -> x
+    id = \x -> x
 
 Haskell is a functional language. 
 As such functions may be used just like any other value including being assigned to bindings.
@@ -32,25 +32,25 @@ The type of our binding is now the function type ``->``.
 
 :: 
 
-    let id :: a -> a
-        id = \x -> x
+    id :: a -> a
+    id = \x -> x
 
 When we have a value of the function type we may apply it to an argument of the type *left* of the arrow to obtain a value of the type *right* of the arrow.
 Ergo ``Int -> Bool`` applied to ``Int`` gives a ``Bool``.
 Similarly ``a -> a`` applied to ``Int`` gives an ``Int`` again.
-An ``a -> a`` applied to a ``Bool`` gives a ``Bool``.
+And ``a -> a`` applied to a ``Bool`` gives a ``Bool``.
 
 To apply a function we use the simplest syntax of all, juxtaposition.
 Also called *postfix notation* or "the function followed by the arguments, all space separated".
 
 ::
 
-    let id :: a -> a
-        id = \x -> x
+    id :: a -> a
+    id = \x -> x
 
-        myBool = id True
-        myBool2 = (\x -> x) True
-        myInt = id 5
+    myBool = id True
+    myBool2 = (\x -> x) True
+    myInt = id 5
 
     myBool == myBool2 == True && myInt == 5
 
@@ -58,8 +58,8 @@ Lets look at another example fuction:
 
 ::
 
-    let const :: a -> b -> a
-        const = \x _ -> x
+    const :: a -> b -> a
+    const = \x _ -> x
     
 The ``const`` function takes a first parameter ``x`` and a second parameter, which we ignore.
 The underscore ``_`` as a parameter or binding name is used to indicate that we ignore the value.
@@ -70,8 +70,8 @@ We see here that the function type ``->`` occurs twice and this is deliberate be
 
 ::
 
-    let const :: a -> (b -> a)
-        const = \x -> \_ -> x
+    const :: a -> (b -> a)
+    const = \x -> \_ -> x
 
 Now we can see the analogy. 
 We first consume the first parameter and return a function.
@@ -87,14 +87,14 @@ Partial application is best described using examples:
 
 ::
 
-    let const :: a -> b -> a
-        const = \x _ -> x
+    const :: a -> b -> a
+    const = \x _ -> x
 
-        alwaysFive = const 5
+    alwaysFive = const 5
     
     alwaysFive "a string" == alwaysFive 6 == alwaysFive () == 5
 
-    let plusThree = (+ 3)
+    plusThree = (+ 3)
 
     plusThree 5 == 8
     plusThree 10 == 13
@@ -138,23 +138,3 @@ Therefore we have some syntactic sugar in the Haskell laguage which allows us to
     myFunction a b = doSomthing
 
     let anotherFunction x = expr
-
-Another common pattern is to take arguments to a function and immediately perform a ``case`` match on them.
-
-::
-
-    myFunction a = 
-        case a of  
-            Constr1 val -> ...
-            Constr2 v2 -> ...
-
-Instead we may write
-
-::
-
-    myFunction (Constr1 val) = ...
-    myFunction (Constr2 v2) = ...
-
-.. note:: 
-    Here we must use parentheses around the match clauses to distinguish the clauses for the different arguments.
-

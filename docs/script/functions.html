@@ -55,35 +55,35 @@ Think of an implicit <code class="docutils literal"><span class="pre">return</sp
 <p>Here for instance we have a function which takes one parameter as input and return it.
 This function is also known as <code class="docutils literal"><span class="pre">id</span></code>.</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="o">--</span> <span class="n">we</span> <span class="n">often</span> <span class="n">call</span> <span class="n">an</span> <span class="n">unspecified</span> <span class="n">parameter</span> <span class="s1">&#39;x&#39;</span>
-<span class="n">let</span> <span class="nb">id</span> <span class="o">=</span> \<span class="n">x</span> <span class="o">-&gt;</span> <span class="n">x</span>
+<span class="nb">id</span> <span class="o">=</span> \<span class="n">x</span> <span class="o">-&gt;</span> <span class="n">x</span>
 </pre></div>
 </div>
 <p>Haskell is a functional language.
 As such functions may be used just like any other value including being assigned to bindings.
 The type of our binding is now the function type <code class="docutils literal"><span class="pre">-&gt;</span></code>.</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">let</span> <span class="nb">id</span> <span class="p">::</span> <span class="n">a</span> <span class="o">-&gt;</span> <span class="n">a</span>
-    <span class="nb">id</span> <span class="o">=</span> \<span class="n">x</span> <span class="o">-&gt;</span> <span class="n">x</span>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="nb">id</span> <span class="p">::</span> <span class="n">a</span> <span class="o">-&gt;</span> <span class="n">a</span>
+<span class="nb">id</span> <span class="o">=</span> \<span class="n">x</span> <span class="o">-&gt;</span> <span class="n">x</span>
 </pre></div>
 </div>
 <p>When we have a value of the function type we may apply it to an argument of the type <em>left</em> of the arrow to obtain a value of the type <em>right</em> of the arrow.
 Ergo <code class="docutils literal"><span class="pre">Int</span> <span class="pre">-&gt;</span> <span class="pre">Bool</span></code> applied to <code class="docutils literal"><span class="pre">Int</span></code> gives a <code class="docutils literal"><span class="pre">Bool</span></code>.
 Similarly <code class="docutils literal"><span class="pre">a</span> <span class="pre">-&gt;</span> <span class="pre">a</span></code> applied to <code class="docutils literal"><span class="pre">Int</span></code> gives an <code class="docutils literal"><span class="pre">Int</span></code> again.
-An <code class="docutils literal"><span class="pre">a</span> <span class="pre">-&gt;</span> <span class="pre">a</span></code> applied to a <code class="docutils literal"><span class="pre">Bool</span></code> gives a <code class="docutils literal"><span class="pre">Bool</span></code>.</p>
+And <code class="docutils literal"><span class="pre">a</span> <span class="pre">-&gt;</span> <span class="pre">a</span></code> applied to a <code class="docutils literal"><span class="pre">Bool</span></code> gives a <code class="docutils literal"><span class="pre">Bool</span></code>.</p>
 <p>To apply a function we use the simplest syntax of all, juxtaposition.
 Also called <em>postfix notation</em> or &#8220;the function followed by the arguments, all space separated&#8221;.</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">let</span> <span class="nb">id</span> <span class="p">::</span> <span class="n">a</span> <span class="o">-&gt;</span> <span class="n">a</span>
-    <span class="nb">id</span> <span class="o">=</span> \<span class="n">x</span> <span class="o">-&gt;</span> <span class="n">x</span>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="nb">id</span> <span class="p">::</span> <span class="n">a</span> <span class="o">-&gt;</span> <span class="n">a</span>
+<span class="nb">id</span> <span class="o">=</span> \<span class="n">x</span> <span class="o">-&gt;</span> <span class="n">x</span>
 
-    <span class="n">myBool</span> <span class="o">=</span> <span class="nb">id</span> <span class="kc">True</span>
-    <span class="n">myBool2</span> <span class="o">=</span> <span class="p">(</span>\<span class="n">x</span> <span class="o">-&gt;</span> <span class="n">x</span><span class="p">)</span> <span class="kc">True</span>
-    <span class="n">myInt</span> <span class="o">=</span> <span class="nb">id</span> <span class="mi">5</span>
+<span class="n">myBool</span> <span class="o">=</span> <span class="nb">id</span> <span class="kc">True</span>
+<span class="n">myBool2</span> <span class="o">=</span> <span class="p">(</span>\<span class="n">x</span> <span class="o">-&gt;</span> <span class="n">x</span><span class="p">)</span> <span class="kc">True</span>
+<span class="n">myInt</span> <span class="o">=</span> <span class="nb">id</span> <span class="mi">5</span>
 
 <span class="n">myBool</span> <span class="o">==</span> <span class="n">myBool2</span> <span class="o">==</span> <span class="kc">True</span> <span class="o">&amp;&amp;</span> <span class="n">myInt</span> <span class="o">==</span> <span class="mi">5</span>
 </pre></div>
 </div>
 <p>Lets look at another example fuction:</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">let</span> <span class="n">const</span> <span class="p">::</span> <span class="n">a</span> <span class="o">-&gt;</span> <span class="n">b</span> <span class="o">-&gt;</span> <span class="n">a</span>
-    <span class="n">const</span> <span class="o">=</span> \<span class="n">x</span> <span class="n">_</span> <span class="o">-&gt;</span> <span class="n">x</span>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">const</span> <span class="p">::</span> <span class="n">a</span> <span class="o">-&gt;</span> <span class="n">b</span> <span class="o">-&gt;</span> <span class="n">a</span>
+<span class="n">const</span> <span class="o">=</span> \<span class="n">x</span> <span class="n">_</span> <span class="o">-&gt;</span> <span class="n">x</span>
 </pre></div>
 </div>
 <p>The <code class="docutils literal"><span class="pre">const</span></code> function takes a first parameter <code class="docutils literal"><span class="pre">x</span></code> and a second parameter, which we ignore.
@@ -91,8 +91,8 @@ The underscore <code class="docutils literal"><span class="pre">_</span></code> 
 And finally the function returns the first parameter.</p>
 <p>Note that the type of the function is now <code class="docutils literal"><span class="pre">a</span> <span class="pre">-&gt;</span> <span class="pre">b</span> <span class="pre">-&gt;</span> <span class="pre">a</span></code>.
 We see here that the function type <code class="docutils literal"><span class="pre">-&gt;</span></code> occurs twice and this is deliberate because we may rewrite our function as follows:</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">let</span> <span class="n">const</span> <span class="p">::</span> <span class="n">a</span> <span class="o">-&gt;</span> <span class="p">(</span><span class="n">b</span> <span class="o">-&gt;</span> <span class="n">a</span><span class="p">)</span>
-    <span class="n">const</span> <span class="o">=</span> \<span class="n">x</span> <span class="o">-&gt;</span> \<span class="n">_</span> <span class="o">-&gt;</span> <span class="n">x</span>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">const</span> <span class="p">::</span> <span class="n">a</span> <span class="o">-&gt;</span> <span class="p">(</span><span class="n">b</span> <span class="o">-&gt;</span> <span class="n">a</span><span class="p">)</span>
+<span class="n">const</span> <span class="o">=</span> \<span class="n">x</span> <span class="o">-&gt;</span> \<span class="n">_</span> <span class="o">-&gt;</span> <span class="n">x</span>
 </pre></div>
 </div>
 <p>Now we can see the analogy.
@@ -104,14 +104,14 @@ This means supplying fewer arguments to a function than would be required to pro
 Technically this is not even possible in Haskell, since, as we have seen above, every Haskell function only takes one argument but may return a curried function to simulate being given a second argument.
 To fully grasp the possibilities that partial application offers it is instrumental to internalise this aforementioned concept.</p>
 <p>Partial application is best described using examples:</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">let</span> <span class="n">const</span> <span class="p">::</span> <span class="n">a</span> <span class="o">-&gt;</span> <span class="n">b</span> <span class="o">-&gt;</span> <span class="n">a</span>
-    <span class="n">const</span> <span class="o">=</span> \<span class="n">x</span> <span class="n">_</span> <span class="o">-&gt;</span> <span class="n">x</span>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">const</span> <span class="p">::</span> <span class="n">a</span> <span class="o">-&gt;</span> <span class="n">b</span> <span class="o">-&gt;</span> <span class="n">a</span>
+<span class="n">const</span> <span class="o">=</span> \<span class="n">x</span> <span class="n">_</span> <span class="o">-&gt;</span> <span class="n">x</span>
 
-    <span class="n">alwaysFive</span> <span class="o">=</span> <span class="n">const</span> <span class="mi">5</span>
+<span class="n">alwaysFive</span> <span class="o">=</span> <span class="n">const</span> <span class="mi">5</span>
 
 <span class="n">alwaysFive</span> <span class="s2">&quot;a string&quot;</span> <span class="o">==</span> <span class="n">alwaysFive</span> <span class="mi">6</span> <span class="o">==</span> <span class="n">alwaysFive</span> <span class="p">()</span> <span class="o">==</span> <span class="mi">5</span>
 
-<span class="n">let</span> <span class="n">plusThree</span> <span class="o">=</span> <span class="p">(</span><span class="o">+</span> <span class="mi">3</span><span class="p">)</span>
+<span class="n">plusThree</span> <span class="o">=</span> <span class="p">(</span><span class="o">+</span> <span class="mi">3</span><span class="p">)</span>
 
 <span class="n">plusThree</span> <span class="mi">5</span> <span class="o">==</span> <span class="mi">8</span>
 <span class="n">plusThree</span> <span class="mi">10</span> <span class="o">==</span> <span class="mi">13</span>
@@ -146,22 +146,6 @@ Therefore we have some syntactic sugar in the Haskell laguage which allows us to
 
 <span class="n">let</span> <span class="n">anotherFunction</span> <span class="n">x</span> <span class="o">=</span> <span class="n">expr</span>
 </pre></div>
-</div>
-<p>Another common pattern is to take arguments to a function and immediately perform a <code class="docutils literal"><span class="pre">case</span></code> match on them.</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">myFunction</span> <span class="n">a</span> <span class="o">=</span>
-    <span class="n">case</span> <span class="n">a</span> <span class="n">of</span>
-        <span class="n">Constr1</span> <span class="n">val</span> <span class="o">-&gt;</span> <span class="o">...</span>
-        <span class="n">Constr2</span> <span class="n">v2</span> <span class="o">-&gt;</span> <span class="o">...</span>
-</pre></div>
-</div>
-<p>Instead we may write</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">myFunction</span> <span class="p">(</span><span class="n">Constr1</span> <span class="n">val</span><span class="p">)</span> <span class="o">=</span> <span class="o">...</span>
-<span class="n">myFunction</span> <span class="p">(</span><span class="n">Constr2</span> <span class="n">v2</span><span class="p">)</span> <span class="o">=</span> <span class="o">...</span>
-</pre></div>
-</div>
-<div class="admonition note">
-<p class="first admonition-title">Note</p>
-<p class="last">Here we must use parentheses around the match clauses to distinguish the clauses for the different arguments.</p>
 </div>
 </div>
 </div>
