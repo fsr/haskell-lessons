@@ -3,7 +3,8 @@ title: Hello Haskell
 author: Justus Adam
 date: 13.04.2017
 ---
-# Prologue
+
+# Preface
 
 ## Language
 
@@ -16,6 +17,13 @@ English | German ?
 - [github.com/fsr/haskell-lessons](https://github.com/fsr/haskell-lessons)
 - [www.ifsr.de/kurse/course/37/](https://www.ifsr.de/kurse/course/37/)
 
+<aside class="notes">
+- Use the script!
+- Don't print the script
+- You can leave feedback in the course issue section
+- Or send me an email
+</aside>
+
 ---
 
 I apologize in advance for the many spelling mistakes I make.
@@ -26,6 +34,7 @@ Alternatively shoot me an email.
 <aside class="notes">
 - tell me if I talk too fast!
 - don't hesitate to ask questions for there are no stupid questions!
+- Correct mistakes via issue or PR
 </aside>
 
 ## Who am I

@@ -5,8 +5,6 @@ import System.FilePath
 import Control.Monad.Extra
 import Development.Shake
 import System.IO
-import Data.Foldable
-import Debug.Trace
 
 outputDirectory :: FilePath
 outputDirectory = "docs"
@@ -21,23 +19,24 @@ revealResourcesDirectory :: FilePath
 revealResourcesDirectory = slidesOutputDirectory </> "reveal.js"
 
 copyFromReveal :: FilePath -> Action ()
-copyFromReveal out = 
-    let originalFile = joinPath $ dropWhile (/= "reveal.js/") $ splitPath $ slidesOutputDirectory `makeRelative` out
-    in do 
-        need [originalFile]
-        liftIO $ copyFile originalFile out
+copyFromReveal out = do 
+    need [originalFile]
+    liftIO $ copyFile originalFile out
+  where 
+    originalFile = joinPath $ dropWhile (/= "reveal.js/") $ splitPath $ slidesOutputDirectory `makeRelative` out
 
 needRstSources :: Action ()
 needRstSources = getDirectoryFiles "script/source" ["*.rst", "exercises/*.rst"] >>= need . map ("script/source" </>)
 
 buildSlideWithTheme :: String -> FilePath -> Action ()
 buildSlideWithTheme theme out = do
-    let sourceFile = "slides" </> takeFileName out -<.> ".md"
-        templateFile = "slides/template.html"
-        revealPath = (++ "reveal.js") $ joinPath $ map (const "../") $ filter (/= ".") $ splitPath $ takeDirectory $ makeRelative slidesOutputDirectory out
     need [sourceFile, templateFile]
     -- getDirectoryFiles "slides/img" ["*.png"] >>= need . map ((slidesOutputDirectory </> "img") </>)
     cmd "pandoc" [sourceFile, "--slide-level", "2", "-o", out, "-t", "revealjs", "-s", "--variable=theme:" ++ theme, "--template", templateFile, "--variable=revealjs-url:" ++ revealPath]
+  where
+    sourceFile = "slides" </> takeFileName out -<.> ".md"
+    templateFile = "slides/template.html"
+    revealPath = (++ "reveal.js") $ joinPath $ map (const "../") $ filter (/= ".") $ splitPath $ takeDirectory $ makeRelative slidesOutputDirectory out
 
 main :: IO ()
 main = shakeArgs shakeOptions $ do
