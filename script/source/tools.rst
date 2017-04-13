@@ -1,7 +1,7 @@
 The tools we will need
 ======================
 
-This fist lesson is all about the various tools we will use to develop Haskell code.
+This first lesson is all about the various tools we will use to develop Haskell code.
 
 .. _GHC:
 
@@ -93,7 +93,7 @@ Whereas on hackage you may only search the database by package name on hoogle yo
 Stackage
 ^^^^^^^^
 
-The `stackage`_ site, which host resources to be used with the tool ``stack`` functions similarly to a combination of Hackage and Hoogle.
+The `stackage`_ site, which hosts resources to be used with the tool ``stack`` functions similarly to a combination of Hackage and Hoogle.
 It hosts the documentation, including a Hoogle search, for each package snapshot.
 I therefore recommend to use stackage to browse haskell packages and documentation, unless the package you want information on is not on Stackage.
 
@@ -118,7 +118,7 @@ Also a special mention is to be given to `Haskell for Mac`_ a particularly beaut
 .. _atom-haskell: https://atom-haskell.github.io/
 
 And lastly I want to mention `ghcid <https://www.stackage.org/lts-8.9/package/ghcid>`__. 
-Its a very simple, command line based program which simply attempts to load your code into the interpreter an shows you the errors it encouters.
+Its a very simple, command line based program which simply attempts to load your code into the interpreter and shows you the errors it encouters.
 It automatically refreshes whenever you save a source file.
 This gives you some very bare bones ide features.
 The big advantage is that, unlike the other ide programs, ``ghcid`` is incredibly reliable.

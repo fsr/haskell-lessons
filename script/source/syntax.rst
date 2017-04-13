@@ -4,12 +4,12 @@
 Fundamentals of the Haskell syntax
 ==================================
 
-This lesson contains gets us started with the basics of Haskell syntax.
-Haskell is an old language (older than Java) and also one with which people like to experiment.
+This lesson gets us started with the basics of Haskell syntax.
+Haskell is an old language (older than Java) and also one people like to experiment with.
 As a result a lot of extra syntax has accumulated in over the years.
 Some of it in regular use, some of it more obscure and not well known.
 Most of this extra syntax is hidden behind language extensions.
-We mway come to learn some of it in future lessons, however for now we will simply start with the ML style core of the Haskell syntax.
+We may come to learn some of it in future lessons, however for now we will simply start with the ML style core of the Haskell syntax.
 
 
 .. _comments:
@@ -47,11 +47,11 @@ Examples from Haskell's base library are:
 ``Bool``
     A boolean.
 
-After that the allowed characters are word character, digits, the underscore ``_`` and the apostrope ``'`` (often called *"prime"*).[#type-operators]
+After that the allowed characters are word characters, digits, the underscore ``_`` and the apostrophe ``'`` (often called *"prime"*).[#type-operators]
 Therefore a name such as ``Isn't_4_bool`` is a valid type name.
 
 In general Haskell is a type inferred language, meaning you rarley have to specify the type of a value or expression (although it is common practice to annotate top level types and values with type signatures).
-You can hovever annotate any value and expression you want with a type signature.
+You can however annotate any value and expression you want with a type signature.
 The special operator ``::`` can be used to achieve this (see also next section for examples).
 This is particularly useful when chasing down the source of type errors as you can fix expressions to a certain type you expect them to be.
 
@@ -66,7 +66,7 @@ Numbers
     If you wish to specify the type you can annotate the literal like so ``(3 :: Int)``, ``(3 :: Integer)`` or ``(3.5 :: Float)``, ``(3.5 :: Double)``.
 
 Characters
-    Character literals are constructed by surrounding a character or excape sequence with single quotes.
+    Character literals are constructed by surrounding a character or escape sequence with single quotes.
 
     ``'a'``, ``'H'``, ``'5'``, ``'.'``.
 
@@ -79,7 +79,7 @@ Strings
 
     ``"Hello World"``, ``"Foo\nBar"``
 
-    The same escape sequences as for characters apply with addition of the excaped double quotes ``\"``.
+    The same escape sequences as for characters apply with addition of the escaped double quotes ``\"``.
     [#overloaded-strings]_
 
 Lists
@@ -115,7 +115,7 @@ Since these ergo they are **not** "variable" (they cannot vary).
 This is why I prefer the name "binding" as it **binds** a value to an identifier, not a variable, as it cannot "vary".
 
 Bindings must always start with a lowercase letter.
-Then, like the types, it may contain word characters, digits, the underscore and the apostrope. [#naming-convention]_
+Then, like the types, it may contain word characters, digits, the underscore and the apostrophe. [#naming-convention]_
 
 There are several ways to bind a value.
 The first one we will learn (because it is the way to bind values in GHCi) is called ``let`` with the concrete syntax ``let name = value``.
