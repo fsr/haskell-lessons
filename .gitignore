@@ -1,2 +1,3 @@
 /script/build/
 /.shake/
+.DS_Store

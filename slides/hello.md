@@ -54,6 +54,15 @@ Master Computer Science 2nd Semester
 
 First off, well done for choosing this course! 😁
 
+<aside class="notes">
+- Goal is to learn real world haskell
+- We will discuss syntax and interesting libraries and their design
+- Your goals?
+- You can suggest libraries to discuss
+- Or even present one yourself
+- Reading code is a good exercise
+</aside>
+
 # Safety
 
 ---
