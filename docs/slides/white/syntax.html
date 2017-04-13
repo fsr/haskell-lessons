@@ -81,13 +81,18 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <h1>Types</h1>
 <ul>
 <li><p>Always start with <strong>upper case</strong> letter</p></li>
-<li><code>Int</code> A fixed size integer</li>
-<li><code>Integer</code> An unbounded integer.</li>
-<li><code>Float</code> A floating point number.</li>
-<li><code>Char</code> A character.</li>
-<li><code>String</code> A sequence of characters.</li>
-<li><p><code>Bool</code> A boolean.</p></li>
+<li><code>Int</code></li>
+<li><code>Integer</code></li>
+<li><code>Float</code></li>
+<li><code>Char</code></li>
+<li><code>String</code></li>
+<li><p><code>Bool</code></p></li>
 </ul>
+</section><section id="signatures" class="slide level2">
+<h1>Signatures</h1>
+<p>Created with the <code>::</code> operator.</p>
+<p><code>expression :: Type</code></p>
+<p>In larger context often parenthesised: <code>big (nested with :: Type) expression</code></p>
 </section><section id="values" class="slide level2">
 <h1>Values</h1>
 <dl>
@@ -95,6 +100,11 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <dd><p><code>1</code>, <code>3.0</code> can be overloaded and may have to be annotated <code>(3 :: Int)</code>, <code>(3 :: Integer)</code> or <code>(3.5 :: Float)</code>, <code>(3.5 :: Double)</code>.</p>
 </dd>
 </dl>
+<aside class="notes">
+<ul>
+<li>explain double colon operator</li>
+</ul>
+</aside>
 </section><section class="slide level2">
 
 <dl>
@@ -130,12 +140,30 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 </ul>
 </section><section class="slide level2">
 
-<div class="sourceCode"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="kw">let</span> myInt <span class="fu">=</span> <span class="dv">5</span>
-<span class="kw">let</span> aBool <span class="fu">=</span> <span class="dt">False</span>
-<span class="kw">let</span> someString <span class="fu">=</span> <span class="st">&quot;Hello World&quot;</span></code></pre></div>
+<div class="sourceCode"><pre class="sourceCode haskell"><code class="sourceCode haskell">myInt <span class="fu">=</span> <span class="dv">5</span>
+aBool <span class="fu">=</span> <span class="dt">False</span>
+someString <span class="fu">=</span> <span class="st">&quot;Hello World&quot;</span></code></pre></div>
 </section><section class="slide level2">
 
-<p>``haskell let myInt :: Int myInt = 5 ```</p>
+<p>Annotation with type signature</p>
+<div class="sourceCode"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="ot">myInt ::</span> <span class="dt">Int</span>
+myInt <span class="fu">=</span> <span class="dv">5</span></code></pre></div>
+</section><section class="slide level2">
+
+<p>The simplest binding construct is <code>let ... in</code></p>
+<div class="sourceCode"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="kw">let</span> x <span class="fu">=</span> <span class="dv">5</span> <span class="kw">in</span> x <span class="fu">+</span> <span class="dv">1</span>
+<span class="kw">let</span> x <span class="fu">=</span> <span class="dv">5</span>
+<span class="ot">    y ::</span> <span class="dt">Int</span>
+    y <span class="fu">=</span> <span class="dv">6</span>
+<span class="kw">in</span> x <span class="fu">+</span> y</code></pre></div>
+</section><section class="slide level2">
+
+<p>Or with semicolon and braces instead of newline and indentation</p>
+<div class="sourceCode"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="kw">let</span> x <span class="fu">=</span> <span class="dv">5</span>;<span class="ot"> y ::</span> <span class="dt">Int</span>; y <span class="fu">=</span> <span class="dv">6</span> <span class="kw">in</span> x <span class="fu">+</span> y
+<span class="kw">let</span> { x <span class="fu">=</span> <span class="dv">5</span>;<span class="ot"> y ::</span> <span class="dt">Int</span>; y <span class="fu">=</span> <span class="dv">6</span> } <span class="kw">in</span> x <span class="fu">+</span> y
+<span class="kw">let</span> { x <span class="fu">=</span> <span class="dv">5</span>; 
+<span class="ot">y ::</span> <span class="dt">Int</span>
+; y <span class="fu">=</span> <span class="dv">6</span> } <span class="kw">in</span> x <span class="fu">+</span> y</code></pre></div>
 </section></section>
 <section><section id="if-expressions" class="titleslide slide level1"><h1><code>if</code> expressions</h1></section><section class="slide level2">
 
@@ -145,9 +173,9 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 </ul>
 </section><section class="slide level2">
 
-<div class="sourceCode"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="kw">let</span> aBool <span class="fu">=</span> <span class="dt">False</span>
+<div class="sourceCode"><pre class="sourceCode haskell"><code class="sourceCode haskell">aBool <span class="fu">=</span> <span class="dt">False</span>
 
-<span class="kw">let</span> anInt <span class="fu">=</span> <span class="kw">if</span> aBool <span class="kw">then</span> <span class="dv">8</span> <span class="kw">else</span> <span class="dv">9</span></code></pre></div>
+anInt <span class="fu">=</span> <span class="kw">if</span> aBool <span class="kw">then</span> <span class="dv">8</span> <span class="kw">else</span> <span class="dv">9</span></code></pre></div>
 </section></section>
 <section><section id="function-application" class="titleslide slide level1"><h1>Function application</h1></section><section class="slide level2">
 

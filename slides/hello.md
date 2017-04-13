@@ -36,6 +36,7 @@ Alternatively shoot me an email.
 - tell me if I talk too fast!
 - don't hesitate to ask questions for there are no stupid questions!
 - Correct mistakes via issue or PR
+- Star the project :P
 </aside>
 
 ## Who am I

@@ -17,12 +17,20 @@ date: 13.04.2017
 
 - Always start with **upper case** letter
 
-- `Int` A fixed size integer
-- `Integer` An unbounded integer.
-- `Float` A floating point number.
-- `Char` A character.
-- `String` A sequence of characters.
-- `Bool` A boolean.
+- `Int`
+- `Integer`
+- `Float`
+- `Char`
+- `String`
+- `Bool`
+
+## Signatures
+
+Created with the `::` operator.
+
+`expression :: Type`
+
+In larger context often parenthesised: `big (nested with :: Type) expression`
 
 ## Values
 
@@ -30,6 +38,10 @@ Numbers
 
 :   `1`, `3.0` can be overloaded and may have to be annotated `(3 :: Int)`, `(3 :: Integer)` or `(3.5 :: Float)`,
     `(3.5 :: Double)`.
+
+<aside class="notes">
+- explain double colon operator
+</aside>
 
 ---
 
@@ -66,16 +78,42 @@ Tuples
 --- 
 
 ```haskell
-let myInt = 5
-let aBool = False
-let someString = "Hello World"
+myInt = 5
+aBool = False
+someString = "Hello World"
 ```
 
 ---
 
-``haskell
-let myInt :: Int
-    myInt = 5
+Annotation with type signature
+
+```haskell
+myInt :: Int
+myInt = 5
+```
+
+---
+
+The simplest binding construct is `let ... in`
+
+```haskell
+let x = 5 in x + 1
+let x = 5
+    y :: Int
+    y = 6
+in x + y
+```
+
+---
+
+Or with semicolon and braces instead of newline and indentation
+
+```haskell
+let x = 5; y :: Int; y = 6 in x + y
+let { x = 5; y :: Int; y = 6 } in x + y
+let { x = 5; 
+y :: Int
+; y = 6 } in x + y
 ```
 
 # `if` expressions
@@ -88,9 +126,9 @@ let myInt :: Int
 ---
 
 ```haskell
-let aBool = False
+aBool = False
 
-let anInt = if aBool then 8 else 9
+anInt = if aBool then 8 else 9
 ```
 
 # Function application
