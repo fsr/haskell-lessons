@@ -20,6 +20,7 @@ English | German ?
 <aside class="notes">
 - Use the script!
 - Don't print the script
+- Dont mind the undefined referneces which may occur (the chapters they ought to reference arent done yet)
 - You can leave feedback in the course issue section
 - Or send me an email
 </aside>

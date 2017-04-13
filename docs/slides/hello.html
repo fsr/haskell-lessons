@@ -85,6 +85,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <ul>
 <li>Use the script!</li>
 <li>Don't print the script</li>
+<li>Dont mind the undefined referneces which may occur (the chapters they ought to reference arent done yet)</li>
 <li>You can leave feedback in the course issue section</li>
 <li>Or send me an email</li>
 </ul>
@@ -119,6 +120,16 @@ document.write('<a h'+'ref'+'="ma'+'ilto'+':'+e+'" clas'+'s="em' + 'ail">'+e+'<\
 <section><section id="why-you-should-learn-haskell" class="titleslide slide level1"><h1>Why you should learn Haskell</h1></section><section class="slide level2">
 
 <p>First off, well done for choosing this course! 😁</p>
+<aside class="notes">
+<ul>
+<li>Goal is to learn real world haskell</li>
+<li>We will discuss syntax and interesting libraries and their design</li>
+<li>Your goals?</li>
+<li>You can suggest libraries to discuss</li>
+<li>Or even present one yourself</li>
+<li>Reading code is a good exercise</li>
+</ul>
+</aside>
 </section></section>
 <section><section id="safety" class="titleslide slide level1"><h1>Safety</h1></section><section class="slide level2">
 
@@ -166,8 +177,12 @@ a <span class="ot">&lt;-</span> async <span class="fu">$</span> <span class="kw"
     content <span class="ot">&lt;-</span> readFile f
     writeFile g (modify content)
 wait a</code></pre></div>
+<aside class="notes">
+<ul>
+<li>DSL's</li>
+</ul>
+</aside>
 </section></section>
-<section><section id="dsls" class="titleslide slide level1"><h1>DSL's</h1></section></section>
     </div>
   </div>
 
