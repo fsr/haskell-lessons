@@ -123,6 +123,8 @@ It automatically refreshes whenever you save a source file.
 This gives you some very bare bones ide features.
 The big advantage is that, unlike the other ide programs, ``ghcid`` is incredibly reliable.
 
+Also for those who like their code to be a bit prettier I recommend using *font ligatures* with a font that supports it, for instance my favourite is `github.com/tonsky/FiraCode <https://github.com/tonsky/FiraCode>`__. In this font there are some multi character symbols which in my opinion make the code a bit more readable.
+
 .. rubric:: Footnotes		
  
 .. [#base-sucks] 
