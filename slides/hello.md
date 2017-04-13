@@ -133,6 +133,8 @@ a <- async $ do
 wait a
 ```
 
-# DSL's
+<aside class="notes">
+- DSL's
+</aside>
 
 
