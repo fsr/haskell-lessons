@@ -12,8 +12,8 @@ English | German ?
 
 ## Links
 
-- [fsr.github.io/haskell-lessons/script/](http://fsr.github.io/haskell-lessons/script/)
-- [fsr.github.io/haskell-lessons/script.pdf](http://fsr.github.io/haskell-lessons/script.pdf)
+- [fsr.github.io/haskell-lessons/script/](https://fsr.github.io/haskell-lessons/script/)
+- [fsr.github.io/haskell-lessons/script.pdf](https://fsr.github.io/haskell-lessons/script.pdf)
 - [github.com/fsr/haskell-lessons](https://github.com/fsr/haskell-lessons)
 - [www.ifsr.de/kurse/course/37/](https://www.ifsr.de/kurse/course/37/)
 
@@ -62,6 +62,7 @@ First off, well done for choosing this course! 😁
 - You can suggest libraries to discuss
 - Or even present one yourself
 - Reading code is a good exercise
+- Listen to talks from simon peyton jones
 </aside>
 
 # Safety
