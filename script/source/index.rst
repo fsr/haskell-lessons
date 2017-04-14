@@ -11,7 +11,7 @@ Some links to motivational Haskell source files:
 
 .. toctree::
    :maxdepth: 2
-   :caption: Capters:
+   :caption: Chapters:
    :numbered:
 
    tools
