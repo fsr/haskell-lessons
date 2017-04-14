@@ -75,7 +75,7 @@ Examples from Haskell&#8217;s base library are:</p>
 <dt><code class="docutils literal"><span class="pre">Bool</span></code></dt>
 <dd>A boolean.</dd>
 </dl>
-<p>After that the allowed characters are word character, digits, the underscore <code class="docutils literal"><span class="pre">_</span></code> and the apostrope <code class="docutils literal"><span class="pre">'</span></code> (often called <em>&#8220;prime&#8221;</em>).[#type-operators]
+<p>After that the allowed characters are word character, digits, the underscore <code class="docutils literal"><span class="pre">_</span></code> and the apostrope <code class="docutils literal"><span class="pre">'</span></code> (often called <em>&#8220;prime&#8221;</em>). <a class="footnote-reference" href="#type-operators" id="id2">[6]</a>
 Therefore a name such as <code class="docutils literal"><span class="pre">Isn't_4_bool</span></code> is a valid type name.</p>
 <p>In general Haskell is a type inferred language, meaning you rarley have to specify the type of a value or expression (although it is common practice to annotate top level types and values with type signatures).
 You can hovever annotate any value and expression you want with a type signature.
@@ -101,7 +101,7 @@ For a literal <code class="docutils literal"><span class="pre">'</span></code> c
 <dd><p class="first">String literals are constructed by surrounding a sequence of characters or escape sequences with double quotes.</p>
 <p><code class="docutils literal"><span class="pre">&quot;Hello</span> <span class="pre">World&quot;</span></code>, <code class="docutils literal"><span class="pre">&quot;Foo\nBar&quot;</span></code></p>
 <p class="last">The same escape sequences as for characters apply with addition of the excaped double quotes <code class="docutils literal"><span class="pre">\&quot;</span></code>.
-<a class="footnote-reference" href="#overloaded-strings" id="id2">[2]</a></p>
+<a class="footnote-reference" href="#overloaded-strings" id="id3">[2]</a></p>
 </dd>
 <dt>Lists</dt>
 <dd><p class="first">List literals are a sequence of comma separated values surrounded by square brackets.</p>
@@ -120,13 +120,13 @@ For a literal <code class="docutils literal"><span class="pre">'</span></code> c
 The literals for <code class="docutils literal"><span class="pre">Bool</span></code> are <code class="docutils literal"><span class="pre">True</span></code> and <code class="docutils literal"><span class="pre">False</span></code>.</p>
 </div>
 <div class="section" id="bindings">
-<span id="id3"></span><h2>2.4. Bindings<a class="headerlink" href="#bindings" title="Permalink to this headline">¶</a></h2>
+<span id="id4"></span><h2>2.4. Bindings<a class="headerlink" href="#bindings" title="Permalink to this headline">¶</a></h2>
 <p>Bindings (often also called variables) are names referring to pieces of data.
 It is similar to the concept of variables in other languages, however in Haskell bindings are <strong>always</strong> immutable.
 Since these ergo they are <strong>not</strong> &#8220;variable&#8221; (they cannot vary).
 This is why I prefer the name &#8220;binding&#8221; as it <strong>binds</strong> a value to an identifier, not a variable, as it cannot &#8220;vary&#8221;.</p>
 <p>Bindings must always start with a lowercase letter.
-Then, like the types, it may contain word characters, digits, the underscore and the apostrope. <a class="footnote-reference" href="#naming-convention" id="id4">[4]</a></p>
+Then, like the types, it may contain word characters, digits, the underscore and the apostrope. <a class="footnote-reference" href="#naming-convention" id="id5">[4]</a></p>
 <p>There are several ways to bind a value.
 The first one we will learn (because it is the way to bind values in GHCi) is called <code class="docutils literal"><span class="pre">let</span></code> with the concrete syntax <code class="docutils literal"><span class="pre">let</span> <span class="pre">name</span> <span class="pre">=</span> <span class="pre">value</span></code>.</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">let</span> <span class="n">myInt</span> <span class="o">=</span> <span class="mi">5</span>
@@ -134,7 +134,7 @@ The first one we will learn (because it is the way to bind values in GHCi) is ca
 <span class="n">let</span> <span class="n">someString</span> <span class="o">=</span> <span class="s2">&quot;Hello World&quot;</span>
 </pre></div>
 </div>
-<p>You can use <code class="docutils literal"><span class="pre">let</span></code> in GHCi to bind a value and then print it by simply entering the name again and pressing enter. <a class="footnote-reference" href="#rebinding" id="id5">[5]</a>
+<p>You can use <code class="docutils literal"><span class="pre">let</span></code> in GHCi to bind a value and then print it by simply entering the name again and pressing enter. <a class="footnote-reference" href="#rebinding" id="id6">[5]</a>
 In the <code class="docutils literal"><span class="pre">let</span></code> construct you may also, optionally, specify a type signature for the binding.</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">let</span> <span class="n">myInt</span> <span class="p">::</span> <span class="n">Int</span>
     <span class="n">myInt</span> <span class="o">=</span> <span class="mi">5</span>
@@ -193,7 +193,7 @@ Below the last declaration is a large block of perhaps 20 more declarations whic
 <table class="docutils footnote" frame="void" id="overloaded-strings" rules="none">
 <colgroup><col class="label" /><col /></colgroup>
 <tbody valign="top">
-<tr><td class="label"><a class="fn-backref" href="#id2">[2]</a></td><td>There is a language extension in GHC which allows overloading of strings (much like the numeric literals), see <a class="reference internal" href="overloaded-lits.html#overloaded-strings"><span class="std std-ref">Overloaded Strings</span></a>.</td></tr>
+<tr><td class="label"><a class="fn-backref" href="#id3">[2]</a></td><td>There is a language extension in GHC which allows overloading of strings (much like the numeric literals), see <a class="reference internal" href="overloaded-lits.html#overloaded-strings"><span class="std std-ref">Overloaded Strings</span></a>.</td></tr>
 </tbody>
 </table>
 <table class="docutils footnote" frame="void" id="overloaded-lists" rules="none">
@@ -205,14 +205,14 @@ Below the last declaration is a large block of perhaps 20 more declarations whic
 <table class="docutils footnote" frame="void" id="naming-convention" rules="none">
 <colgroup><col class="label" /><col /></colgroup>
 <tbody valign="top">
-<tr><td class="label"><a class="fn-backref" href="#id4">[4]</a></td><td>The naming convention in Haskell is camel case.
+<tr><td class="label"><a class="fn-backref" href="#id5">[4]</a></td><td>The naming convention in Haskell is camel case.
 Meaning in each identifier (type variable, type or binding) all words composing the name are chained directly, with each new word starting with an upper case letter, except for the first word, who&#8217;s case is determined by the syntax contstraints (upper case for types, lower case for type variables and bindings).</td></tr>
 </tbody>
 </table>
 <table class="docutils footnote" frame="void" id="rebinding" rules="none">
 <colgroup><col class="label" /><col /></colgroup>
 <tbody valign="top">
-<tr><td class="label"><a class="fn-backref" href="#id5">[5]</a></td><td>Note that in GHCi, as in many Haskell constructs you may also <strong>rebind</strong> a binding.
+<tr><td class="label"><a class="fn-backref" href="#id6">[5]</a></td><td>Note that in GHCi, as in many Haskell constructs you may also <strong>rebind</strong> a binding.
 This may look like you have altered the binding, however this is not the case.
 It creates a wholly new binding, which simply shadows the older binding in the current scope.
 When the scope is exited the value stored for this name remains the old value.
@@ -222,7 +222,7 @@ You will also know that it is a new binding by the fact that the new binding can
 <table class="docutils footnote" frame="void" id="type-operators" rules="none">
 <colgroup><col class="label" /><col /></colgroup>
 <tbody valign="top">
-<tr><td class="label">[6]</td><td>GHC also allows you to define <a class="reference external" href="https://downloads.haskell.org/~ghc/latest/docs/html/users_guide/glasgow_exts.html#infix-type-constructors-classes-and-type-variables">data constructors and types</a> as operators.</td></tr>
+<tr><td class="label"><a class="fn-backref" href="#id2">[6]</a></td><td>GHC also allows you to define <a class="reference external" href="https://downloads.haskell.org/~ghc/latest/docs/html/users_guide/glasgow_exts.html#infix-type-constructors-classes-and-type-variables">data constructors and types</a> as operators.</td></tr>
 </tbody>
 </table>
 </div>

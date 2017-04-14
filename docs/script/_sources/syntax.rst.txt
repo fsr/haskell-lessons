@@ -47,7 +47,7 @@ Examples from Haskell's base library are:
 ``Bool``
     A boolean.
 
-After that the allowed characters are word character, digits, the underscore ``_`` and the apostrope ``'`` (often called *"prime"*).[#type-operators]
+After that the allowed characters are word character, digits, the underscore ``_`` and the apostrope ``'`` (often called *"prime"*). [#type-operators]_
 Therefore a name such as ``Isn't_4_bool`` is a valid type name.
 
 In general Haskell is a type inferred language, meaning you rarley have to specify the type of a value or expression (although it is common practice to annotate top level types and values with type signatures).
