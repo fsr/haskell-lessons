@@ -1,7 +1,17 @@
-# Ideas about future lessons
+# Ideas for future lessons
+
+Note that this list only contains *non realized* idea.
+All realized ideas are in the script or slides.
+
+The entries in this list are in loosely chronological order aka in order in which I intend to cover the topics.
+
+## General concepts
 
 - type classes
 - Monads as procedures
+
+## Libraries
+
 - `base` the standard library
 - `filepath` and `directory` manipulating files and paths in hakell
 - `containers` and `unordered-containers` useful generic data structures 
