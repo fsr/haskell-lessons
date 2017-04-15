@@ -1,0 +1,23 @@
+# Ideas about future lessons
+
+- type classes
+- Monads as procedures
+- `base` the standard library
+- `filepath` and `directory` manipulating files and paths in hakell
+- `containers` and `unordered-containers` useful generic data structures 
+- `mtl` and `transformers` ... Monads
+- `aeson` JSON parsing and the applicative functor (`yaml`)
+- `text` and `bytestring` efficient strings
+    - `text-icu` regex and unicode
+- WEB
+    - writing a haskell server (`wai`?, `warp`?)
+    - `blaze-html` writing html
+    - `http-client` self explanatory
+- `lens` the good parts of OOP
+- `parsec` parser combinators
+- `conduit` also maybe `pipes` constant space stream data processing
+- `configurator` configuration parsing
+- `monad-logger` logging
+- `optparse-applicative` command line argument parsing
+- `stm` software transactional memory
+- `async` ... async

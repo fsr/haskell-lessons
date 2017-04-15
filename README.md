@@ -8,3 +8,6 @@ The script is written in reStructured text which makes it easy to generate beaut
 `Shakefile.hs` serves as a makefile for automating the build process.
 
 You may use the issue section to leave feedback on the course itself.
+
+See my ideas for future lessons in [this file](IDEAS.md). 
+Anyone can submit new ides in issue #2.
