@@ -1,7 +1,7 @@
 ---
 title: Functions
 author: Justus Adam
-date: 13.04.2017
+date: 20.04.2017
 ---
 
 # Literals

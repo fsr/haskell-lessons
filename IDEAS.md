@@ -31,3 +31,10 @@ The entries in this list are in loosely chronological order aka in order in whic
 - `optparse-applicative` command line argument parsing
 - `stm` software transactional memory
 - `async` ... async
+
+## Tools
+
+- Debugging
+
+    - `Debug.Trace`
+    - GHCi debugger

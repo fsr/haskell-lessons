@@ -9,6 +9,9 @@ Some links to motivational Haskell source files:
 * `The acommodating test suite <https://github.com/JustusAdam/marvin-interpolate/blob/master/test/Spec.hs>`__
 * `A short script to strip directory prefixes <https://gist.github.com/JustusAdam/5faab5a741a9d5d3fd2f9d096bdc35d8>`__
 
+New.
+
+
 .. toctree::
    :maxdepth: 2
    :caption: Chapters:
@@ -16,6 +19,8 @@ Some links to motivational Haskell source files:
 
    tools
    syntax
+   functions
+   types
    exercises/index
 
 

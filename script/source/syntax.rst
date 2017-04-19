@@ -192,10 +192,6 @@ Thus ``(+)`` for instance is applied before ``(==)``.
 
 .. rubric:: footnotes
 
-.. [#tuple-size] 
-    The `source file for tuples in GHC <https://hackage.haskell.org/package/ghc-prim-0.5.0.0/docs/src/GHC.Tuple.html#%28%2C%2C%2C%2C%2C%2C%2C%2C%2C%2C%2C%2C%2C%2C%2C%2C%2C%2C%2C%2C%2C%2C%2C%2C%2C%2C%2C%2C%2C%2C%2C%2C%2C%2C%2C%2C%2C%2C%2C%2C%2C%2C%2C%2C%2C%2C%2C%2C%2C%2C%2C%2C%2C%2C%2C%2C%2C%2C%2C%2C%2C%29>`__ defined tuples with up to 62 elements.
-    Below the last declaration is a large block of perhaps 20 more declarations which is commented out, with a note above saying "Manuel says: Including one more declaration gives a segmentation fault."
-
 .. [#overloaded-strings] 
     There is a language extension in GHC which allows overloading of strings (much like the numeric literals), see :ref:`overloaded strings`.
 

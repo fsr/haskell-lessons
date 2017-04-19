@@ -55,6 +55,8 @@ main = shakeArgs shakeOptions $ do
         whenM (doesDirectoryExist scriptOutputDirectory) $
             liftIO $ removeDirectoryRecursive scriptOutputDirectory
         mapM_ (liftIO . removeDirectoryRecursive) =<< filterM doesDirectoryExist =<< map (slidesOutputDirectory </>) . filter (/= "reveal.js") <$> getDirectoryContents slidesOutputDirectory
+    
+    phony "script-html" $ need [scriptOutputDirectory </> "index.html"]
 
     "**/.nojekyll" %> \out -> liftIO $ withFile out AppendMode (`hPutChar` ' ')
 

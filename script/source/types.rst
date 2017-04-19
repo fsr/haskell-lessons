@@ -3,8 +3,100 @@
 Types
 =====
 
-.. _user defined types:
+.. _type variables:
 
+Type variables
+--------------
+
+Types in Haskell may be parameterized over another type, which is not known at the time of defining the former type.
+This system is very similar to generics in many languages, but much more powerful as the type information is fully preserved.
+
+The naming rules for type variables are the same as for :ref:`bindings`. [#naming-convention]_
+
+The whole type is then written as first the type name followed by a space and then followed by the parameters, also space separated.
+This is also called juxtaposition.
+
+As an example for a parameterized type is the ``Either a b`` type. 
+The name of the type is ``Either`` and it is parameterized by a type variable ``a`` and a type variable ``b``.
+Note that there is no special significance to the name of the type variables themselves. 
+It would be semantically equivalent to call the type ``Either one the_other``.
+Only if we were to name both variables the same would we change the meaning, because ``Either a a`` would mean **both** types ``Either`` is parameterized over are the **same** type.
+
+We have now seen the type in its generic form.
+By instantiating the type variables we can create a concrete form.
+For instance ``Either Int String`` or ``Either Bool Char``.
+Note that ``Either a b`` does not mean that ``a`` and ``b`` **have** to be distinct, but they are allowed to.
+``Either Int Int`` is also a perfectly valid concrete form of ``Either a b``.
+
+At compile time all of the type parameters must be known, i.e. only concrete form of types are allowed.
+The compiler will infer the concrete values of the type variables for you.
+
+Note that if you wish to annotate a type which uses type variables you will have to fill in the concrete types for those variables *unless* they are unused.
+An example:
+
+As you can see from the definition of ``Either`` each type variable is used in one of the constructors.
+If you now create one of theses values and whish to annotate it with a type you have to fill in the respective typ variable.
+However you do not have to fill in the second variable.
+For instance if you create a ``Left`` value, lets say containing a ``String`` it does not matter what type ``b`` is in the resulting ``Either``, becuase the ``Left`` constructor only uses the ``a`` variable and therefore the compiler will allow you to write anything for ``a`` including a type variable (which means it can be anything).
+If however you have an expression like the ``if`` which may either return ``Left`` or ``Right`` you have to fill in both types properly.
+
+::
+
+    data Either a b = Left a | Right b
+
+    x :: Either String b
+    x = Left "A String" 
+    y :: Either a Int
+    y = Right 1 
+
+    x_and_y :: Either String Int
+    x_and_y = if someBool then x else y 
+
+We could also have annotated ``x`` and ``y`` with concrete types for the respective other variable, however in that case we must make it the type the ``if`` expression expects it to be or we get a type error.
+Therefore is is usually advisable to leave the type unspecified unless necessary.
+
+::
+
+    data Either a b = Left a | Right b
+
+    -- these definitions are ok 
+    -- because the type lines up with the if expression
+
+    x :: Either String Int
+    x = Left "A String" 
+    y :: Either String Int
+    y = Right 1 
+
+    -- these definitions are problematic
+    -- they would cause a type error
+
+    x :: Either String Bool
+    x = Left "A String" 
+    y :: Either (Either String String) Int
+    y = Right 1 
+
+    x_and_y :: Either String Int
+    x_and_y = if someBool then x else y
+
+
+If you don't know the type of an expression but wish to annotate it or you dont know the value of one of the type variables you can use a so called "type hole" to have the compiler figure it out for you.
+If you annotate an expression with ``_`` the compiler will throw an error and tell you what it infers the type for ``_`` to be.
+You can use multiple ``_`` at the same time each of which will cause a compile error with information about the inferred type.
+This can be used for full type signatures or even just parts of it, including type variables.
+GHC generally tries to infer the most general type for you.
+
+::
+
+    -- infer a full type signature
+    x :: _
+    x = Left "A String"
+
+    -- Infer a variable
+    y :: Either a _
+    y = Right 1
+
+
+.. _user defined types:
 
 User defined types
 ------------------
@@ -62,7 +154,7 @@ This is followed by any number of ``|`` separated *constructor definitions*.
 
     data Coordinates = LongAndLat Int Int
 
-    data Maybe a = Nothing | Just a
+    data File = TextFile String | Binary Bytes
 
 A constructor definition takes the form of first the constructor itself, followed by any number of type arguments, which are the types of the fields in the constructor.
 The naming constraints for the constructor are the same as for :ref:`types`.[#type-operators]
@@ -88,7 +180,7 @@ Constructors serve two purposes.
 
 It is very important to know the difference between a *type(name)* and a *constructor* in Haskell.
 Also not that it is allowed for a type and a constructor with the same name to be in scope, as the distinction between the two can be made from the context in which they are used.
-Type names only ever occur in a place where a type can occur, such as in the definition of another type and type signatures.
+Type names only ever occur in a place where a type can occur, such as in the definition of another type and type signatures whereas a *Constructor* can occur in any epression.
 
 .. admonition:: Aside
     
@@ -143,10 +235,10 @@ This is easiest to see with a user defined type
 
     data MyType = Constr1 Int
 
-    let aValue = Constr1 5 :: MyType
-        theIntWithin =
-            case aValue of
-                Constr1 i -> i
+    aValue = Constr1 5 :: MyType
+    theIntWithin =
+        case aValue of
+            Constr1 i -> i
 
     theIntWithin == 5
 
@@ -173,13 +265,13 @@ However this is often used to create a default clause for a case match.
 
     data MyType = Constr1 Int | Constr2 String
 
-    let aValue = Constr1 5 :: MyType
-        theIntWithin =
-            case aValue of
-                Constr1 i -> i
-                x -> 0
+    aValue = Constr1 5 :: MyType
+    theIntWithin =
+        case aValue of
+            Constr1 i -> i
+            x -> 0
 
-Match clauses are alwas matched in sequence, from top to bottom until a matching clause is found.
+Match clauses are always matched in sequence, from top to bottom until a matching clause is found.
 A clause like ``x``, which does not contain a constructor will always match.
 Therefore it is usually found as the last clause, often serving as a kind of default clause.
 If the default clause does not need the value we often use ``_`` as binding to indicate that we do not use the value.
@@ -189,25 +281,25 @@ For instance we can define an ``if`` using case.
 
 ::
 
-    let if cond a b =
-            case cond of
-                True -> a
-                False -> b
+    if cond a b =
+        case cond of
+            True -> a
+            False -> b
 
-You can also pattern match on primitive, built-in types.
+You can also pattern match on all primitive, built-in types such as ``Char``, ``[]``, ``String``, ``Int``, ``Float`` and so on. Anything you can write as a literal you may use in a case pattern.
 
 ::
 
-    let isC char = case char of
-                        'c' -> True
-                        _ -> False
+    isC char = case char of
+                    'c' -> True
+                    _ -> False
     
     isC 'l' == False
     isC 'c' == True
 
-    let is4 n = case n of 
-                    4 -> True
-                    _ -> False
+    is4 n = case n of 
+                4 -> True
+                _ -> False
 
     is4 4 == True 
     is4 0 == False
@@ -215,7 +307,8 @@ You can also pattern match on primitive, built-in types.
 Different ways to write a case expression
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Case expressions can either be written using indentation, or semicolons and braces.
+Case expressions can either be written using indentation, or semicolons and braces in the same way we can do with ``let``. 
+Thereby we can use ``;`` to omit newlines and ``{}`` to omit the indentation.
 The following definitions are equivalent
 
 ::
@@ -229,46 +322,18 @@ The following definitions are equivalent
         Constr1 field1 field2 -> 
             -- note the deeper indent for the result expression
             resultExpr
-        Constr2 f -> resultExpr2 
+        Constr2 f -> 
+            resultExpr2 
 
     -- indent is replaced with semicolons and braces
     case expr of { Constr1 field1 field2 -> resultExpr; Constr2 f -> resultExpr2 }
 
-
-.. _type variables:
-
-Type variables and special types
---------------------------------
-
-Types in Haskell may be parameterized over another type, which is not known at the time of defining the former type.
-This system is very similar to generics in many languages, but much more powerful as the type information is fully preserved.
-
-The naming rules for type variables are the same as for :ref:`bindings`. [#naming-convention]_
-
-The whole type is then written as first the type name followed by a space and then followed by the parameters, also space separated.
-This is also called juxtaposition.
-
-As an example for a parameterized type is the ``Either a b`` type. 
-The name of the type is ``Either`` and it is parameterized by a type variable ``a`` and a type variable ``b``.
-Note that there is no special significance to the name of the type variables themselves. 
-It would be semantically equivalent to call the type ``Either one the_other``.
-Only if we were to name both variables the same would we change the meaning, because ``Either a a`` would mean **both** types ``Either`` is parameterized over are the **same** type.
-
-We have now seen the type in its generic form.
-By instantiating the type variables we can create a concrete form.
-For instance ``Either Int String`` or ``Either Bool Char``.
-Note that ``Either a b`` does not mean that ``a`` and ``b`` **have** to be distinct, but they are allowed to.
-``Either Int Int`` is also a perfectly valid concrete form of ``Either a b``.
-
-At compile time all of the type parameters must be known, i.e. only concrete form of types are allowed.
-The compiler will infer the concrete values of the type variables for you.
-
 .. _special types:
 
 Special types
-^^^^^^^^^^^^^
+-------------
 
-There are some notable exceptions to the type naming rule above.
+There are some notable exceptions to the type naming rule.
 Those are the **list type**, which is ``[]`` or ``[a]`` which means "a list containing elements of type ``a``" and the **tuple type** ``(a,b)`` for "a 2-tuple containing a value of type ``a`` and a value of type ``b``".
 There are also larger tuples ``(a,b,c)``, ``(a,b,c,d)`` etc. [#tuple-size]_
 These tuples are simply grouped data and very common in mathematics for instance.
@@ -279,17 +344,17 @@ Some examples for concrete instances of special types:
 
 ::
 
-    let myIntBoolTriple :: (Int, Int, Bool)
-        myIntBoolTriple = (5, 9, False)
+    myIntBoolTriple :: (Int, Int, Bool)
+    myIntBoolTriple = (5, 9, False)
     
-    let aWordList = ["Hello", "Foo", "bar"] :: [String] -- Note: A different way to annotate the type
+    aWordList = ["Hello", "Foo", "bar"] :: [String] -- Note: A different way to annotate the type
 
     -- Note: we can also nest these types
-    let listOfTuples :: [(Int, String)]
-        listOfTuples = 
-            [ (1, "Marco")
-            , (9, "Janine")
-            ]
+    listOfTuples :: [(Int, String)]
+    listOfTuples = 
+        [ (1, "Marco")
+        , (9, "Janine")
+        ]
 
 
 .. _record syntax:
@@ -303,7 +368,7 @@ We can write the following:
 
 ::
 
-    data TyType = 
+    data MyType = 
         Constructor { field1 :: Int
                     , field2 :: String
                     }
@@ -314,11 +379,9 @@ Meaning we can pattern match as usual on the constructor.
 
 ::
 
-    data MyType = Constructor Int String
-
-    let theData = Constructor 9 "hello" :: MyType
-    let theInt = case theData of
-                    Constructor i _ -> i
+    theData = Constructor 9 "hello" :: MyType
+    theInt = case theData of
+                Constructor i _ -> i
     
     theInt == 9
 
@@ -341,24 +404,43 @@ Additionally the record may be created with a special record creation syntax.
 
 ::
 
-    data TyType = 
+    data MyType = 
         Constructor { field1 :: Int
                     , field2 :: String
                     }
 
-    let v1 = Constructor 9 "Hello" :: MyType
+    v1 = Constructor 9 "Hello" :: MyType
     
     -- record creation syntax
-    let v2 = Constructor { field2 = "World", field1 = 4 } :: MyType
+    v2 = Constructor { field2 = "World", field1 = 4 } :: MyType
 
     -- update syntax
-    let v3 = v2 { field1 = 9 }
+    v3 = v2 { field1 = 9 }
     -- updating multiple fields at once
-    let v4 = v2 { field1 = 9, field2 "Hello" }
+    v4 = v2 { field1 = 9, field2 "Hello" }
 
     v1 == v4
 
     -- old records are unchanged
     v2 /= v3 /= v4
 
+And finally it also enables a special record pattern match using the fields.
 
+::
+
+    theData = Constructor 9 "hello" :: MyType
+
+    theInt = case theData of
+                Constructor{ field1 = i } -> i
+
+    theInt == 9
+
+.. rubric:: footnotes
+
+.. [#naming-convention]
+    The naming convention in Haskell is camel case. 
+    Meaning in each identifier (type variable, type or binding) all words composing the name are chained directly, with each new word starting with an upper case letter, except for the first word, who's case is determined by the syntax contstraints (upper case for types, lower case for type variables and bindings).
+
+.. [#tuple-size] 
+    The `source file for tuples in GHC <https://hackage.haskell.org/package/ghc-prim-0.5.0.0/docs/src/GHC.Tuple.html#%28%2C%2C%2C%2C%2C%2C%2C%2C%2C%2C%2C%2C%2C%2C%2C%2C%2C%2C%2C%2C%2C%2C%2C%2C%2C%2C%2C%2C%2C%2C%2C%2C%2C%2C%2C%2C%2C%2C%2C%2C%2C%2C%2C%2C%2C%2C%2C%2C%2C%2C%2C%2C%2C%2C%2C%2C%2C%2C%2C%2C%2C%29>`__ defined tuples with up to 62 elements.
+    Below the last declaration is a large block of perhaps 20 more declarations which is commented out, with a note above saying "Manuel says: Including one more declaration gives a segmentation fault."

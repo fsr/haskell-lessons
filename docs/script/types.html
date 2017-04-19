@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Types &#8212; Haskell Lessons 0.1 documentation</title>
+    <title>4. Types &#8212; Haskell Lessons 0.1 documentation</title>
     
     <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
@@ -26,6 +26,8 @@
     <script type="text/javascript" src="_static/doctools.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="5. Exercises" href="exercises/index.html" />
+    <link rel="prev" title="3. Functions" href="functions.html" />
    
   <link rel="stylesheet" href="_static/custom.css" type="text/css" />
   
@@ -42,12 +44,88 @@
           <div class="body" role="main">
             
   <div class="section" id="types">
-<span id="id1"></span><h1>Types<a class="headerlink" href="#types" title="Permalink to this headline">¶</a></h1>
+<span id="id1"></span><h1>4. Types<a class="headerlink" href="#types" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="type-variables">
+<span id="id2"></span><h2>4.1. Type variables<a class="headerlink" href="#type-variables" title="Permalink to this headline">¶</a></h2>
+<p>Types in Haskell may be parameterized over another type, which is not known at the time of defining the former type.
+This system is very similar to generics in many languages, but much more powerful as the type information is fully preserved.</p>
+<p>The naming rules for type variables are the same as for <a class="reference internal" href="syntax.html#bindings"><span class="std std-ref">Bindings</span></a>. <a class="footnote-reference" href="#naming-convention" id="id3">[1]</a></p>
+<p>The whole type is then written as first the type name followed by a space and then followed by the parameters, also space separated.
+This is also called juxtaposition.</p>
+<p>As an example for a parameterized type is the <code class="docutils literal"><span class="pre">Either</span> <span class="pre">a</span> <span class="pre">b</span></code> type.
+The name of the type is <code class="docutils literal"><span class="pre">Either</span></code> and it is parameterized by a type variable <code class="docutils literal"><span class="pre">a</span></code> and a type variable <code class="docutils literal"><span class="pre">b</span></code>.
+Note that there is no special significance to the name of the type variables themselves.
+It would be semantically equivalent to call the type <code class="docutils literal"><span class="pre">Either</span> <span class="pre">one</span> <span class="pre">the_other</span></code>.
+Only if we were to name both variables the same would we change the meaning, because <code class="docutils literal"><span class="pre">Either</span> <span class="pre">a</span> <span class="pre">a</span></code> would mean <strong>both</strong> types <code class="docutils literal"><span class="pre">Either</span></code> is parameterized over are the <strong>same</strong> type.</p>
+<p>We have now seen the type in its generic form.
+By instantiating the type variables we can create a concrete form.
+For instance <code class="docutils literal"><span class="pre">Either</span> <span class="pre">Int</span> <span class="pre">String</span></code> or <code class="docutils literal"><span class="pre">Either</span> <span class="pre">Bool</span> <span class="pre">Char</span></code>.
+Note that <code class="docutils literal"><span class="pre">Either</span> <span class="pre">a</span> <span class="pre">b</span></code> does not mean that <code class="docutils literal"><span class="pre">a</span></code> and <code class="docutils literal"><span class="pre">b</span></code> <strong>have</strong> to be distinct, but they are allowed to.
+<code class="docutils literal"><span class="pre">Either</span> <span class="pre">Int</span> <span class="pre">Int</span></code> is also a perfectly valid concrete form of <code class="docutils literal"><span class="pre">Either</span> <span class="pre">a</span> <span class="pre">b</span></code>.</p>
+<p>At compile time all of the type parameters must be known, i.e. only concrete form of types are allowed.
+The compiler will infer the concrete values of the type variables for you.</p>
+<p>Note that if you wish to annotate a type which uses type variables you will have to fill in the concrete types for those variables <em>unless</em> they are unused.
+An example:</p>
+<p>As you can see from the definition of <code class="docutils literal"><span class="pre">Either</span></code> each type variable is used in one of the constructors.
+If you now create one of theses values and whish to annotate it with a type you have to fill in the respective typ variable.
+However you do not have to fill in the second variable.
+For instance if you create a <code class="docutils literal"><span class="pre">Left</span></code> value, lets say containing a <code class="docutils literal"><span class="pre">String</span></code> it does not matter what type <code class="docutils literal"><span class="pre">b</span></code> is in the resulting <code class="docutils literal"><span class="pre">Either</span></code>, becuase the <code class="docutils literal"><span class="pre">Left</span></code> constructor only uses the <code class="docutils literal"><span class="pre">a</span></code> variable and therefore the compiler will allow you to write anything for <code class="docutils literal"><span class="pre">a</span></code> including a type variable (which means it can be anything).
+If however you have an expression like the <code class="docutils literal"><span class="pre">if</span></code> which may either return <code class="docutils literal"><span class="pre">Left</span></code> or <code class="docutils literal"><span class="pre">Right</span></code> you have to fill in both types properly.</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">data</span> <span class="n">Either</span> <span class="n">a</span> <span class="n">b</span> <span class="o">=</span> <span class="n">Left</span> <span class="n">a</span> <span class="o">|</span> <span class="n">Right</span> <span class="n">b</span>
+
+<span class="n">x</span> <span class="p">::</span> <span class="n">Either</span> <span class="n">String</span> <span class="n">b</span>
+<span class="n">x</span> <span class="o">=</span> <span class="n">Left</span> <span class="s2">&quot;A String&quot;</span>
+<span class="n">y</span> <span class="p">::</span> <span class="n">Either</span> <span class="n">a</span> <span class="n">Int</span>
+<span class="n">y</span> <span class="o">=</span> <span class="n">Right</span> <span class="mi">1</span>
+
+<span class="n">x_and_y</span> <span class="p">::</span> <span class="n">Either</span> <span class="n">String</span> <span class="n">Int</span>
+<span class="n">x_and_y</span> <span class="o">=</span> <span class="k">if</span> <span class="n">someBool</span> <span class="n">then</span> <span class="n">x</span> <span class="k">else</span> <span class="n">y</span>
+</pre></div>
+</div>
+<p>We could also have annotated <code class="docutils literal"><span class="pre">x</span></code> and <code class="docutils literal"><span class="pre">y</span></code> with concrete types for the respective other variable, however in that case we must make it the type the <code class="docutils literal"><span class="pre">if</span></code> expression expects it to be or we get a type error.
+Therefore is is usually advisable to leave the type unspecified unless necessary.</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">data</span> <span class="n">Either</span> <span class="n">a</span> <span class="n">b</span> <span class="o">=</span> <span class="n">Left</span> <span class="n">a</span> <span class="o">|</span> <span class="n">Right</span> <span class="n">b</span>
+
+<span class="o">--</span> <span class="n">these</span> <span class="n">definitions</span> <span class="n">are</span> <span class="n">ok</span>
+<span class="o">--</span> <span class="n">because</span> <span class="n">the</span> <span class="nb">type</span> <span class="n">lines</span> <span class="n">up</span> <span class="k">with</span> <span class="n">the</span> <span class="k">if</span> <span class="n">expression</span>
+
+<span class="n">x</span> <span class="p">::</span> <span class="n">Either</span> <span class="n">String</span> <span class="n">Int</span>
+<span class="n">x</span> <span class="o">=</span> <span class="n">Left</span> <span class="s2">&quot;A String&quot;</span>
+<span class="n">y</span> <span class="p">::</span> <span class="n">Either</span> <span class="n">String</span> <span class="n">Int</span>
+<span class="n">y</span> <span class="o">=</span> <span class="n">Right</span> <span class="mi">1</span>
+
+<span class="o">--</span> <span class="n">these</span> <span class="n">definitions</span> <span class="n">are</span> <span class="n">problematic</span>
+<span class="o">--</span> <span class="n">they</span> <span class="n">would</span> <span class="n">cause</span> <span class="n">a</span> <span class="nb">type</span> <span class="n">error</span>
+
+<span class="n">x</span> <span class="p">::</span> <span class="n">Either</span> <span class="n">String</span> <span class="n">Bool</span>
+<span class="n">x</span> <span class="o">=</span> <span class="n">Left</span> <span class="s2">&quot;A String&quot;</span>
+<span class="n">y</span> <span class="p">::</span> <span class="n">Either</span> <span class="p">(</span><span class="n">Either</span> <span class="n">String</span> <span class="n">String</span><span class="p">)</span> <span class="n">Int</span>
+<span class="n">y</span> <span class="o">=</span> <span class="n">Right</span> <span class="mi">1</span>
+
+<span class="n">x_and_y</span> <span class="p">::</span> <span class="n">Either</span> <span class="n">String</span> <span class="n">Int</span>
+<span class="n">x_and_y</span> <span class="o">=</span> <span class="k">if</span> <span class="n">someBool</span> <span class="n">then</span> <span class="n">x</span> <span class="k">else</span> <span class="n">y</span>
+</pre></div>
+</div>
+<p>If you don&#8217;t know the type of an expression but wish to annotate it or you dont know the value of one of the type variables you can use a so called &#8220;type hole&#8221; to have the compiler figure it out for you.
+If you annotate an expression with <code class="docutils literal"><span class="pre">_</span></code> the compiler will throw an error and tell you what it infers the type for <code class="docutils literal"><span class="pre">_</span></code> to be.
+You can use multiple <code class="docutils literal"><span class="pre">_</span></code> at the same time each of which will cause a compile error with information about the inferred type.
+This can be used for full type signatures or even just parts of it, including type variables.
+GHC generally tries to infer the most general type for you.</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="o">--</span> <span class="n">infer</span> <span class="n">a</span> <span class="n">full</span> <span class="nb">type</span> <span class="n">signature</span>
+<span class="n">x</span> <span class="p">::</span> <span class="n">_</span>
+<span class="n">x</span> <span class="o">=</span> <span class="n">Left</span> <span class="s2">&quot;A String&quot;</span>
+
+<span class="o">--</span> <span class="n">Infer</span> <span class="n">a</span> <span class="n">variable</span>
+<span class="n">y</span> <span class="p">::</span> <span class="n">Either</span> <span class="n">a</span> <span class="n">_</span>
+<span class="n">y</span> <span class="o">=</span> <span class="n">Right</span> <span class="mi">1</span>
+</pre></div>
+</div>
+</div>
 <div class="section" id="user-defined-types">
-<span id="id2"></span><h2>User defined types<a class="headerlink" href="#user-defined-types" title="Permalink to this headline">¶</a></h2>
+<span id="id4"></span><h2>4.2. User defined types<a class="headerlink" href="#user-defined-types" title="Permalink to this headline">¶</a></h2>
 <p>Defining types in Haskell takes three forms.</p>
 <div class="section" id="aliases">
-<span id="type-alases"></span><h3>Aliases<a class="headerlink" href="#aliases" title="Permalink to this headline">¶</a></h3>
+<span id="type-alases"></span><h3>4.2.1. Aliases<a class="headerlink" href="#aliases" title="Permalink to this headline">¶</a></h3>
 <p>The <code class="docutils literal"><span class="pre">type</span></code> keyword allows us to define a new name for an existing type.
 This can have two different purposes:</p>
 <ol class="arabic">
@@ -81,20 +159,20 @@ type MyMap = HashMap
 <p>As you can see from these examples like in function signatures type aliases support polymorphism via type variables and the type varables support partial application like functions.</p>
 </div>
 <div class="section" id="algebraic-datatypes">
-<span id="id3"></span><h3>Algebraic datatypes<a class="headerlink" href="#algebraic-datatypes" title="Permalink to this headline">¶</a></h3>
+<span id="id5"></span><h3>4.2.2. Algebraic datatypes<a class="headerlink" href="#algebraic-datatypes" title="Permalink to this headline">¶</a></h3>
 <p>Algebraic datatypes are the &#8220;normal&#8221; user defined datatypes in Haskell.
 They are richer than datatypes from other laguages such as Java classes or C structs in that each type can have more (or less) than one representation.
 Some modern languages such as Rust and Swift also support those types of data.
 They call them Enums.</p>
-<p>A type is defined using the <code class="docutils literal"><span class="pre">data</span></code> keyword, followed by the name of the type, which must begin with an upper case letter (see also <a class="reference internal" href="syntax.html#types"><span class="std std-ref">here</span></a>), followed by an equal sign.
+<p>A type is defined using the <code class="docutils literal"><span class="pre">data</span></code> keyword, followed by the name of the type, which must begin with an upper case letter (see also <a class="reference internal" href="#types"><span class="std std-ref">here</span></a>), followed by an equal sign.
 This is followed by any number of <code class="docutils literal"><span class="pre">|</span></code> separated <em>constructor definitions</em>.</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">data</span> <span class="n">Coordinates</span> <span class="o">=</span> <span class="n">LongAndLat</span> <span class="n">Int</span> <span class="n">Int</span>
 
-<span class="n">data</span> <span class="n">Maybe</span> <span class="n">a</span> <span class="o">=</span> <span class="n">Nothing</span> <span class="o">|</span> <span class="n">Just</span> <span class="n">a</span>
+<span class="n">data</span> <span class="n">File</span> <span class="o">=</span> <span class="n">TextFile</span> <span class="n">String</span> <span class="o">|</span> <span class="n">Binary</span> <span class="n">Bytes</span>
 </pre></div>
 </div>
 <p>A constructor definition takes the form of first the constructor itself, followed by any number of type arguments, which are the types of the fields in the constructor.
-The naming constraints for the constructor are the same as for <a class="reference internal" href="syntax.html#types"><span class="std std-ref">Type literals</span></a>.[#type-operators]</p>
+The naming constraints for the constructor are the same as for <a class="reference internal" href="#types"><span class="std std-ref">Types</span></a>.[#type-operators]</p>
 <p>Constructors serve two purposes.</p>
 <ol class="arabic">
 <li><dl class="first docutils">
@@ -117,14 +195,14 @@ The naming constraints for the constructor are the same as for <a class="referen
 </ol>
 <p>It is very important to know the difference between a <em>type(name)</em> and a <em>constructor</em> in Haskell.
 Also not that it is allowed for a type and a constructor with the same name to be in scope, as the distinction between the two can be made from the context in which they are used.
-Type names only ever occur in a place where a type can occur, such as in the definition of another type and type signatures.</p>
+Type names only ever occur in a place where a type can occur, such as in the definition of another type and type signatures whereas a <em>Constructor</em> can occur in any epression.</p>
 <div class="admonition-aside admonition">
 <p class="first admonition-title">Aside</p>
 <p class="last">There are more ways to control type variables in Haskell using a <span class="xref std std-ref">generalised concept of algebraic datatypes</span>.</p>
 </div>
 </div>
 <div class="section" id="newtypes">
-<span id="id4"></span><h3>Newtypes<a class="headerlink" href="#newtypes" title="Permalink to this headline">¶</a></h3>
+<span id="id6"></span><h3>4.2.3. Newtypes<a class="headerlink" href="#newtypes" title="Permalink to this headline">¶</a></h3>
 <p>Newtypes are basically a stricter version of the <code class="docutils literal"><span class="pre">type</span></code> alias.
 To be more concrete a <code class="docutils literal"><span class="pre">newtype</span></code> is a wrapper for another type which completely hides the wrapped type.</p>
 <p>The syntax is very similar to a <code class="docutils literal"><span class="pre">data</span></code> definition, with two important restrictions.</p>
@@ -151,16 +229,16 @@ if we used a <code class="docutils literal"><span class="pre">type</span></code>
 </div>
 </div>
 <div class="section" id="the-case-construct">
-<span id="case"></span><h2>The <code class="docutils literal"><span class="pre">case</span></code> construct<a class="headerlink" href="#the-case-construct" title="Permalink to this headline">¶</a></h2>
+<span id="case"></span><h2>4.3. The <code class="docutils literal"><span class="pre">case</span></code> construct<a class="headerlink" href="#the-case-construct" title="Permalink to this headline">¶</a></h2>
 <p>The <code class="docutils literal"><span class="pre">case</span></code> construct together with function application basically comprises everything which you can do in Haskell.
 The <code class="docutils literal"><span class="pre">case</span></code> construct is used to deconstruct a type and gain access to the data contained withtin.</p>
 <p>This is easiest to see with a user defined type</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">data</span> <span class="n">MyType</span> <span class="o">=</span> <span class="n">Constr1</span> <span class="n">Int</span>
 
-<span class="n">let</span> <span class="n">aValue</span> <span class="o">=</span> <span class="n">Constr1</span> <span class="mi">5</span> <span class="p">::</span> <span class="n">MyType</span>
-    <span class="n">theIntWithin</span> <span class="o">=</span>
-        <span class="n">case</span> <span class="n">aValue</span> <span class="n">of</span>
-            <span class="n">Constr1</span> <span class="n">i</span> <span class="o">-&gt;</span> <span class="n">i</span>
+<span class="n">aValue</span> <span class="o">=</span> <span class="n">Constr1</span> <span class="mi">5</span> <span class="p">::</span> <span class="n">MyType</span>
+<span class="n">theIntWithin</span> <span class="o">=</span>
+    <span class="n">case</span> <span class="n">aValue</span> <span class="n">of</span>
+        <span class="n">Constr1</span> <span class="n">i</span> <span class="o">-&gt;</span> <span class="n">i</span>
 
 <span class="n">theIntWithin</span> <span class="o">==</span> <span class="mi">5</span>
 </pre></div>
@@ -179,44 +257,45 @@ We simply bind the expression to <code class="docutils literal"><span class="pre
 <p>However this is often used to create a default clause for a case match.</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">data</span> <span class="n">MyType</span> <span class="o">=</span> <span class="n">Constr1</span> <span class="n">Int</span> <span class="o">|</span> <span class="n">Constr2</span> <span class="n">String</span>
 
-<span class="n">let</span> <span class="n">aValue</span> <span class="o">=</span> <span class="n">Constr1</span> <span class="mi">5</span> <span class="p">::</span> <span class="n">MyType</span>
-    <span class="n">theIntWithin</span> <span class="o">=</span>
-        <span class="n">case</span> <span class="n">aValue</span> <span class="n">of</span>
-            <span class="n">Constr1</span> <span class="n">i</span> <span class="o">-&gt;</span> <span class="n">i</span>
-            <span class="n">x</span> <span class="o">-&gt;</span> <span class="mi">0</span>
+<span class="n">aValue</span> <span class="o">=</span> <span class="n">Constr1</span> <span class="mi">5</span> <span class="p">::</span> <span class="n">MyType</span>
+<span class="n">theIntWithin</span> <span class="o">=</span>
+    <span class="n">case</span> <span class="n">aValue</span> <span class="n">of</span>
+        <span class="n">Constr1</span> <span class="n">i</span> <span class="o">-&gt;</span> <span class="n">i</span>
+        <span class="n">x</span> <span class="o">-&gt;</span> <span class="mi">0</span>
 </pre></div>
 </div>
-<p>Match clauses are alwas matched in sequence, from top to bottom until a matching clause is found.
+<p>Match clauses are always matched in sequence, from top to bottom until a matching clause is found.
 A clause like <code class="docutils literal"><span class="pre">x</span></code>, which does not contain a constructor will always match.
 Therefore it is usually found as the last clause, often serving as a kind of default clause.
 If the default clause does not need the value we often use <code class="docutils literal"><span class="pre">_</span></code> as binding to indicate that we do not use the value.</p>
 <p>The <code class="docutils literal"><span class="pre">case</span></code> is an immensely powerful control structure as all other control structures can be defined in terms of <code class="docutils literal"><span class="pre">case</span></code> and function application.
 For instance we can define an <code class="docutils literal"><span class="pre">if</span></code> using case.</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">let</span> <span class="k">if</span> <span class="n">cond</span> <span class="n">a</span> <span class="n">b</span> <span class="o">=</span>
-        <span class="n">case</span> <span class="n">cond</span> <span class="n">of</span>
-            <span class="kc">True</span> <span class="o">-&gt;</span> <span class="n">a</span>
-            <span class="kc">False</span> <span class="o">-&gt;</span> <span class="n">b</span>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="k">if</span> <span class="n">cond</span> <span class="n">a</span> <span class="n">b</span> <span class="o">=</span>
+    <span class="n">case</span> <span class="n">cond</span> <span class="n">of</span>
+        <span class="kc">True</span> <span class="o">-&gt;</span> <span class="n">a</span>
+        <span class="kc">False</span> <span class="o">-&gt;</span> <span class="n">b</span>
 </pre></div>
 </div>
-<p>You can also pattern match on primitive, built-in types.</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">let</span> <span class="n">isC</span> <span class="n">char</span> <span class="o">=</span> <span class="n">case</span> <span class="n">char</span> <span class="n">of</span>
-                    <span class="s1">&#39;c&#39;</span> <span class="o">-&gt;</span> <span class="kc">True</span>
-                    <span class="n">_</span> <span class="o">-&gt;</span> <span class="kc">False</span>
+<p>You can also pattern match on all primitive, built-in types such as <code class="docutils literal"><span class="pre">Char</span></code>, <code class="docutils literal"><span class="pre">[]</span></code>, <code class="docutils literal"><span class="pre">String</span></code>, <code class="docutils literal"><span class="pre">Int</span></code>, <code class="docutils literal"><span class="pre">Float</span></code> and so on. Anything you can write as a literal you may use in a case pattern.</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">isC</span> <span class="n">char</span> <span class="o">=</span> <span class="n">case</span> <span class="n">char</span> <span class="n">of</span>
+                <span class="s1">&#39;c&#39;</span> <span class="o">-&gt;</span> <span class="kc">True</span>
+                <span class="n">_</span> <span class="o">-&gt;</span> <span class="kc">False</span>
 
 <span class="n">isC</span> <span class="s1">&#39;l&#39;</span> <span class="o">==</span> <span class="kc">False</span>
 <span class="n">isC</span> <span class="s1">&#39;c&#39;</span> <span class="o">==</span> <span class="kc">True</span>
 
-<span class="n">let</span> <span class="n">is4</span> <span class="n">n</span> <span class="o">=</span> <span class="n">case</span> <span class="n">n</span> <span class="n">of</span>
-                <span class="mi">4</span> <span class="o">-&gt;</span> <span class="kc">True</span>
-                <span class="n">_</span> <span class="o">-&gt;</span> <span class="kc">False</span>
+<span class="n">is4</span> <span class="n">n</span> <span class="o">=</span> <span class="n">case</span> <span class="n">n</span> <span class="n">of</span>
+            <span class="mi">4</span> <span class="o">-&gt;</span> <span class="kc">True</span>
+            <span class="n">_</span> <span class="o">-&gt;</span> <span class="kc">False</span>
 
 <span class="n">is4</span> <span class="mi">4</span> <span class="o">==</span> <span class="kc">True</span>
 <span class="n">is4</span> <span class="mi">0</span> <span class="o">==</span> <span class="kc">False</span>
 </pre></div>
 </div>
 <div class="section" id="different-ways-to-write-a-case-expression">
-<h3>Different ways to write a case expression<a class="headerlink" href="#different-ways-to-write-a-case-expression" title="Permalink to this headline">¶</a></h3>
-<p>Case expressions can either be written using indentation, or semicolons and braces.
+<h3>4.3.1. Different ways to write a case expression<a class="headerlink" href="#different-ways-to-write-a-case-expression" title="Permalink to this headline">¶</a></h3>
+<p>Case expressions can either be written using indentation, or semicolons and braces in the same way we can do with <code class="docutils literal"><span class="pre">let</span></code>.
+Thereby we can use <code class="docutils literal"><span class="pre">;</span></code> to omit newlines and <code class="docutils literal"><span class="pre">{}</span></code> to omit the indentation.
 The following definitions are equivalent</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">case</span> <span class="n">expr</span> <span class="n">of</span>
     <span class="o">--</span> <span class="n">note</span> <span class="n">the</span> <span class="n">indent</span> <span class="n">of</span> <span class="n">the</span> <span class="n">match</span> <span class="n">clauses</span>
@@ -227,7 +306,8 @@ The following definitions are equivalent</p>
     <span class="n">Constr1</span> <span class="n">field1</span> <span class="n">field2</span> <span class="o">-&gt;</span>
         <span class="o">--</span> <span class="n">note</span> <span class="n">the</span> <span class="n">deeper</span> <span class="n">indent</span> <span class="k">for</span> <span class="n">the</span> <span class="n">result</span> <span class="n">expression</span>
         <span class="n">resultExpr</span>
-    <span class="n">Constr2</span> <span class="n">f</span> <span class="o">-&gt;</span> <span class="n">resultExpr2</span>
+    <span class="n">Constr2</span> <span class="n">f</span> <span class="o">-&gt;</span>
+        <span class="n">resultExpr2</span>
 
 <span class="o">--</span> <span class="n">indent</span> <span class="ow">is</span> <span class="n">replaced</span> <span class="k">with</span> <span class="n">semicolons</span> <span class="ow">and</span> <span class="n">braces</span>
 <span class="n">case</span> <span class="n">expr</span> <span class="n">of</span> <span class="p">{</span> <span class="n">Constr1</span> <span class="n">field1</span> <span class="n">field2</span> <span class="o">-&gt;</span> <span class="n">resultExpr</span><span class="p">;</span> <span class="n">Constr2</span> <span class="n">f</span> <span class="o">-&gt;</span> <span class="n">resultExpr2</span> <span class="p">}</span>
@@ -235,54 +315,34 @@ The following definitions are equivalent</p>
 </div>
 </div>
 </div>
-<div class="section" id="type-variables-and-special-types">
-<span id="type-variables"></span><h2>Type variables and special types<a class="headerlink" href="#type-variables-and-special-types" title="Permalink to this headline">¶</a></h2>
-<p>Types in Haskell may be parameterized over another type, which is not known at the time of defining the former type.
-This system is very similar to generics in many languages, but much more powerful as the type information is fully preserved.</p>
-<p>The naming rules for type variables are the same as for <a class="reference internal" href="syntax.html#bindings"><span class="std std-ref">Bindings</span></a>. <a href="#id10"><span class="problematic" id="id11"><span id="id5"></span>[#naming-convention]_</span></a></p>
-<p>The whole type is then written as first the type name followed by a space and then followed by the parameters, also space separated.
-This is also called juxtaposition.</p>
-<p>As an example for a parameterized type is the <code class="docutils literal"><span class="pre">Either</span> <span class="pre">a</span> <span class="pre">b</span></code> type.
-The name of the type is <code class="docutils literal"><span class="pre">Either</span></code> and it is parameterized by a type variable <code class="docutils literal"><span class="pre">a</span></code> and a type variable <code class="docutils literal"><span class="pre">b</span></code>.
-Note that there is no special significance to the name of the type variables themselves.
-It would be semantically equivalent to call the type <code class="docutils literal"><span class="pre">Either</span> <span class="pre">one</span> <span class="pre">the_other</span></code>.
-Only if we were to name both variables the same would we change the meaning, because <code class="docutils literal"><span class="pre">Either</span> <span class="pre">a</span> <span class="pre">a</span></code> would mean <strong>both</strong> types <code class="docutils literal"><span class="pre">Either</span></code> is parameterized over are the <strong>same</strong> type.</p>
-<p>We have now seen the type in its generic form.
-By instantiating the type variables we can create a concrete form.
-For instance <code class="docutils literal"><span class="pre">Either</span> <span class="pre">Int</span> <span class="pre">String</span></code> or <code class="docutils literal"><span class="pre">Either</span> <span class="pre">Bool</span> <span class="pre">Char</span></code>.
-Note that <code class="docutils literal"><span class="pre">Either</span> <span class="pre">a</span> <span class="pre">b</span></code> does not mean that <code class="docutils literal"><span class="pre">a</span></code> and <code class="docutils literal"><span class="pre">b</span></code> <strong>have</strong> to be distinct, but they are allowed to.
-<code class="docutils literal"><span class="pre">Either</span> <span class="pre">Int</span> <span class="pre">Int</span></code> is also a perfectly valid concrete form of <code class="docutils literal"><span class="pre">Either</span> <span class="pre">a</span> <span class="pre">b</span></code>.</p>
-<p>At compile time all of the type parameters must be known, i.e. only concrete form of types are allowed.
-The compiler will infer the concrete values of the type variables for you.</p>
 <div class="section" id="special-types">
-<span id="id6"></span><h3>Special types<a class="headerlink" href="#special-types" title="Permalink to this headline">¶</a></h3>
-<p>There are some notable exceptions to the type naming rule above.
+<span id="id7"></span><h2>4.4. Special types<a class="headerlink" href="#special-types" title="Permalink to this headline">¶</a></h2>
+<p>There are some notable exceptions to the type naming rule.
 Those are the <strong>list type</strong>, which is <code class="docutils literal"><span class="pre">[]</span></code> or <code class="docutils literal"><span class="pre">[a]</span></code> which means &#8220;a list containing elements of type <code class="docutils literal"><span class="pre">a</span></code>&#8221; and the <strong>tuple type</strong> <code class="docutils literal"><span class="pre">(a,b)</span></code> for &#8220;a 2-tuple containing a value of type <code class="docutils literal"><span class="pre">a</span></code> and a value of type <code class="docutils literal"><span class="pre">b</span></code>&#8221;.
-There are also larger tuples <code class="docutils literal"><span class="pre">(a,b,c)</span></code>, <code class="docutils literal"><span class="pre">(a,b,c,d)</span></code> etc. <a href="#id12"><span class="problematic" id="id13"><span id="id7"></span>[#tuple-size]_</span></a>
+There are also larger tuples <code class="docutils literal"><span class="pre">(a,b,c)</span></code>, <code class="docutils literal"><span class="pre">(a,b,c,d)</span></code> etc. <a class="footnote-reference" href="#tuple-size" id="id8">[2]</a>
 These tuples are simply grouped data and very common in mathematics for instance.
 Should you not be familiar with the mathematical notion of tuples it may help to think of it as an unnamed struct where the fields are accessed by &#8220;index&#8221;.
 And the last special type is the <strong>function type</strong> <code class="docutils literal"><span class="pre">a</span> <span class="pre">-&gt;</span> <span class="pre">b</span></code>, which reads &#8220;a function taking as input a value of type <code class="docutils literal"><span class="pre">a</span></code> and producing a value of type <code class="docutils literal"><span class="pre">b</span></code>.</p>
 <p>Some examples for concrete instances of special types:</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">let</span> <span class="n">myIntBoolTriple</span> <span class="p">::</span> <span class="p">(</span><span class="n">Int</span><span class="p">,</span> <span class="n">Int</span><span class="p">,</span> <span class="n">Bool</span><span class="p">)</span>
-    <span class="n">myIntBoolTriple</span> <span class="o">=</span> <span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="mi">9</span><span class="p">,</span> <span class="kc">False</span><span class="p">)</span>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">myIntBoolTriple</span> <span class="p">::</span> <span class="p">(</span><span class="n">Int</span><span class="p">,</span> <span class="n">Int</span><span class="p">,</span> <span class="n">Bool</span><span class="p">)</span>
+<span class="n">myIntBoolTriple</span> <span class="o">=</span> <span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="mi">9</span><span class="p">,</span> <span class="kc">False</span><span class="p">)</span>
 
-<span class="n">let</span> <span class="n">aWordList</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;Hello&quot;</span><span class="p">,</span> <span class="s2">&quot;Foo&quot;</span><span class="p">,</span> <span class="s2">&quot;bar&quot;</span><span class="p">]</span> <span class="p">::</span> <span class="p">[</span><span class="n">String</span><span class="p">]</span> <span class="o">--</span> <span class="n">Note</span><span class="p">:</span> <span class="n">A</span> <span class="n">different</span> <span class="n">way</span> <span class="n">to</span> <span class="n">annotate</span> <span class="n">the</span> <span class="nb">type</span>
+<span class="n">aWordList</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;Hello&quot;</span><span class="p">,</span> <span class="s2">&quot;Foo&quot;</span><span class="p">,</span> <span class="s2">&quot;bar&quot;</span><span class="p">]</span> <span class="p">::</span> <span class="p">[</span><span class="n">String</span><span class="p">]</span> <span class="o">--</span> <span class="n">Note</span><span class="p">:</span> <span class="n">A</span> <span class="n">different</span> <span class="n">way</span> <span class="n">to</span> <span class="n">annotate</span> <span class="n">the</span> <span class="nb">type</span>
 
 <span class="o">--</span> <span class="n">Note</span><span class="p">:</span> <span class="n">we</span> <span class="n">can</span> <span class="n">also</span> <span class="n">nest</span> <span class="n">these</span> <span class="n">types</span>
-<span class="n">let</span> <span class="n">listOfTuples</span> <span class="p">::</span> <span class="p">[(</span><span class="n">Int</span><span class="p">,</span> <span class="n">String</span><span class="p">)]</span>
-    <span class="n">listOfTuples</span> <span class="o">=</span>
-        <span class="p">[</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="s2">&quot;Marco&quot;</span><span class="p">)</span>
-        <span class="p">,</span> <span class="p">(</span><span class="mi">9</span><span class="p">,</span> <span class="s2">&quot;Janine&quot;</span><span class="p">)</span>
-        <span class="p">]</span>
+<span class="n">listOfTuples</span> <span class="p">::</span> <span class="p">[(</span><span class="n">Int</span><span class="p">,</span> <span class="n">String</span><span class="p">)]</span>
+<span class="n">listOfTuples</span> <span class="o">=</span>
+    <span class="p">[</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="s2">&quot;Marco&quot;</span><span class="p">)</span>
+    <span class="p">,</span> <span class="p">(</span><span class="mi">9</span><span class="p">,</span> <span class="s2">&quot;Janine&quot;</span><span class="p">)</span>
+    <span class="p">]</span>
 </pre></div>
 </div>
 </div>
-</div>
 <div class="section" id="record-syntax">
-<span id="id8"></span><h2>Record syntax<a class="headerlink" href="#record-syntax" title="Permalink to this headline">¶</a></h2>
+<span id="id9"></span><h2>4.5. Record syntax<a class="headerlink" href="#record-syntax" title="Permalink to this headline">¶</a></h2>
 <p>For convenience reasons there is some extra syntax for defining data types which also automatically creates some field accessor functions.</p>
 <p>We can write the following:</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">data</span> <span class="n">TyType</span> <span class="o">=</span>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">data</span> <span class="n">MyType</span> <span class="o">=</span>
     <span class="n">Constructor</span> <span class="p">{</span> <span class="n">field1</span> <span class="p">::</span> <span class="n">Int</span>
                 <span class="p">,</span> <span class="n">field2</span> <span class="p">::</span> <span class="n">String</span>
                 <span class="p">}</span>
@@ -290,11 +350,9 @@ And the last special type is the <strong>function type</strong> <code class="doc
 </div>
 <p>This defines the type the same way as the other <code class="docutils literal"><span class="pre">data</span></code> construct.
 Meaning we can pattern match as usual on the constructor.</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">data</span> <span class="n">MyType</span> <span class="o">=</span> <span class="n">Constructor</span> <span class="n">Int</span> <span class="n">String</span>
-
-<span class="n">let</span> <span class="n">theData</span> <span class="o">=</span> <span class="n">Constructor</span> <span class="mi">9</span> <span class="s2">&quot;hello&quot;</span> <span class="p">::</span> <span class="n">MyType</span>
-<span class="n">let</span> <span class="n">theInt</span> <span class="o">=</span> <span class="n">case</span> <span class="n">theData</span> <span class="n">of</span>
-                <span class="n">Constructor</span> <span class="n">i</span> <span class="n">_</span> <span class="o">-&gt;</span> <span class="n">i</span>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">theData</span> <span class="o">=</span> <span class="n">Constructor</span> <span class="mi">9</span> <span class="s2">&quot;hello&quot;</span> <span class="p">::</span> <span class="n">MyType</span>
+<span class="n">theInt</span> <span class="o">=</span> <span class="n">case</span> <span class="n">theData</span> <span class="n">of</span>
+            <span class="n">Constructor</span> <span class="n">i</span> <span class="n">_</span> <span class="o">-&gt;</span> <span class="n">i</span>
 
 <span class="n">theInt</span> <span class="o">==</span> <span class="mi">9</span>
 </pre></div>
@@ -312,20 +370,20 @@ Meaning we can pattern match as usual on the constructor.</p>
 </div>
 <p>Also the two accessor functions <code class="docutils literal"><span class="pre">field1</span></code> and <code class="docutils literal"><span class="pre">field2</span></code> may be used in a special <em>record update syntax</em> to create a new record from an old one with altered field contents.
 Additionally the record may be created with a special record creation syntax.</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">data</span> <span class="n">TyType</span> <span class="o">=</span>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">data</span> <span class="n">MyType</span> <span class="o">=</span>
     <span class="n">Constructor</span> <span class="p">{</span> <span class="n">field1</span> <span class="p">::</span> <span class="n">Int</span>
                 <span class="p">,</span> <span class="n">field2</span> <span class="p">::</span> <span class="n">String</span>
                 <span class="p">}</span>
 
-<span class="n">let</span> <span class="n">v1</span> <span class="o">=</span> <span class="n">Constructor</span> <span class="mi">9</span> <span class="s2">&quot;Hello&quot;</span> <span class="p">::</span> <span class="n">MyType</span>
+<span class="n">v1</span> <span class="o">=</span> <span class="n">Constructor</span> <span class="mi">9</span> <span class="s2">&quot;Hello&quot;</span> <span class="p">::</span> <span class="n">MyType</span>
 
 <span class="o">--</span> <span class="n">record</span> <span class="n">creation</span> <span class="n">syntax</span>
-<span class="n">let</span> <span class="n">v2</span> <span class="o">=</span> <span class="n">Constructor</span> <span class="p">{</span> <span class="n">field2</span> <span class="o">=</span> <span class="s2">&quot;World&quot;</span><span class="p">,</span> <span class="n">field1</span> <span class="o">=</span> <span class="mi">4</span> <span class="p">}</span> <span class="p">::</span> <span class="n">MyType</span>
+<span class="n">v2</span> <span class="o">=</span> <span class="n">Constructor</span> <span class="p">{</span> <span class="n">field2</span> <span class="o">=</span> <span class="s2">&quot;World&quot;</span><span class="p">,</span> <span class="n">field1</span> <span class="o">=</span> <span class="mi">4</span> <span class="p">}</span> <span class="p">::</span> <span class="n">MyType</span>
 
 <span class="o">--</span> <span class="n">update</span> <span class="n">syntax</span>
-<span class="n">let</span> <span class="n">v3</span> <span class="o">=</span> <span class="n">v2</span> <span class="p">{</span> <span class="n">field1</span> <span class="o">=</span> <span class="mi">9</span> <span class="p">}</span>
+<span class="n">v3</span> <span class="o">=</span> <span class="n">v2</span> <span class="p">{</span> <span class="n">field1</span> <span class="o">=</span> <span class="mi">9</span> <span class="p">}</span>
 <span class="o">--</span> <span class="n">updating</span> <span class="n">multiple</span> <span class="n">fields</span> <span class="n">at</span> <span class="n">once</span>
-<span class="n">let</span> <span class="n">v4</span> <span class="o">=</span> <span class="n">v2</span> <span class="p">{</span> <span class="n">field1</span> <span class="o">=</span> <span class="mi">9</span><span class="p">,</span> <span class="n">field2</span> <span class="s2">&quot;Hello&quot;</span> <span class="p">}</span>
+<span class="n">v4</span> <span class="o">=</span> <span class="n">v2</span> <span class="p">{</span> <span class="n">field1</span> <span class="o">=</span> <span class="mi">9</span><span class="p">,</span> <span class="n">field2</span> <span class="s2">&quot;Hello&quot;</span> <span class="p">}</span>
 
 <span class="n">v1</span> <span class="o">==</span> <span class="n">v4</span>
 
@@ -333,6 +391,30 @@ Additionally the record may be created with a special record creation syntax.</p
 <span class="n">v2</span> <span class="o">/=</span> <span class="n">v3</span> <span class="o">/=</span> <span class="n">v4</span>
 </pre></div>
 </div>
+<p>And finally it also enables a special record pattern match using the fields.</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">theData</span> <span class="o">=</span> <span class="n">Constructor</span> <span class="mi">9</span> <span class="s2">&quot;hello&quot;</span> <span class="p">::</span> <span class="n">MyType</span>
+
+<span class="n">theInt</span> <span class="o">=</span> <span class="n">case</span> <span class="n">theData</span> <span class="n">of</span>
+            <span class="n">Constructor</span><span class="p">{</span> <span class="n">field1</span> <span class="o">=</span> <span class="n">i</span> <span class="p">}</span> <span class="o">-&gt;</span> <span class="n">i</span>
+
+<span class="n">theInt</span> <span class="o">==</span> <span class="mi">9</span>
+</pre></div>
+</div>
+<p class="rubric">footnotes</p>
+<table class="docutils footnote" frame="void" id="naming-convention" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label"><a class="fn-backref" href="#id3">[1]</a></td><td>The naming convention in Haskell is camel case.
+Meaning in each identifier (type variable, type or binding) all words composing the name are chained directly, with each new word starting with an upper case letter, except for the first word, who&#8217;s case is determined by the syntax contstraints (upper case for types, lower case for type variables and bindings).</td></tr>
+</tbody>
+</table>
+<table class="docutils footnote" frame="void" id="tuple-size" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label"><a class="fn-backref" href="#id8">[2]</a></td><td>The <a class="reference external" href="https://hackage.haskell.org/package/ghc-prim-0.5.0.0/docs/src/GHC.Tuple.html#%28%2C%2C%2C%2C%2C%2C%2C%2C%2C%2C%2C%2C%2C%2C%2C%2C%2C%2C%2C%2C%2C%2C%2C%2C%2C%2C%2C%2C%2C%2C%2C%2C%2C%2C%2C%2C%2C%2C%2C%2C%2C%2C%2C%2C%2C%2C%2C%2C%2C%2C%2C%2C%2C%2C%2C%2C%2C%2C%2C%2C%2C%29">source file for tuples in GHC</a> defined tuples with up to 62 elements.
+Below the last declaration is a large block of perhaps 20 more declarations which is commented out, with a note above saying &#8220;Manuel says: Including one more declaration gives a segmentation fault.&#8221;</td></tr>
+</tbody>
+</table>
 </div>
 </div>
 
@@ -344,22 +426,20 @@ Additionally the record may be created with a special record creation syntax.</p
         <div class="sphinxsidebarwrapper">
   <h3><a href="index.html">Table Of Contents</a></h3>
   <ul>
-<li><a class="reference internal" href="#">Types</a><ul>
-<li><a class="reference internal" href="#user-defined-types">User defined types</a><ul>
-<li><a class="reference internal" href="#aliases">Aliases</a></li>
-<li><a class="reference internal" href="#algebraic-datatypes">Algebraic datatypes</a></li>
-<li><a class="reference internal" href="#newtypes">Newtypes</a></li>
+<li><a class="reference internal" href="#">4. Types</a><ul>
+<li><a class="reference internal" href="#type-variables">4.1. Type variables</a></li>
+<li><a class="reference internal" href="#user-defined-types">4.2. User defined types</a><ul>
+<li><a class="reference internal" href="#aliases">4.2.1. Aliases</a></li>
+<li><a class="reference internal" href="#algebraic-datatypes">4.2.2. Algebraic datatypes</a></li>
+<li><a class="reference internal" href="#newtypes">4.2.3. Newtypes</a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#the-case-construct">The <code class="docutils literal"><span class="pre">case</span></code> construct</a><ul>
-<li><a class="reference internal" href="#different-ways-to-write-a-case-expression">Different ways to write a case expression</a></li>
+<li><a class="reference internal" href="#the-case-construct">4.3. The <code class="docutils literal"><span class="pre">case</span></code> construct</a><ul>
+<li><a class="reference internal" href="#different-ways-to-write-a-case-expression">4.3.1. Different ways to write a case expression</a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#type-variables-and-special-types">Type variables and special types</a><ul>
-<li><a class="reference internal" href="#special-types">Special types</a></li>
-</ul>
-</li>
-<li><a class="reference internal" href="#record-syntax">Record syntax</a></li>
+<li><a class="reference internal" href="#special-types">4.4. Special types</a></li>
+<li><a class="reference internal" href="#record-syntax">4.5. Record syntax</a></li>
 </ul>
 </li>
 </ul>
@@ -367,6 +447,8 @@ Additionally the record may be created with a special record creation syntax.</p
 <h3>Related Topics</h3>
 <ul>
   <li><a href="index.html">Documentation overview</a><ul>
+      <li>Previous: <a href="functions.html" title="previous chapter">3. Functions</a></li>
+      <li>Next: <a href="exercises/index.html" title="next chapter">5. Exercises</a></li>
   </ul></li>
 </ul>
 </div>

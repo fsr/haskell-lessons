@@ -1,0 +1,397 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="generator" content="pandoc">
+  <meta name="author" content="Justus Adam">
+  <title>Types</title>
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
+  <link rel="stylesheet" href="../reveal.js/css/reveal.css">
+  <style type="text/css">code{white-space: pre;}</style>
+  <style type="text/css">
+div.sourceCode { overflow-x: auto; }
+table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
+  margin: 0; padding: 0; vertical-align: baseline; border: none; }
+table.sourceCode { width: 100%; line-height: 100%; }
+td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
+td.sourceCode { padding-left: 5px; }
+code > span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code > span.dt { color: #902000; } /* DataType */
+code > span.dv { color: #40a070; } /* DecVal */
+code > span.bn { color: #40a070; } /* BaseN */
+code > span.fl { color: #40a070; } /* Float */
+code > span.ch { color: #4070a0; } /* Char */
+code > span.st { color: #4070a0; } /* String */
+code > span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code > span.ot { color: #007020; } /* Other */
+code > span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code > span.fu { color: #06287e; } /* Function */
+code > span.er { color: #ff0000; font-weight: bold; } /* Error */
+code > span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+code > span.cn { color: #880000; } /* Constant */
+code > span.sc { color: #4070a0; } /* SpecialChar */
+code > span.vs { color: #4070a0; } /* VerbatimString */
+code > span.ss { color: #bb6688; } /* SpecialString */
+code > span.im { } /* Import */
+code > span.va { color: #19177c; } /* Variable */
+code > span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code > span.op { color: #666666; } /* Operator */
+code > span.bu { } /* BuiltIn */
+code > span.ex { } /* Extension */
+code > span.pp { color: #bc7a00; } /* Preprocessor */
+code > span.at { color: #7d9029; } /* Attribute */
+code > span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code > span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code > span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+  </style>
+  <link rel="stylesheet" href="../reveal.js/css/theme/white.css" id="theme">
+  <!-- Printing and PDF exports -->
+  <script>
+    var link = document.createElement( 'link' );
+    link.rel = 'stylesheet';
+    link.type = 'text/css';
+    link.href = window.location.search.match( /print-pdf/gi ) ? '../reveal.js/css/print/pdf.css' : '../reveal.js/css/print/paper.css';
+    document.getElementsByTagName( 'head' )[0].appendChild( link );
+  </script>
+  <!--[if lt IE 9]>
+  <script src="../reveal.js/lib/js/html5shiv.js"></script>
+  <![endif]-->
+</head>
+<body>
+  <div class="reveal">
+    <div class="slides">
+
+<section>
+  <h1 class="title">Types</h1>
+  <h2 class="author">Justus Adam</h2>
+  <h3 class="date">20.04.2017</h3>
+</section>
+
+<section><section id="type-variables" class="titleslide slide level1"><h1>Type variables</h1></section><section class="slide level2">
+
+<ul>
+<li>parameterizes a type</li>
+<li>similar to gernerics</li>
+<li>naming rules the same as bindings</li>
+<li><code>TypeName param1 param2 ...</code></li>
+</ul>
+</section><section class="slide level2">
+
+<div class="sourceCode"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="kw">data</span> <span class="dt">Either</span> a b <span class="fu">=</span> <span class="dt">Left</span> a <span class="fu">|</span> <span class="dt">Right</span> b
+
+<span class="ot">x :: ::</span> <span class="dt">Either</span> <span class="dt">String</span> b
+x <span class="fu">=</span> <span class="dt">Left</span> <span class="st">&quot;A String&quot;</span> 
+<span class="ot">y ::</span> <span class="dt">Either</span> a <span class="dt">Int</span>
+y <span class="fu">=</span> <span class="dt">Right</span> <span class="dv">1</span> 
+
+<span class="ot">x_and_y ::</span> <span class="dt">Either</span> <span class="dt">String</span> <span class="dt">Int</span>
+x_and_y <span class="fu">=</span> <span class="kw">if</span> someBool <span class="kw">then</span> x <span class="kw">else</span> y </code></pre></div>
+</section><section class="slide level2">
+
+<div class="sourceCode"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="kw">data</span> <span class="dt">Either</span> a b <span class="fu">=</span> <span class="dt">Left</span> a <span class="fu">|</span> <span class="dt">Right</span> b
+
+<span class="ot">x ::</span> <span class="dt">Either</span> <span class="dt">String</span> <span class="dt">Int</span>
+x <span class="fu">=</span> <span class="dt">Left</span> <span class="st">&quot;A String&quot;</span> 
+<span class="ot">y ::</span> <span class="dt">Either</span> <span class="dt">String</span> <span class="dt">Int</span>
+y <span class="fu">=</span> <span class="dt">Right</span> <span class="dv">1</span> 
+
+<span class="ot">x ::</span> <span class="dt">Either</span> <span class="dt">String</span> <span class="dt">Bool</span>
+x <span class="fu">=</span> <span class="dt">Left</span> <span class="st">&quot;A String&quot;</span> 
+<span class="ot">y ::</span> <span class="dt">Either</span> (<span class="dt">Either</span> <span class="dt">String</span> <span class="dt">String</span>) <span class="dt">Int</span>
+y <span class="fu">=</span> <span class="dt">Right</span> <span class="dv">1</span> 
+
+<span class="ot">x_and_y ::</span> <span class="dt">Either</span> <span class="dt">String</span> <span class="dt">Int</span>
+x_and_y <span class="fu">=</span> <span class="kw">if</span> someBool <span class="kw">then</span> x <span class="kw">else</span> y</code></pre></div>
+</section><section class="slide level2">
+
+<div class="sourceCode"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="ot">x ::</span> _
+x <span class="fu">=</span> <span class="dt">Left</span> <span class="st">&quot;A String&quot;</span>
+
+<span class="ot">y ::</span> <span class="dt">Either</span> a _
+y <span class="fu">=</span> <span class="dt">Right</span> <span class="dv">1</span></code></pre></div>
+</section></section>
+<section><section id="user-defined-types" class="titleslide slide level1"><h1>User defined types</h1></section><section id="aliases" class="slide level2">
+<h1>Aliases</h1>
+<ul>
+<li>defined using the <code>type</code> keyword</li>
+<li>Used to shorten long type names</li>
+<li>Abstract the api from a concrete type (eases refactoring)</li>
+<li>supports partial type parameter application</li>
+</ul>
+</section><section class="slide level2">
+
+<div class="sourceCode"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="kw">type</span> <span class="dt">MakerM</span> a <span class="fu">=</span> <span class="dt">StateT</span> (<span class="dt">ALongStateName</span> <span class="dt">String</span> <span class="dt">Bool</span> (<span class="dt">HashMap</span> <span class="dt">Text</span> <span class="dt">Int</span>)) (<span class="dt">LoggingT</span> <span class="dt">IO</span>) a
+
+<span class="kw">type</span> <span class="dt">MyMap</span> key value <span class="fu">=</span> <span class="dt">HashMap</span> key value
+<span class="co">-- or (omitting the `value` variable)</span>
+<span class="kw">type</span> <span class="dt">MyMap</span> key <span class="fu">=</span> <span class="dt">HashMap</span> key
+<span class="co">-- or (omitting both the `value` and `key` variable)</span>
+<span class="kw">type</span> <span class="dt">MyMap</span> <span class="fu">=</span> <span class="dt">HashMap</span>
+
+<span class="kw">type</span> <span class="dt">MyMap</span> <span class="fu">=</span> <span class="dt">Map</span></code></pre></div>
+</section><section id="adts" class="slide level2">
+<h1>ADT's</h1>
+<ul>
+<li>standard user defined datatype</li>
+<li>one type - multiple constructors</li>
+<li>defined with the <code>data</code> keyword</li>
+<li>followed by any number of <code>|</code> separated <em>constructor definitions</em>.</li>
+<li>same naming convention as type names</li>
+</ul>
+</section><section class="slide level2">
+
+<div class="sourceCode"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="kw">data</span> <span class="dt">Coordinates</span> <span class="fu">=</span> <span class="dt">LongAndLat</span> <span class="dt">Int</span> <span class="dt">Int</span>
+
+<span class="kw">data</span> <span class="dt">Maybe</span> a <span class="fu">=</span> <span class="dt">Nothing</span> <span class="fu">|</span> <span class="dt">Just</span> a</code></pre></div>
+<aside class="notes">
+<ul>
+<li>explain construtor definition</li>
+</ul>
+</aside>
+</section><section class="slide level2">
+
+<ul>
+<li><p>Constructors are used for</p>
+<ol type="1">
+<li><em>construction</em> through function application</li>
+<li><em>deconstruction</em> through pattern matching</li>
+</ol></li>
+<li>like a regular function</li>
+<li><p>supports partial application</p></li>
+</ul>
+</section><section class="slide level2">
+
+<div class="sourceCode"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="dt">LongAndLat</span><span class="ot"> ::</span> <span class="dt">Int</span> <span class="ot">-&gt;</span> <span class="dt">Int</span> <span class="ot">-&gt;</span> <span class="dt">Coordinates</span>
+
+<span class="dt">LongAndLat</span> <span class="dv">8</span><span class="ot"> ::</span> <span class="dt">Int</span> <span class="ot">-&gt;</span> <span class="dt">Coordinates</span>
+
+map (<span class="dt">LongAndLat</span> <span class="dv">9</span>) [<span class="dv">0</span>,<span class="dv">9</span>,<span class="dv">15</span>] <span class="fu">==</span> [<span class="dt">LongAndLat</span> <span class="dv">9</span> <span class="dv">0</span>, <span class="dt">LongAndLat</span> <span class="dv">9</span> <span class="dv">9</span>, <span class="dt">LongAndLat</span> <span class="dv">9</span> <span class="dv">15</span>]</code></pre></div>
+<aside class="notes">
+<ul>
+<li>its impotant to know the difference between type and constructor</li>
+<li>type and constructor with same name can be in scope</li>
+<li>place of occurrence allows distinction</li>
+</ul>
+</aside>
+</section><section id="newtypes" class="slide level2">
+<h1>Newtypes</h1>
+<ul>
+<li>Stricter version of <code>type</code></li>
+<li>Wraps an inner type (hides it)</li>
+<li>only exists at compile time</li>
+</ul>
+<ol type="1">
+<li>The newtype must have exactly <em>one</em> constructor.</li>
+<li>The constructor must have exactly <em>one</em> field.</li>
+</ol>
+</section><section class="slide level2">
+
+<ul>
+<li><code>type</code> can be used like the source type</li>
+<li><p><code>newtype</code> cannot</p></li>
+<li><p>used to hide implementation or enforce constraints on creation</p></li>
+</ul>
+</section><section class="slide level2">
+
+<div class="sourceCode"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="kw">newtype</span> <span class="dt">Email</span> <span class="fu">=</span> <span class="dt">Email</span> <span class="dt">String</span>
+
+<span class="ot">createEmail ::</span> <span class="dt">String</span> <span class="ot">-&gt;</span> <span class="dt">Either</span> <span class="dt">String</span> <span class="dt">Email</span>
+createEmail str <span class="fu">=</span>
+    <span class="kw">if</span> conformsToEmailStandard str
+        <span class="kw">then</span> <span class="dt">Right</span> (<span class="dt">Email</span> str)
+        <span class="kw">else</span> <span class="dt">Left</span> <span class="st">&quot;This is not a valid email&quot;</span>
+
+<span class="ot">sendEmail ::</span> <span class="dt">Email</span> <span class="ot">-&gt;</span> <span class="dt">String</span> <span class="ot">-&gt;</span> <span class="dt">IO</span> ()</code></pre></div>
+</section></section>
+<section><section id="the-case-construct" class="titleslide slide level1"><h1>The <code>case</code> construct</h1></section><section class="slide level2">
+
+<ul>
+<li>case and function application form core of Haskell</li>
+<li>used to deconstruct a type and gain access to the data within</li>
+</ul>
+</section><section class="slide level2">
+
+<div class="sourceCode"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="kw">data</span> <span class="dt">MyType</span> <span class="fu">=</span> <span class="dt">Constr1</span> <span class="dt">Int</span>
+
+aValue <span class="fu">=</span> <span class="dt">Constr1</span> <span class="dv">5</span><span class="ot"> ::</span> <span class="dt">MyType</span>
+theIntWithin <span class="fu">=</span>
+    <span class="kw">case</span> aValue <span class="kw">of</span>
+        <span class="dt">Constr1</span> i <span class="ot">-&gt;</span> i
+
+theIntWithin <span class="fu">==</span> <span class="dv">5</span></code></pre></div>
+</section><section class="slide level2">
+
+<ul>
+<li>any Haskell expression is allowed in the <code>case &lt;expr&gt; of</code> head</li>
+<li>the body is a number of <code>matchclause -&gt; expr</code> pairs</li>
+<li>match clauses are a combination of constructors and bindings</li>
+</ul>
+<div class="sourceCode"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="kw">case</span> expr <span class="kw">of</span>
+    x <span class="ot">-&gt;</span> doSomething x</code></pre></div>
+</section><section class="slide level2">
+
+<p>Used for default cases</p>
+<div class="sourceCode"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="kw">data</span> <span class="dt">MyType</span> <span class="fu">=</span> <span class="dt">Constr1</span> <span class="dt">Int</span> <span class="fu">|</span> <span class="dt">Constr2</span> <span class="dt">String</span>
+
+aValue <span class="fu">=</span> <span class="dt">Constr1</span> <span class="dv">5</span><span class="ot"> ::</span> <span class="dt">MyType</span>
+theIntWithin <span class="fu">=</span>
+    <span class="kw">case</span> aValue <span class="kw">of</span>
+        <span class="dt">Constr1</span> i <span class="ot">-&gt;</span> i
+        x <span class="ot">-&gt;</span> <span class="dv">0</span></code></pre></div>
+</section><section class="slide level2">
+
+<ul>
+<li>match clauses are matched in sequence, from top to bottom</li>
+<li>no fallthrough</li>
+<li>clause with only binding will always match</li>
+<li>used as default case (often <code>_</code> when value is unused)</li>
+<li><code>case</code> is very powerful (can be used to define <code>if</code> for instance)</li>
+</ul>
+</section><section class="slide level2">
+
+<div class="sourceCode"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="kw">if</span> cond a b <span class="fu">=</span>
+    <span class="kw">case</span> cond <span class="kw">of</span>
+        <span class="dt">True</span> <span class="ot">-&gt;</span> a
+        <span class="dt">False</span> <span class="ot">-&gt;</span> b</code></pre></div>
+</section><section class="slide level2">
+
+<ul>
+<li>pattern match allowed on all primitives</li>
+<li><code>Char</code>, <code>[]</code>, <code>String</code>, <code>Int</code>, <code>Float</code> and so on</li>
+</ul>
+<div class="sourceCode"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="kw">case</span> char <span class="kw">of</span>
+    <span class="ch">&#39;c&#39;</span> <span class="ot">-&gt;</span> <span class="dt">True</span>
+    _ <span class="ot">-&gt;</span> <span class="dt">False</span>
+
+<span class="kw">case</span> n <span class="kw">of</span> 
+    <span class="dv">4</span> <span class="ot">-&gt;</span> <span class="dt">True</span>
+    _ <span class="ot">-&gt;</span> <span class="dt">False</span></code></pre></div>
+</section><section class="slide level2">
+
+<p>We can exchange newlines for <code>;</code> and indentation for <code>{}</code>.</p>
+<pre><code>case expr of
+    Constr1 field1 field2 -&gt; resultExpr 
+    Constr2 f -&gt; resultExpr2
+
+case expr of { Constr1 field1 field2 -&gt; resultExpr; Constr2 f -&gt; resultExpr2 }</code></pre>
+</section><section class="slide level2">
+
+<p>We can use multiline result expressions with indentation</p>
+<div class="sourceCode"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="kw">case</span> expr <span class="kw">of</span>
+    <span class="dt">Constr1</span> field1 field2 <span class="ot">-&gt;</span> 
+        resultExpr 
+    <span class="dt">Constr2</span> f <span class="ot">-&gt;</span> 
+        resultExpr2</code></pre></div>
+</section></section>
+<section><section id="special-types" class="titleslide slide level1"><h1>Special types</h1></section><section class="slide level2">
+
+<ul>
+<li>the list type <code>[]</code> or <code>[a]</code></li>
+<li>tuple type <code>(a,b)</code> for a 2-tuple</li>
+<li><code>(a,b,c)</code>, <code>(a,b,c,d)</code> etc for n-tuples</li>
+<li>the function type <code>a -&gt; b</code></li>
+</ul>
+</section><section class="slide level2">
+
+<p>Some examples for concrete instances of special types:</p>
+<div class="sourceCode"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="ot">myIntBoolTriple ::</span> (<span class="dt">Int</span>, <span class="dt">Int</span>, <span class="dt">Bool</span>)
+myIntBoolTriple <span class="fu">=</span> (<span class="dv">5</span>, <span class="dv">9</span>, <span class="dt">False</span>)
+
+aWordList <span class="fu">=</span> [<span class="st">&quot;Hello&quot;</span>, <span class="st">&quot;Foo&quot;</span>, <span class="st">&quot;bar&quot;</span>]<span class="ot"> ::</span> [<span class="dt">String</span>] <span class="co">-- Note: A different way to annotate the type</span>
+
+<span class="co">-- Note: we can also nest these types</span>
+<span class="ot">listOfTuples ::</span> [(<span class="dt">Int</span>, <span class="dt">String</span>)]
+listOfTuples <span class="fu">=</span> 
+    [ (<span class="dv">1</span>, <span class="st">&quot;Marco&quot;</span>)
+    , (<span class="dv">9</span>, <span class="st">&quot;Janine&quot;</span>)
+    ]</code></pre></div>
+</section></section>
+<section><section id="record-syntax" class="titleslide slide level1"><h1>Record syntax</h1></section><section class="slide level2">
+
+<ul>
+<li>convenience for defining field accessors</li>
+<li>type is the same as with the other <code>data</code> definition</li>
+</ul>
+<div class="sourceCode"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="kw">data</span> <span class="dt">MyType</span> <span class="fu">=</span> 
+    <span class="dt">Constructor</span> {<span class="ot"> field1 ::</span> <span class="dt">Int</span>
+                ,<span class="ot"> field2 ::</span> <span class="dt">String</span>
+                }</code></pre></div>
+</section><section class="slide level2">
+
+<p>Same pattern match as before.</p>
+<div class="sourceCode"><pre class="sourceCode haskell"><code class="sourceCode haskell">theData <span class="fu">=</span> <span class="dt">Constructor</span> <span class="dv">9</span> <span class="st">&quot;hello&quot;</span><span class="ot"> ::</span> <span class="dt">MyType</span>
+theInt <span class="fu">=</span> <span class="kw">case</span> theData <span class="kw">of</span>
+            <span class="dt">Constructor</span> i _ <span class="ot">-&gt;</span> i
+
+theInt <span class="fu">==</span> <span class="dv">9</span></code></pre></div>
+</section><section class="slide level2">
+
+<p>It also generates some accessor functions.</p>
+<div class="sourceCode"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="kw">data</span> <span class="dt">MyType</span> <span class="fu">=</span> <span class="dt">Constructor</span> <span class="dt">Int</span> <span class="dt">String</span>
+
+<span class="ot">field1 ::</span> <span class="dt">MyType</span> <span class="ot">-&gt;</span> <span class="dt">Int</span>
+field1 (<span class="dt">Constructor</span> i _) <span class="fu">=</span> i
+
+<span class="ot">field2 ::</span> <span class="dt">MyType</span> <span class="ot">-&gt;</span> <span class="dt">String</span>
+field2 (<span class="dt">Constructor</span> _ s) <span class="fu">=</span> s</code></pre></div>
+</section><section class="slide level2">
+
+<p>And enables record creation and update syntax</p>
+<div class="sourceCode"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="kw">data</span> <span class="dt">TyType</span> <span class="fu">=</span> 
+    <span class="dt">Constructor</span> {<span class="ot"> field1 ::</span> <span class="dt">Int</span>
+                ,<span class="ot"> field2 ::</span> <span class="dt">String</span>
+                }
+
+<span class="kw">let</span> v1 <span class="fu">=</span> <span class="dt">Constructor</span> <span class="dv">9</span> <span class="st">&quot;Hello&quot;</span><span class="ot"> ::</span> <span class="dt">MyType</span>
+
+<span class="kw">let</span> v2 <span class="fu">=</span> <span class="dt">Constructor</span> { field2 <span class="fu">=</span> <span class="st">&quot;World&quot;</span>, field1 <span class="fu">=</span> <span class="dv">4</span> }<span class="ot"> ::</span> <span class="dt">MyType</span>
+
+<span class="kw">let</span> v3 <span class="fu">=</span> v2 { field1 <span class="fu">=</span> <span class="dv">9</span> }
+<span class="kw">let</span> v4 <span class="fu">=</span> v2 { field1 <span class="fu">=</span> <span class="dv">9</span>, field2 <span class="st">&quot;Hello&quot;</span> }
+
+v1 <span class="fu">==</span> v4
+
+v2 <span class="fu">/=</span> v3 <span class="fu">/=</span> v4</code></pre></div>
+</section><section class="slide level2">
+
+<p>Record pattern match</p>
+<div class="sourceCode"><pre class="sourceCode haskell"><code class="sourceCode haskell">theData <span class="fu">=</span> <span class="dt">Constructor</span> <span class="dv">9</span> <span class="st">&quot;hello&quot;</span><span class="ot"> ::</span> <span class="dt">MyType</span>
+
+theInt <span class="fu">=</span> <span class="kw">case</span> theData <span class="kw">of</span>
+            <span class="dt">Constructor</span>{ field1 <span class="fu">=</span> i } <span class="ot">-&gt;</span> i
+
+theInt <span class="fu">==</span> <span class="dv">9</span></code></pre></div>
+</section></section>
+    </div>
+  </div>
+
+  <script src="../reveal.js/lib/js/head.min.js"></script>
+  <script src="../reveal.js/js/reveal.js"></script>
+
+  <script>
+
+      // Full list of configuration options available at:
+      // https://github.com/hakimel/reveal.js#configuration
+      Reveal.initialize({
+
+        // Optional reveal.js plugins
+        dependencies: [
+          { src: '../reveal.js/lib/js/classList.js', condition: function() { return !document.body.classList; } },
+          { src: '../reveal.js/plugin/zoom-js/zoom.js', async: true },
+          { src: '../reveal.js/plugin/notes/notes.js', async: true }
+        ]
+      });
+Reveal.configure({
+    keyboard: {
+      75: 'prev',
+      38: 'prev',
+      74: 'next',
+      40: 'next'
+    }
+    });
+    </script>
+    </body>
+</html>
