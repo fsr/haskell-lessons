@@ -393,12 +393,22 @@ addTheInts (<span class="dt">Constr</span> i)   _            <span class="fu">=<
 addTheInts _            (<span class="dt">Constr</span> i)   <span class="fu">=</span> i 
 addTheInts _            _            <span class="fu">=</span> <span class="dv">0</span></code></pre></div>
 </section></section>
-<section><section id="errors" class="titleslide slide level1"><h1>Errors</h1></section><section class="slide level2">
-
+<section><section id="misc" class="titleslide slide level1"><h1>Misc</h1></section><section id="error" class="slide level2">
+<h1>Error</h1>
 <p>You can use the <code>error</code> function to throw an exception on Haskell.</p>
 <p>Or use the <code>undefined</code> value (which itself is an <code>error</code>).</p>
 <p>If these are ever evaluated an exception is raised.</p>
 <div class="sourceCode"><pre class="sourceCode haskell"><code class="sourceCode haskell">error <span class="st">&quot;Something went wrong&quot;</span></code></pre></div>
+</section><section id="importing" class="slide level2">
+<h1>Importing</h1>
+<p>You can import other module using the <code>import</code> keyword.</p>
+<div class="sourceCode"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="kw">import </span><span class="dt">Data.List</span>
+<span class="kw">import </span><span class="dt">Data.Set</span> (member, <span class="dt">Set</span>, singleton)
+<span class="kw">import </span><span class="dt">Prelude</span> <span class="kw">as</span> <span class="dt">P</span>
+<span class="kw">import qualified</span> <span class="dt">Data.HashMap</span> <span class="kw">as</span> <span class="dt">H</span></code></pre></div>
+<aside class="notes">
+Also mention how to load source files into ghci
+</aside>
 </section></section>
     </div>
   </div>

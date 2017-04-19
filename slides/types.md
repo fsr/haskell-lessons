@@ -396,9 +396,9 @@ addTheInts _            (Constr i)   = i
 addTheInts _            _            = 0
 ```
 
-# Errors
+# Misc
 
----
+## Error
 
 You can use the `error` function to throw an exception on Haskell.
 
@@ -409,3 +409,18 @@ If these are ever evaluated an exception is raised.
 ```haskell
 error "Something went wrong"
 ```
+
+## Importing
+
+You can import other module using the `import` keyword.
+
+```haskell
+import Data.List
+import Data.Set (member, Set, singleton)
+import Prelude as P
+import qualified Data.HashMap as H
+```
+
+<aside class="notes">
+Also mention how to load source files into ghci
+</aside>
