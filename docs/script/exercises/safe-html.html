@@ -132,7 +132,8 @@ Implement the following queries as functions (they all return <code class="docut
 <ul class="simple">
 <li>Is a supplied <code class="docutils literal"><span class="pre">Html</span></code> value a text node</li>
 <li>Does the node have a specific tag (hint: the type signature should be <code class="docutils literal"><span class="pre">::</span> <span class="pre">String</span> <span class="pre">-&gt;</span> <span class="pre">Html</span> <span class="pre">-&gt;</span> <span class="pre">Bool</span></code>)</li>
-<li>Does the node have a specific attribute (hint: the type signature should be <code class="docutils literal"><span class="pre">::</span> <span class="pre">String</span> <span class="pre">-&gt;</span> <span class="pre">Html</span> <span class="pre">-&gt;</span> <span class="pre">Bool</span></code>) <a class="footnote-reference" href="#finding" id="id11">[11]</a></li>
+<li>How many attributes does the node have? (assuming no attribute occurs twice in the attribute list) <a class="footnote-reference" href="#num-attrs" id="id11">[11]</a></li>
+<li>Does the node have a specific attribute (hint: the type signature should be <code class="docutils literal"><span class="pre">::</span> <span class="pre">String</span> <span class="pre">-&gt;</span> <span class="pre">Html</span> <span class="pre">-&gt;</span> <span class="pre">Bool</span></code>) <a class="footnote-reference" href="#finding" id="id12">[12]</a></li>
 </ul>
 <p class="rubric">footnotes</p>
 <table class="docutils footnote" frame="void" id="defining-html" rules="none">
@@ -207,10 +208,16 @@ Meaning you can for instance call <code class="docutils literal"><span class="pr
 <tr><td class="label"><a class="fn-backref" href="#id10">[10]</a></td><td>This can be nicely done using a partially applied <code class="docutils literal"><span class="pre">Container</span></code> constructor.</td></tr>
 </tbody>
 </table>
+<table class="docutils footnote" frame="void" id="num-attrs" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label"><a class="fn-backref" href="#id11">[11]</a></td><td>This is the same as the length of the attribute list.</td></tr>
+</tbody>
+</table>
 <table class="docutils footnote" frame="void" id="finding" rules="none">
 <colgroup><col class="label" /><col /></colgroup>
 <tbody valign="top">
-<tr><td class="label"><a class="fn-backref" href="#id11">[11]</a></td><td>To see if an element of a list satisfies a predicate there are two ways.
+<tr><td class="label"><a class="fn-backref" href="#id12">[12]</a></td><td>To see if an element of a list satisfies a predicate there are two ways.
 Either using <code class="docutils literal"><span class="pre">map</span></code> and <code class="docutils literal"><span class="pre">any</span></code> or using <code class="docutils literal"><span class="pre">find</span></code>.
 I leave you to find out how to use these ;)</td></tr>
 </tbody>

@@ -97,6 +97,7 @@ Implement the following queries as functions (they all return ``Bool``).
 
 * Is a supplied ``Html`` value a text node 
 * Does the node have a specific tag (hint: the type signature should be ``:: String -> Html -> Bool``)
+* How many attributes does the node have? (assuming no attribute occurs twice in the attribute list) [#num_attrs]_
 * Does the node have a specific attribute (hint: the type signature should be ``:: String -> Html -> Bool``) [#finding]_
 
 
@@ -138,6 +139,8 @@ Implement the following queries as functions (they all return ``Bool``).
     Meaning you can for instance call ``render`` from within ``render`` to render a nested ``Html`` value.
 
 .. [#partial_application] This can be nicely done using a partially applied ``Container`` constructor.
+
+.. [#num_attrs] This is the same as the length of the attribute list.
 
 .. [#finding] 
     To see if an element of a list satisfies a predicate there are two ways.
