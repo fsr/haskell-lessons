@@ -1,0 +1,167 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>5.3. A custom boolean &#8212; Haskell Lessons 0.1 documentation</title>
+    
+    <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '0.1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="5.4. Implementing a library for safe html construction" href="safe-html.html" />
+    <link rel="prev" title="5.2. Basics" href="basics.html" />
+   
+  <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head>
+  <body role="document">
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="a-custom-boolean">
+<h1>5.3. A custom boolean<a class="headerlink" href="#a-custom-boolean" title="Permalink to this headline">¶</a></h1>
+<p>We want to define a boolean type.
+The standard library already has a type <code class="docutils literal"><span class="pre">Bool</span></code> but we will make your own.</p>
+<div class="section" id="defining-the-type">
+<h2>5.3.1. Defining the type<a class="headerlink" href="#defining-the-type" title="Permalink to this headline">¶</a></h2>
+<p>Define a new type called <code class="docutils literal"><span class="pre">Boolean</span></code> with two constructors <code class="docutils literal"><span class="pre">Yes</span></code> and <code class="docutils literal"><span class="pre">No</span></code>. <a class="footnote-reference" href="#defining" id="id1">[1]</a></p>
+</div>
+<div class="section" id="if">
+<h2>5.3.2. <code class="docutils literal"><span class="pre">if</span></code><a class="headerlink" href="#if" title="Permalink to this headline">¶</a></h2>
+<p>Booleans are used for <code class="docutils literal"><span class="pre">if</span></code> expressions.
+Therefore we will define our own <code class="docutils literal"><span class="pre">if</span></code>.
+Since <code class="docutils literal"><span class="pre">if</span></code> is a keyword in Haskell you can use a name like <code class="docutils literal"><span class="pre">if_</span></code> or <code class="docutils literal"><span class="pre">if'</span></code> or something else.</p>
+<p>Your <code class="docutils literal"><span class="pre">if</span></code> function should take three arguments.</p>
+<ol class="arabic simple">
+<li>A <code class="docutils literal"><span class="pre">Boolean</span></code> (your custom boolean type) as condition.</li>
+<li>A value which to return when the boolean is <code class="docutils literal"><span class="pre">Yes</span></code>.</li>
+<li>A value which to return when the boolean is <code class="docutils literal"><span class="pre">No</span></code>.</li>
+</ol>
+<ol class="arabic simple">
+<li>Implement the function <a class="footnote-reference" href="#implementing-if" id="id2">[2]</a></li>
+<li>Add a signature to your <code class="docutils literal"><span class="pre">if</span></code> <a class="footnote-reference" href="#if-signature" id="id3">[3]</a></li>
+</ol>
+</div>
+<div class="section" id="boolean-operations">
+<h2>5.3.3. Boolean operations<a class="headerlink" href="#boolean-operations" title="Permalink to this headline">¶</a></h2>
+<p>We also need to be able to define more complex interactions.
+Implement a <code class="docutils literal"><span class="pre">not'</span></code>, <code class="docutils literal"><span class="pre">or'</span></code> and <code class="docutils literal"><span class="pre">and'</span></code> operation which, as the names suggest, do boolean <em>not</em>, <em>and</em> and <em>or</em>. <a class="footnote-reference" href="#id5" id="id4">[4]</a></p>
+<p class="rubric">footnotes</p>
+<table class="docutils footnote" frame="void" id="defining" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label"><a class="fn-backref" href="#id1">[1]</a></td><td>Use the <code class="docutils literal"><span class="pre">data</span></code> keyword</td></tr>
+</tbody>
+</table>
+<table class="docutils footnote" frame="void" id="implementing-if" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label"><a class="fn-backref" href="#id2">[2]</a></td><td>Use a <code class="docutils literal"><span class="pre">case</span></code> construct to match on the two <code class="docutils literal"><span class="pre">Boolean</span></code> constructors.</td></tr>
+</tbody>
+</table>
+<table class="docutils footnote" frame="void" id="if-signature" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label"><a class="fn-backref" href="#id3">[3]</a></td><td>Use a type variable for the two values.
+If you&#8217;re stuck think about what you know about the two values (do they perhaps have the same type? Aka the type variable needs to be the same) and what type would the return be?</td></tr>
+</tbody>
+</table>
+<table class="docutils footnote" frame="void" id="id5" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label"><a class="fn-backref" href="#id4">[4]</a></td><td>A nested <code class="docutils literal"><span class="pre">case</span></code> match should be useful here.
+Alternatively you can match on both booleans simultaneously if you wrap them in a tuple <em>or</em> if you match them with the special function syntax on the arguments.</td></tr>
+</tbody>
+</table>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">5.3. A custom boolean</a><ul>
+<li><a class="reference internal" href="#defining-the-type">5.3.1. Defining the type</a></li>
+<li><a class="reference internal" href="#if">5.3.2. <code class="docutils literal"><span class="pre">if</span></code></a></li>
+<li><a class="reference internal" href="#boolean-operations">5.3.3. Boolean operations</a></li>
+</ul>
+</li>
+</ul>
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../index.html">Documentation overview</a><ul>
+  <li><a href="index.html">5. Exercises</a><ul>
+      <li>Previous: <a href="basics.html" title="previous chapter">5.2. Basics</a></li>
+      <li>Next: <a href="safe-html.html" title="next chapter">5.4. Implementing a library for safe html construction</a></li>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../_sources/exercises/custom-boolean.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2017, Justus Adam.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.5.1</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.9</a>
+      
+      |
+      <a href="../_sources/exercises/custom-boolean.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

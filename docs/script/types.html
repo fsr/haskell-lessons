@@ -314,6 +314,43 @@ The following definitions are equivalent</p>
 </pre></div>
 </div>
 </div>
+<div class="section" id="case-match-in-function-definition">
+<h3>4.3.2. Case match in function definition<a class="headerlink" href="#case-match-in-function-definition" title="Permalink to this headline">¶</a></h3>
+<p>A very common pattern in Haskell is to have a function and then directly perform a <code class="docutils literal"><span class="pre">case</span></code> match on one or more of the arguments.
+There is some syntactic sugar to make this more convenient.</p>
+<p>If you define your function with the syntax where the arguments come before the <code class="docutils literal"><span class="pre">=</span></code> you can directly perform a pattern match on them there.
+Mutliple <code class="docutils literal"><span class="pre">case</span></code> options are hereby achieved by defining the function once for each option.
+Note that in this pattern match constructors with more than zero fields need to be parenthesized (otherwise how can the compiler distinguish between field bindings and the next argument?).</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">data</span> <span class="n">MyType</span> <span class="o">=</span> <span class="n">Constr1</span> <span class="n">Int</span> <span class="o">|</span> <span class="n">Constr2</span> <span class="n">String</span>
+
+<span class="o">--</span> <span class="n">before</span>
+<span class="n">getTheInt</span> <span class="p">::</span> <span class="n">MyType</span> <span class="o">-&gt;</span> <span class="n">Int</span>
+<span class="n">getTheInt</span> <span class="n">t</span> <span class="o">=</span>
+    <span class="n">case</span> <span class="n">t</span> <span class="n">of</span>
+        <span class="n">Constr1</span> <span class="n">i</span> <span class="o">-&gt;</span> <span class="n">i</span>
+        <span class="n">Consrt2</span> <span class="n">_</span> <span class="o">-&gt;</span> <span class="mi">0</span>
+
+<span class="o">--</span> <span class="n">after</span>
+<span class="n">getTheInt2</span> <span class="p">::</span> <span class="n">MyType</span> <span class="o">-&gt;</span> <span class="n">Int</span>
+<span class="n">getTheInt2</span> <span class="p">(</span><span class="n">Constr1</span> <span class="n">i</span><span class="p">)</span> <span class="o">=</span> <span class="n">i</span>
+<span class="n">getTheInt2</span> <span class="p">(</span><span class="n">Constr2</span> <span class="n">_</span><span class="p">)</span> <span class="o">=</span> <span class="mi">0</span>
+
+<span class="o">--</span> <span class="ow">or</span><span class="p">,</span> <span class="n">alternatively</span> <span class="k">with</span> <span class="n">a</span> <span class="s2">&quot;_&quot;</span> <span class="n">default</span> <span class="n">case</span>
+<span class="n">getTheInt2</span> <span class="p">::</span> <span class="n">MyType</span> <span class="o">-&gt;</span> <span class="n">Int</span>
+<span class="n">getTheInt2</span> <span class="p">(</span><span class="n">Constr1</span> <span class="n">i</span><span class="p">)</span> <span class="o">=</span> <span class="n">i</span>
+<span class="n">getTheInt2</span> <span class="n">_</span> <span class="o">=</span> <span class="mi">0</span>
+</pre></div>
+</div>
+<p>You can also match on multiple arguments at the same time.
+(I have aligned the arguments so you can better see the different patterns, this is only for readability and not necessary.)</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">addTheInts</span> <span class="p">::</span> <span class="n">MyType</span> <span class="o">-&gt;</span> <span class="n">MyType</span> <span class="o">-&gt;</span> <span class="n">Int</span>
+<span class="n">addTheInts</span> <span class="p">(</span><span class="n">Constr1</span> <span class="n">i1</span><span class="p">)</span> <span class="p">(</span><span class="n">Constr1</span> <span class="n">i2</span><span class="p">)</span> <span class="o">=</span> <span class="n">i1</span> <span class="o">+</span> <span class="n">i2</span>
+<span class="n">addTheInts</span> <span class="p">(</span><span class="n">Constr</span> <span class="n">i</span><span class="p">)</span>   <span class="n">_</span>            <span class="o">=</span> <span class="n">i</span>
+<span class="n">addTheInts</span> <span class="n">_</span>            <span class="p">(</span><span class="n">Constr</span> <span class="n">i</span><span class="p">)</span>   <span class="o">=</span> <span class="n">i</span>
+<span class="n">addTheInts</span> <span class="n">_</span>            <span class="n">_</span>            <span class="o">=</span> <span class="mi">0</span>
+</pre></div>
+</div>
+</div>
 </div>
 <div class="section" id="special-types">
 <span id="id7"></span><h2>4.4. Special types<a class="headerlink" href="#special-types" title="Permalink to this headline">¶</a></h2>
@@ -436,6 +473,7 @@ Below the last declaration is a large block of perhaps 20 more declarations whic
 </li>
 <li><a class="reference internal" href="#the-case-construct">4.3. The <code class="docutils literal"><span class="pre">case</span></code> construct</a><ul>
 <li><a class="reference internal" href="#different-ways-to-write-a-case-expression">4.3.1. Different ways to write a case expression</a></li>
+<li><a class="reference internal" href="#case-match-in-function-definition">4.3.2. Case match in function definition</a></li>
 </ul>
 </li>
 <li><a class="reference internal" href="#special-types">4.4. Special types</a></li>

@@ -33,7 +33,7 @@ main = do
     shakeCmd ["--live"]
     !files <- HS.fromList . map (cwd </>) . lines <$> readFile "live.txt"
     removeFile "live.txt"
-    let dirs = HS.map takeDirectory files
+    let dirs = HS.filter (("docs" `notElem`) . splitDirectories) $ HS.map takeDirectory files
     withManager $ \mgr -> do
         for_ dirs $ \dir ->
             watchDir

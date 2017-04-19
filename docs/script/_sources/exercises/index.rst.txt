@@ -9,3 +9,5 @@ Exercises
 
     tools
     basics
+    custom-boolean
+    safe-html

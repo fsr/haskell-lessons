@@ -328,6 +328,48 @@ The following definitions are equivalent
     -- indent is replaced with semicolons and braces
     case expr of { Constr1 field1 field2 -> resultExpr; Constr2 f -> resultExpr2 }
 
+Case match in function definition
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+A very common pattern in Haskell is to have a function and then directly perform a ``case`` match on one or more of the arguments.
+There is some syntactic sugar to make this more convenient.
+
+If you define your function with the syntax where the arguments come before the ``=`` you can directly perform a pattern match on them there.
+Mutliple ``case`` options are hereby achieved by defining the function once for each option.
+Note that in this pattern match constructors with more than zero fields need to be parenthesized (otherwise how can the compiler distinguish between field bindings and the next argument?).
+
+::
+
+    data MyType = Constr1 Int | Constr2 String
+
+    -- before
+    getTheInt :: MyType -> Int
+    getTheInt t = 
+        case t of
+            Constr1 i -> i
+            Consrt2 _ -> 0
+    
+    -- after
+    getTheInt2 :: MyType -> Int
+    getTheInt2 (Constr1 i) = i
+    getTheInt2 (Constr2 _) = 0
+
+    -- or, alternatively with a "_" default case
+    getTheInt2 :: MyType -> Int
+    getTheInt2 (Constr1 i) = i
+    getTheInt2 _ = 0
+
+You can also match on multiple arguments at the same time.
+(I have aligned the arguments so you can better see the different patterns, this is only for readability and not necessary.)
+
+::
+
+    addTheInts :: MyType -> MyType -> Int
+    addTheInts (Constr1 i1) (Constr1 i2) = i1 + i2
+    addTheInts (Constr i)   _            = i 
+    addTheInts _            (Constr i)   = i 
+    addTheInts _            _            = 0
+
 .. _special types:
 
 Special types

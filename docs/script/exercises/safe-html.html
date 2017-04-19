@@ -1,0 +1,287 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>5.4. Implementing a library for safe html construction &#8212; Haskell Lessons 0.1 documentation</title>
+    
+    <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '0.1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="prev" title="5.3. A custom boolean" href="custom-boolean.html" />
+   
+  <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head>
+  <body role="document">
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="implementing-a-library-for-safe-html-construction">
+<h1>5.4. Implementing a library for safe html construction<a class="headerlink" href="#implementing-a-library-for-safe-html-construction" title="Permalink to this headline">¶</a></h1>
+<p>We want to build a library which we can use to programmatically build a html website in Haskell and then render it.</p>
+<div class="section" id="a-base-type">
+<h2>5.4.1. A base type<a class="headerlink" href="#a-base-type" title="Permalink to this headline">¶</a></h2>
+<p>First we need a basic <code class="docutils literal"><span class="pre">Html</span></code> type.
+For now this is just going to be a wrapper around a <code class="docutils literal"><span class="pre">String</span></code> containing the actiual html.</p>
+<p>Define the <code class="docutils literal"><span class="pre">Html</span></code> type as a wrapper around <code class="docutils literal"><span class="pre">String</span></code>. <a class="footnote-reference" href="#defining-html" id="id1">[1]</a></p>
+<p>Don&#8217;t expose your constructor to the user of the library <a class="footnote-reference" href="#exposing" id="id2">[2]</a> so that they cannot unsafely create <code class="docutils literal"><span class="pre">Html</span></code> values from <code class="docutils literal"><span class="pre">String</span></code>.</p>
+<p>Also create a function <code class="docutils literal"><span class="pre">render</span></code> or <code class="docutils literal"><span class="pre">renderHtml</span></code> which takes a <code class="docutils literal"><span class="pre">Html</span></code> value and returns it in rendered <code class="docutils literal"><span class="pre">String</span></code>.
+In this case that&#8217;s simply the <code class="docutils literal"><span class="pre">String</span></code> contained in the <code class="docutils literal"><span class="pre">Html</span></code> value.
+You&#8217;ll then be able to use this function in the subsequent tasks to look at the <code class="docutils literal"><span class="pre">Html</span></code> values and verify you have implemented your manipulation functions correctly.</p>
+</div>
+<div class="section" id="creating-html-from-strings">
+<h2>5.4.2. Creating html from strings<a class="headerlink" href="#creating-html-from-strings" title="Permalink to this headline">¶</a></h2>
+<p>Now we need the user to be able to crete <code class="docutils literal"><span class="pre">Html</span></code> values from strings, but we want that to be safe.
+First we will enable them to create just html text nodes.
+Html text nodes may not contain any of the special html characters like <code class="docutils literal"><span class="pre">&amp;</span></code>, <code class="docutils literal"><span class="pre">&lt;</span></code>, <code class="docutils literal"><span class="pre">&gt;</span></code>, <code class="docutils literal"><span class="pre">&quot;</span></code> and <code class="docutils literal"><span class="pre">'</span></code>.
+Write a function <code class="docutils literal"><span class="pre">mkTextNode</span></code> which takes a <code class="docutils literal"><span class="pre">String</span></code> as input and verifies that none of the above mentioned characters are in it. <a class="footnote-reference" href="#verifying" id="id3">[3]</a>
+If one of the characters is found raise an <code class="docutils literal"><span class="pre">error</span></code> and if not return a <code class="docutils literal"><span class="pre">Html</span></code> value containing the string.</p>
+</div>
+<div class="section" id="concatenating-html">
+<h2>5.4.3. Concatenating html<a class="headerlink" href="#concatenating-html" title="Permalink to this headline">¶</a></h2>
+<p>Html elements can also be consecutive.
+Like <code class="docutils literal"><span class="pre">&lt;div&gt;...&lt;/div&gt;&lt;span&gt;...&lt;/span&gt;</span></code>.</p>
+<p>Write a function which takes as input <em>two</em> <code class="docutils literal"><span class="pre">Html</span></code> values and returns a <code class="docutils literal"><span class="pre">Html</span></code> value which is the concatenation of the two input <code class="docutils literal"><span class="pre">Html</span></code> values. <a class="footnote-reference" href="#concatenating" id="id4">[4]</a></p>
+</div>
+<div class="section" id="html-containers">
+<h2>5.4.4. Html containers<a class="headerlink" href="#html-containers" title="Permalink to this headline">¶</a></h2>
+<p>Now we want to be able to use things like html <code class="docutils literal"><span class="pre">div</span></code> and <code class="docutils literal"><span class="pre">span</span></code>.
+Write at least two functions which implement one of the html containers like <code class="docutils literal"><span class="pre">i</span></code>, <code class="docutils literal"><span class="pre">div</span></code> or <code class="docutils literal"><span class="pre">span</span></code>.
+I recommend calling the <code class="docutils literal"><span class="pre">mkDiv</span></code> and <code class="docutils literal"><span class="pre">mkSpan</span></code> etc.
+For now we will not add any attributes to these containers.
+They should accept a <code class="docutils literal"><span class="pre">Html</span></code> value as input and return a <code class="docutils literal"><span class="pre">Html</span></code> value.
+And what they should do is add the respective opening and closing tags around the html value they have recieved as input. <a class="footnote-reference" href="#containers" id="id5">[5]</a></p>
+</div>
+<div class="section" id="html-documents">
+<h2>5.4.5. Html documents<a class="headerlink" href="#html-documents" title="Permalink to this headline">¶</a></h2>
+<p>Now we want to model a whole html document.
+First we will need to model the doctype.</p>
+<ol class="arabic">
+<li><p class="first">Create a <code class="docutils literal"><span class="pre">Doctype</span></code> type with constructors for some of the most common html versions: <code class="docutils literal"><span class="pre">Html</span></code> (for html4) <code class="docutils literal"><span class="pre">Html5</span></code> (for html5) and <code class="docutils literal"><span class="pre">XHtml</span></code>.</p>
+</li>
+<li><dl class="first docutils">
+<dt>For the document itself we will create a <code class="docutils literal"><span class="pre">Document</span></code> type.</dt>
+<dd><p class="first last">This type should have three fields.</p>
+</dd>
+</dl>
+<ol class="arabic simple">
+<li><code class="docutils literal"><span class="pre">doctype</span> <span class="pre">::</span> <span class="pre">Doctype</span></code></li>
+<li><code class="docutils literal"><span class="pre">headSection</span> <span class="pre">::</span> <span class="pre">Html</span></code></li>
+<li><code class="docutils literal"><span class="pre">bodySection</span> <span class="pre">::</span> <span class="pre">Html</span></code></li>
+</ol>
+<p>Implement this type using record syntax.
+This allows us to manipulate the fields later.</p>
+</li>
+<li><p class="first">Lastly we need a way to render it.</p>
+<p>Create a <code class="docutils literal"><span class="pre">renderDocument</span></code> function which returns a string that is the concatenation of:</p>
+<ul class="simple">
+<li>The correct doctype string for the <code class="docutils literal"><span class="pre">Doctype</span></code></li>
+<li>The head html wrapped in <code class="docutils literal"><span class="pre">&lt;head&gt;&lt;/head&gt;</span></code></li>
+<li>The body html wrapped in <code class="docutils literal"><span class="pre">&lt;body&gt;&lt;/body&gt;</span></code></li>
+</ul>
+</li>
+</ol>
+</div>
+<div class="section" id="making-the-html-editable">
+<h2>5.4.6. Making the html editable<a class="headerlink" href="#making-the-html-editable" title="Permalink to this headline">¶</a></h2>
+<p>Unitl now we have only used <code class="docutils literal"><span class="pre">String</span></code> for the internal html.
+However we can do better.
+We want to be able to edit our html safely after we have created it.
+Also we want support for attrbutes.</p>
+<ol class="arabic simple">
+<li>Change the <code class="docutils literal"><span class="pre">Html</span></code> datatype such that <a class="footnote-reference" href="#new-html-type" id="id6">[8]</a><ol class="arabic">
+<li>It can either be a text node which contains only a <code class="docutils literal"><span class="pre">string</span></code></li>
+<li>It is a container node (such as <code class="docutils literal"><span class="pre">div</span></code>) which contains a string for the <code class="docutils literal"><span class="pre">containerTag</span></code>, a list of attribute/value pairs <code class="docutils literal"><span class="pre">containerAttributes</span></code> <a class="footnote-reference" href="#pairs" id="id7">[6]</a> and a list of <code class="docutils literal"><span class="pre">containerChildren</span></code> <a class="footnote-reference" href="#children" id="id8">[7]</a>
+Use a record here with the mentioned field names.</li>
+</ol>
+</li>
+<li>Rewrite the <code class="docutils literal"><span class="pre">render</span></code> function to use the new type, and also render the attributes. <a class="footnote-reference" href="#new-rendering" id="id9">[9]</a></li>
+<li>Rewrite the <code class="docutils literal"><span class="pre">mkDiv</span></code> etc functions to create the new type. <a class="footnote-reference" href="#partial-application" id="id10">[10]</a></li>
+</ol>
+</div>
+<div class="section" id="doing-some-inspection">
+<h2>5.4.7. Doing some inspection<a class="headerlink" href="#doing-some-inspection" title="Permalink to this headline">¶</a></h2>
+<p>Now that we have this fancier Html tree we can do interesting things.
+Implement the following queries as functions (they all return <code class="docutils literal"><span class="pre">Bool</span></code>).</p>
+<ul class="simple">
+<li>Is a supplied <code class="docutils literal"><span class="pre">Html</span></code> value a text node</li>
+<li>Does the node have a specific tag (hint: the type signature should be <code class="docutils literal"><span class="pre">::</span> <span class="pre">String</span> <span class="pre">-&gt;</span> <span class="pre">Html</span> <span class="pre">-&gt;</span> <span class="pre">Bool</span></code>)</li>
+<li>Does the node have a specific attribute (hint: the type signature should be <code class="docutils literal"><span class="pre">::</span> <span class="pre">String</span> <span class="pre">-&gt;</span> <span class="pre">Html</span> <span class="pre">-&gt;</span> <span class="pre">Bool</span></code>) <a class="footnote-reference" href="#finding" id="id11">[11]</a></li>
+</ul>
+<p class="rubric">footnotes</p>
+<table class="docutils footnote" frame="void" id="defining-html" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label"><a class="fn-backref" href="#id1">[1]</a></td><td>You can use a <code class="docutils literal"><span class="pre">data</span></code> declaration, however since we only have one field in it youn should use a <code class="docutils literal"><span class="pre">newtype</span></code>.</td></tr>
+</tbody>
+</table>
+<table class="docutils footnote" frame="void" id="exposing" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label"><a class="fn-backref" href="#id2">[2]</a></td><td>Use the export list in your module to only export the type, not the constructor.</td></tr>
+</tbody>
+</table>
+<table class="docutils footnote" frame="void" id="verifying" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label"><a class="fn-backref" href="#id3">[3]</a></td><td>Remember that the Haskell <code class="docutils literal"><span class="pre">String</span></code> type is just a list of characters.
+Look at the <code class="docutils literal"><span class="pre">Data.List</span></code> module in the <code class="docutils literal"><span class="pre">base</span></code> library documentation and find the function that allows you to test whether a certain character is in the string.
+(Hint: its the same function that tests whether a certain value is an <em>element</em> of the list.)</td></tr>
+</tbody>
+</table>
+<table class="docutils footnote" frame="void" id="concatenating" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label"><a class="fn-backref" href="#id4">[4]</a></td><td>You&#8217;ll have to unwrap the input <code class="docutils literal"><span class="pre">Html</span></code> values to get acces to the strings within.
+Look for an operator in <code class="docutils literal"><span class="pre">Data.List</span></code> which appends two lists together.
+You can use this operator to combine the strings as well.
+Finally wrap it all back up into a new <code class="docutils literal"><span class="pre">Html</span></code> value.</td></tr>
+</tbody>
+</table>
+<table class="docutils footnote" frame="void" id="containers" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label"><a class="fn-backref" href="#id5">[5]</a></td><td>You&#8217;ll again have to unwrap the <code class="docutils literal"><span class="pre">Html</span></code>, prepend the start tag and append the end tag to it.
+Finally wrap it all back up into a new <code class="docutils literal"><span class="pre">Html</span></code> value</td></tr>
+</tbody>
+</table>
+<table class="docutils footnote" frame="void" id="pairs" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label"><a class="fn-backref" href="#id7">[6]</a></td><td>Pairs are the same a tuples. Both attribute and its value should be of type <code class="docutils literal"><span class="pre">String</span></code>.</td></tr>
+</tbody>
+</table>
+<table class="docutils footnote" frame="void" id="children" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label"><a class="fn-backref" href="#id8">[7]</a></td><td>Children are again <code class="docutils literal"><span class="pre">Html</span></code> values.</td></tr>
+</tbody>
+</table>
+<table class="docutils footnote" frame="void" id="new-html-type" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label"><a class="fn-backref" href="#id6">[8]</a></td><td>You can implement the different types of html by making it an algebraic datatype (<code class="docutils literal"><span class="pre">data</span></code>) with one constructor for the text node and one for the container node.
+Use record syntax for the latter.</td></tr>
+</tbody>
+</table>
+<table class="docutils footnote" frame="void" id="new-rendering" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label"><a class="fn-backref" href="#id9">[9]</a></td><td><p class="first">Some things that may come in handy here is the <code class="docutils literal"><span class="pre">map</span></code> function and the <code class="docutils literal"><span class="pre">concat</span></code> function.
+The first can be used (with an appropriate function) to transform for instance the list of <code class="docutils literal"><span class="pre">Html</span></code> children into a list of <code class="docutils literal"><span class="pre">String</span></code>.
+The latter can be used to concatenate a list of <code class="docutils literal"><span class="pre">String</span></code> into a single <code class="docutils literal"><span class="pre">String</span></code>.</p>
+<p class="last">Haskell supports calling functions recursively.
+Meaning you can for instance call <code class="docutils literal"><span class="pre">render</span></code> from within <code class="docutils literal"><span class="pre">render</span></code> to render a nested <code class="docutils literal"><span class="pre">Html</span></code> value.</p>
+</td></tr>
+</tbody>
+</table>
+<table class="docutils footnote" frame="void" id="partial-application" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label"><a class="fn-backref" href="#id10">[10]</a></td><td>This can be nicely done using a partially applied <code class="docutils literal"><span class="pre">Container</span></code> constructor.</td></tr>
+</tbody>
+</table>
+<table class="docutils footnote" frame="void" id="finding" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label"><a class="fn-backref" href="#id11">[11]</a></td><td>To see if an element of a list satisfies a predicate there are two ways.
+Either using <code class="docutils literal"><span class="pre">map</span></code> and <code class="docutils literal"><span class="pre">any</span></code> or using <code class="docutils literal"><span class="pre">find</span></code>.
+I leave you to find out how to use these ;)</td></tr>
+</tbody>
+</table>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">5.4. Implementing a library for safe html construction</a><ul>
+<li><a class="reference internal" href="#a-base-type">5.4.1. A base type</a></li>
+<li><a class="reference internal" href="#creating-html-from-strings">5.4.2. Creating html from strings</a></li>
+<li><a class="reference internal" href="#concatenating-html">5.4.3. Concatenating html</a></li>
+<li><a class="reference internal" href="#html-containers">5.4.4. Html containers</a></li>
+<li><a class="reference internal" href="#html-documents">5.4.5. Html documents</a></li>
+<li><a class="reference internal" href="#making-the-html-editable">5.4.6. Making the html editable</a></li>
+<li><a class="reference internal" href="#doing-some-inspection">5.4.7. Doing some inspection</a></li>
+</ul>
+</li>
+</ul>
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../index.html">Documentation overview</a><ul>
+  <li><a href="index.html">5. Exercises</a><ul>
+      <li>Previous: <a href="custom-boolean.html" title="previous chapter">5.3. A custom boolean</a></li>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../_sources/exercises/safe-html.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2017, Justus Adam.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.5.1</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.9</a>
+      
+      |
+      <a href="../_sources/exercises/safe-html.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

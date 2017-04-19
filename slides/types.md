@@ -357,3 +357,55 @@ theInt = case theData of
 
 theInt == 9
 ```
+
+## Syntactic sugar 
+
+
+```haskell
+
+data MyType = Constr1 Int | Constr2 String
+
+-- before
+getTheInt :: MyType -> Int
+getTheInt t = 
+    case t of
+        Constr1 i -> i
+        Consrt2 _ -> 0
+```
+
+---
+
+```haskell
+-- after
+getTheInt2 :: MyType -> Int
+getTheInt2 (Constr1 i) = i
+getTheInt2 (Constr2 _) = 0
+
+getTheInt2 :: MyType -> Int
+getTheInt2 (Constr1 i) = i
+getTheInt2 _ = 0
+```
+
+---
+
+```haskell
+addTheInts :: MyType -> MyType -> Int
+addTheInts (Constr1 i1) (Constr1 i2) = i1 + i2
+addTheInts (Constr i)   _            = i 
+addTheInts _            (Constr i)   = i 
+addTheInts _            _            = 0
+```
+
+# Errors
+
+---
+
+You can use the `error` function to throw an exception on Haskell.
+
+Or use the `undefined` value (which itself is an `error`).
+
+If these are ever evaluated an exception is raised.
+
+```haskell
+error "Something went wrong"
+```

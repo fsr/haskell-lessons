@@ -364,6 +364,41 @@ theInt <span class="fu">=</span> <span class="kw">case</span> theData <span clas
             <span class="dt">Constructor</span>{ field1 <span class="fu">=</span> i } <span class="ot">-&gt;</span> i
 
 theInt <span class="fu">==</span> <span class="dv">9</span></code></pre></div>
+</section><section id="syntactic-sugar" class="slide level2">
+<h1>Syntactic sugar</h1>
+<div class="sourceCode"><pre class="sourceCode haskell"><code class="sourceCode haskell">
+<span class="kw">data</span> <span class="dt">MyType</span> <span class="fu">=</span> <span class="dt">Constr1</span> <span class="dt">Int</span> <span class="fu">|</span> <span class="dt">Constr2</span> <span class="dt">String</span>
+
+<span class="co">-- before</span>
+<span class="ot">getTheInt ::</span> <span class="dt">MyType</span> <span class="ot">-&gt;</span> <span class="dt">Int</span>
+getTheInt t <span class="fu">=</span> 
+    <span class="kw">case</span> t <span class="kw">of</span>
+        <span class="dt">Constr1</span> i <span class="ot">-&gt;</span> i
+        <span class="dt">Consrt2</span> _ <span class="ot">-&gt;</span> <span class="dv">0</span></code></pre></div>
+</section><section class="slide level2">
+
+<div class="sourceCode"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="co">-- after</span>
+<span class="ot">getTheInt2 ::</span> <span class="dt">MyType</span> <span class="ot">-&gt;</span> <span class="dt">Int</span>
+getTheInt2 (<span class="dt">Constr1</span> i) <span class="fu">=</span> i
+getTheInt2 (<span class="dt">Constr2</span> _) <span class="fu">=</span> <span class="dv">0</span>
+
+<span class="ot">getTheInt2 ::</span> <span class="dt">MyType</span> <span class="ot">-&gt;</span> <span class="dt">Int</span>
+getTheInt2 (<span class="dt">Constr1</span> i) <span class="fu">=</span> i
+getTheInt2 _ <span class="fu">=</span> <span class="dv">0</span></code></pre></div>
+</section><section class="slide level2">
+
+<div class="sourceCode"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="ot">addTheInts ::</span> <span class="dt">MyType</span> <span class="ot">-&gt;</span> <span class="dt">MyType</span> <span class="ot">-&gt;</span> <span class="dt">Int</span>
+addTheInts (<span class="dt">Constr1</span> i1) (<span class="dt">Constr1</span> i2) <span class="fu">=</span> i1 <span class="fu">+</span> i2
+addTheInts (<span class="dt">Constr</span> i)   _            <span class="fu">=</span> i 
+addTheInts _            (<span class="dt">Constr</span> i)   <span class="fu">=</span> i 
+addTheInts _            _            <span class="fu">=</span> <span class="dv">0</span></code></pre></div>
+</section></section>
+<section><section id="errors" class="titleslide slide level1"><h1>Errors</h1></section><section class="slide level2">
+
+<p>You can use the <code>error</code> function to throw an exception on Haskell.</p>
+<p>Or use the <code>undefined</code> value (which itself is an <code>error</code>).</p>
+<p>If these are ever evaluated an exception is raised.</p>
+<div class="sourceCode"><pre class="sourceCode haskell"><code class="sourceCode haskell">error <span class="st">&quot;Something went wrong&quot;</span></code></pre></div>
 </section></section>
     </div>
   </div>
