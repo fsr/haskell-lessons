@@ -10,7 +10,7 @@ date: 20.04.2017
 ---
 
 - parameterizes a type
-- similar to gernerics
+- similar to generics
 - naming rules the same as bindings
 - `TypeName t0 t1 ...`
 - `TypeName (AnotherType t0) t1 ...`
@@ -122,7 +122,7 @@ map (LongAndLat 9) [0,9,15] == [LongAndLat 9 0, LongAndLat 9 9, LongAndLat 9 15]
 ```
 
 <aside class="notes">
-- its impotant to know the difference between type and constructor
+- its important to know the difference between type and constructor
 - type and constructor with same name can be in scope
 - place of occurrence allows distinction
 </aside>
@@ -347,7 +347,7 @@ field2 (Constructor _ s) = s
 And enables record creation and update syntax
 
 ```haskell
-data TyType = 
+data MyType = 
     Constructor { field1 :: Int
                 , field2 :: String
                 }
@@ -419,7 +419,7 @@ addTheInts _            _            = 0
 
 ## Error
 
-You can use the `error` function to throw an exception on Haskell.
+You can use the `error` function to throw an exception in Haskell.
 
 Or use the `undefined` value (which itself is an `error`).
 
