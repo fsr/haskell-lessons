@@ -47,6 +47,10 @@
 <h1>5.3. A custom boolean<a class="headerlink" href="#a-custom-boolean" title="Permalink to this headline">¶</a></h1>
 <p>We want to define a boolean type.
 The standard library already has a type <code class="docutils literal"><span class="pre">Bool</span></code> but we will make your own.</p>
+<p><em>Note:</em> this exercise is intended to be solved using both a Haskell source file and ghci.
+My recommendation is to implement the code in a file (<code class="docutils literal"><span class="pre">Something.hs</span></code>) then open <code class="docutils literal"><span class="pre">ghci</span></code> and load the file with the <code class="docutils literal"><span class="pre">:load</span> <span class="pre">FileName.hs</span></code> (this has autocompletion for the file name as well) command.
+After that the types and functions you defined in the file will be in scope and you can play around with them.</p>
+<p><em>Note:</em> In ghci bindings must be created with <code class="docutils literal"><span class="pre">let</span> <span class="pre">binsing</span> <span class="pre">=</span> <span class="pre">expr</span></code>.</p>
 <div class="section" id="defining-the-type">
 <h2>5.3.1. Defining the type<a class="headerlink" href="#defining-the-type" title="Permalink to this headline">¶</a></h2>
 <p>Define a new type called <code class="docutils literal"><span class="pre">Boolean</span></code> with two constructors <code class="docutils literal"><span class="pre">Yes</span></code> and <code class="docutils literal"><span class="pre">No</span></code>. <a class="footnote-reference" href="#defining" id="id1">[1]</a></p>

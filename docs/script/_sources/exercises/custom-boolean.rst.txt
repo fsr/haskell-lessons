@@ -4,6 +4,12 @@ A custom boolean
 We want to define a boolean type. 
 The standard library already has a type ``Bool`` but we will make your own.
 
+*Note:* this exercise is intended to be solved using both a Haskell source file and ghci.
+My recommendation is to implement the code in a file (``Something.hs``) then open ``ghci`` and load the file with the ``:load FileName.hs`` (this has autocompletion for the file name as well) command.
+After that the types and functions you defined in the file will be in scope and you can play around with them.
+
+*Note:* In ghci bindings must be created with ``let binsing = expr``.
+
 Defining the type
 -----------------
 
