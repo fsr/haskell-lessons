@@ -31,6 +31,9 @@ Boolean operations
 We also need to be able to define more complex interactions.
 Implement a ``not'``, ``or'`` and ``and'`` operation which, as the names suggest, do boolean *not*, *and* and *or*. [#boolean_operations]_
 
+Finally play around some with the operations you have defined.
+Make sure they are indeed correct.
+
 .. rubric:: footnotes
 
 .. [#defining] Use the ``data`` keyword

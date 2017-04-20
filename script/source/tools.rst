@@ -23,7 +23,7 @@ For more information about the various parts of the GHC see the `compiler refere
 There you will find information on `compiler flags <https://downloads.haskell.org/~ghc/latest/docs/html/users_guide/flags.html>`__, the `interactive prompt GHCi <ghci-reference-pages>`_, including the `debugger <https://downloads.haskell.org/~ghc/latest/docs/html/users_guide/ghci.html#the-ghci-debugger>`__, `profiling <https://downloads.haskell.org/~ghc/latest/docs/html/users_guide/profiling.html>`__, and the `GHC Haskell extensions <https://downloads.haskell.org/~ghc/latest/docs/html/users_guide/glasgow_exts.html#syntactic-extensions>`__.
 We will discuss all these topics in the future.
 
-We will rarely interact directly with the compiler, as there are very nice :ref:`build tools` out there which we will make use of instead.
+We will rarely interact directly with the compiler, as there are very nice build tools out there which we will make use of instead.
 
 .. _ghci-reference-pages: https://downloads.haskell.org/~ghc/latest/docs/html/users_guide/ghci.html
 

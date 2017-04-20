@@ -12,7 +12,9 @@ date: 20.04.2017
 - parameterizes a type
 - similar to gernerics
 - naming rules the same as bindings
-- `TypeName param1 param2 ...`
+- `TypeName t0 t1 ...`
+- `TypeName (AnotherType t0) t1 ...`
+- `a -> b -> AType c`
 
 ---
 
@@ -155,6 +157,23 @@ createEmail str =
 sendEmail :: Email -> String -> IO ()
 ```
 
+## Using type variables
+
+- declare on the left
+- use on the right
+- can also be parameters to other types
+
+---
+
+```haskell
+data Maybe a = Just a | Nothing
+
+data Either a b = Left a | Right b
+
+newtype SetWrapper a = SetWrapper (Set a)
+````
+
+
 # The `case` construct
 
 ---
@@ -236,7 +255,7 @@ case n of
 
 We can exchange newlines for `;` and indentation for `{}`.
 
-```
+```hs
 case expr of
     Constr1 field1 field2 -> resultExpr 
     Constr2 f -> resultExpr2

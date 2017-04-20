@@ -182,10 +182,6 @@ It is very important to know the difference between a *type(name)* and a *constr
 Also not that it is allowed for a type and a constructor with the same name to be in scope, as the distinction between the two can be made from the context in which they are used.
 Type names only ever occur in a place where a type can occur, such as in the definition of another type and type signatures whereas a *Constructor* can occur in any epression.
 
-.. admonition:: Aside
-    
-    There are more ways to control type variables in Haskell using a :ref:`generalised concept of algebraic datatypes <GADTs>`.
-
 .. _newtypes:
 
 Newtypes
@@ -219,6 +215,27 @@ if we used a ``type`` alias the user could simply pass a ``String`` to the ``sen
     
     sendEmail :: Email -> String -> IO ()
 
+Using type variables
+^^^^^^^^^^^^^^^^^^^^
+
+To use a type variable in a type you are defining yourself there is a very simple rule.
+You may use as many type variables as you like.
+Any type variable you use on the *right* side of the equal sign *must* also occur on the *left* side.
+Basically on the left you declare which variables the type is abstracted over and on the right you may use it as a type for your fields. [#unused_type_variables]_
+
+Some examples:
+
+::
+
+    data Maybe a = Just a | Nothing
+
+    data Either a b = Left a | Right b
+
+    newtype SetWrapper a = SetWrapper (Set a)
+
+.. admonition:: Aside
+    
+    There are more ways to control type variables in Haskell using a :ref:`generalised concept of algebraic datatypes <GADTs>`.
 
 .. _case:
 
@@ -486,3 +503,10 @@ And finally it also enables a special record pattern match using the fields.
 .. [#tuple-size] 
     The `source file for tuples in GHC <https://hackage.haskell.org/package/ghc-prim-0.5.0.0/docs/src/GHC.Tuple.html#%28%2C%2C%2C%2C%2C%2C%2C%2C%2C%2C%2C%2C%2C%2C%2C%2C%2C%2C%2C%2C%2C%2C%2C%2C%2C%2C%2C%2C%2C%2C%2C%2C%2C%2C%2C%2C%2C%2C%2C%2C%2C%2C%2C%2C%2C%2C%2C%2C%2C%2C%2C%2C%2C%2C%2C%2C%2C%2C%2C%2C%2C%29>`__ defined tuples with up to 62 elements.
     Below the last declaration is a large block of perhaps 20 more declarations which is commented out, with a note above saying "Manuel says: Including one more declaration gives a segmentation fault."
+
+.. [#unused_type_variables] 
+    It is possible to declare type variables on the left and then *not* use them on the right.
+    This is often used to tag types with other types, but this is a topic for later.
+
+    There are also a language extensions which let you use type variables which only occur on the right side, however this is a very advanced topic.
+    For now we may simply assume that this is never necessary.

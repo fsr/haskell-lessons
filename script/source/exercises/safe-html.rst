@@ -80,7 +80,7 @@ Also we want support for attrbutes.
 
 #. Change the ``Html`` datatype such that [#new_html_type]_
 
-   #. It can either be a text node which contains only a ``string``
+   #. It can either be a text node which contains only a ``String``
    #. It is a container node (such as ``div``) which contains a string for the ``containerTag``, a list of attribute/value pairs ``containerAttributes`` [#pairs]_ and a list of ``containerChildren`` [#children]_
       Use a record here with the mentioned field names.
 

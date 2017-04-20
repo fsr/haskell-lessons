@@ -47,7 +47,7 @@ main = shakeArgs shakeOptions $ do
     phony "slides" $ do 
         slideMds <- getDirectoryFiles "slides" ["*.md"]
         let htmls = map (-<.> "html") slideMds
-        need $ map (slidesOutputDirectory </>) $ htmls ++ map ("white" </>) htmls
+        need $ map (slidesOutputDirectory </>) htmls
 
     phony "clean" $ do 
         removeFilesAfter outputDirectory ["*.pdf"]
@@ -74,7 +74,7 @@ main = shakeArgs shakeOptions $ do
 
     (slidesOutputDirectory </> "img" </> "*") %> liftIO . (copyFile <$> ("slides/img" </>) . takeFileName <*> id)
 
-    (slidesOutputDirectory </> "*.html") %> buildSlideWithTheme "black"
+    (slidesOutputDirectory </> "*.html") %> buildSlideWithTheme "white"
     (slidesOutputDirectory </> "*/*.html") %> \out -> 
         let theme = takeBaseName $ takeDirectory $ makeRelative slidesOutputDirectory out
         in buildSlideWithTheme theme out

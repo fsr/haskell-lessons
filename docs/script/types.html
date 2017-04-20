@@ -196,10 +196,6 @@ The naming constraints for the constructor are the same as for <a class="referen
 <p>It is very important to know the difference between a <em>type(name)</em> and a <em>constructor</em> in Haskell.
 Also not that it is allowed for a type and a constructor with the same name to be in scope, as the distinction between the two can be made from the context in which they are used.
 Type names only ever occur in a place where a type can occur, such as in the definition of another type and type signatures whereas a <em>Constructor</em> can occur in any epression.</p>
-<div class="admonition-aside admonition">
-<p class="first admonition-title">Aside</p>
-<p class="last">There are more ways to control type variables in Haskell using a <span class="xref std std-ref">generalised concept of algebraic datatypes</span>.</p>
-</div>
 </div>
 <div class="section" id="newtypes">
 <span id="id6"></span><h3>4.2.3. Newtypes<a class="headerlink" href="#newtypes" title="Permalink to this headline">¶</a></h3>
@@ -225,6 +221,25 @@ if we used a <code class="docutils literal"><span class="pre">type</span></code>
 
 <span class="n">sendEmail</span> <span class="p">::</span> <span class="n">Email</span> <span class="o">-&gt;</span> <span class="n">String</span> <span class="o">-&gt;</span> <span class="n">IO</span> <span class="p">()</span>
 </pre></div>
+</div>
+</div>
+<div class="section" id="using-type-variables">
+<h3>4.2.4. Using type variables<a class="headerlink" href="#using-type-variables" title="Permalink to this headline">¶</a></h3>
+<p>To use a type variable in a type you are defining yourself there is a very simple rule.
+You may use as many type variables as you like.
+Any type variable you use on the <em>right</em> side of the equal sign <em>must</em> also occur on the <em>left</em> side.
+Basically on the left you declare which variables the type is abstracted over and on the right you may use it as a type for your fields. <a class="footnote-reference" href="#unused-type-variables" id="id7">[3]</a></p>
+<p>Some examples:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">data</span> <span class="n">Maybe</span> <span class="n">a</span> <span class="o">=</span> <span class="n">Just</span> <span class="n">a</span> <span class="o">|</span> <span class="n">Nothing</span>
+
+<span class="n">data</span> <span class="n">Either</span> <span class="n">a</span> <span class="n">b</span> <span class="o">=</span> <span class="n">Left</span> <span class="n">a</span> <span class="o">|</span> <span class="n">Right</span> <span class="n">b</span>
+
+<span class="n">newtype</span> <span class="n">SetWrapper</span> <span class="n">a</span> <span class="o">=</span> <span class="n">SetWrapper</span> <span class="p">(</span><span class="n">Set</span> <span class="n">a</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="admonition-aside admonition">
+<p class="first admonition-title">Aside</p>
+<p class="last">There are more ways to control type variables in Haskell using a <span class="xref std std-ref">generalised concept of algebraic datatypes</span>.</p>
 </div>
 </div>
 </div>
@@ -353,10 +368,10 @@ Note that in this pattern match constructors with more than zero fields need to 
 </div>
 </div>
 <div class="section" id="special-types">
-<span id="id7"></span><h2>4.4. Special types<a class="headerlink" href="#special-types" title="Permalink to this headline">¶</a></h2>
+<span id="id8"></span><h2>4.4. Special types<a class="headerlink" href="#special-types" title="Permalink to this headline">¶</a></h2>
 <p>There are some notable exceptions to the type naming rule.
 Those are the <strong>list type</strong>, which is <code class="docutils literal"><span class="pre">[]</span></code> or <code class="docutils literal"><span class="pre">[a]</span></code> which means &#8220;a list containing elements of type <code class="docutils literal"><span class="pre">a</span></code>&#8221; and the <strong>tuple type</strong> <code class="docutils literal"><span class="pre">(a,b)</span></code> for &#8220;a 2-tuple containing a value of type <code class="docutils literal"><span class="pre">a</span></code> and a value of type <code class="docutils literal"><span class="pre">b</span></code>&#8221;.
-There are also larger tuples <code class="docutils literal"><span class="pre">(a,b,c)</span></code>, <code class="docutils literal"><span class="pre">(a,b,c,d)</span></code> etc. <a class="footnote-reference" href="#tuple-size" id="id8">[2]</a>
+There are also larger tuples <code class="docutils literal"><span class="pre">(a,b,c)</span></code>, <code class="docutils literal"><span class="pre">(a,b,c,d)</span></code> etc. <a class="footnote-reference" href="#tuple-size" id="id9">[2]</a>
 These tuples are simply grouped data and very common in mathematics for instance.
 Should you not be familiar with the mathematical notion of tuples it may help to think of it as an unnamed struct where the fields are accessed by &#8220;index&#8221;.
 And the last special type is the <strong>function type</strong> <code class="docutils literal"><span class="pre">a</span> <span class="pre">-&gt;</span> <span class="pre">b</span></code>, which reads &#8220;a function taking as input a value of type <code class="docutils literal"><span class="pre">a</span></code> and producing a value of type <code class="docutils literal"><span class="pre">b</span></code>.</p>
@@ -376,7 +391,7 @@ And the last special type is the <strong>function type</strong> <code class="doc
 </div>
 </div>
 <div class="section" id="record-syntax">
-<span id="id9"></span><h2>4.5. Record syntax<a class="headerlink" href="#record-syntax" title="Permalink to this headline">¶</a></h2>
+<span id="id10"></span><h2>4.5. Record syntax<a class="headerlink" href="#record-syntax" title="Permalink to this headline">¶</a></h2>
 <p>For convenience reasons there is some extra syntax for defining data types which also automatically creates some field accessor functions.</p>
 <p>We can write the following:</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">data</span> <span class="n">MyType</span> <span class="o">=</span>
@@ -448,8 +463,18 @@ Meaning in each identifier (type variable, type or binding) all words composing 
 <table class="docutils footnote" frame="void" id="tuple-size" rules="none">
 <colgroup><col class="label" /><col /></colgroup>
 <tbody valign="top">
-<tr><td class="label"><a class="fn-backref" href="#id8">[2]</a></td><td>The <a class="reference external" href="https://hackage.haskell.org/package/ghc-prim-0.5.0.0/docs/src/GHC.Tuple.html#%28%2C%2C%2C%2C%2C%2C%2C%2C%2C%2C%2C%2C%2C%2C%2C%2C%2C%2C%2C%2C%2C%2C%2C%2C%2C%2C%2C%2C%2C%2C%2C%2C%2C%2C%2C%2C%2C%2C%2C%2C%2C%2C%2C%2C%2C%2C%2C%2C%2C%2C%2C%2C%2C%2C%2C%2C%2C%2C%2C%2C%2C%29">source file for tuples in GHC</a> defined tuples with up to 62 elements.
+<tr><td class="label"><a class="fn-backref" href="#id9">[2]</a></td><td>The <a class="reference external" href="https://hackage.haskell.org/package/ghc-prim-0.5.0.0/docs/src/GHC.Tuple.html#%28%2C%2C%2C%2C%2C%2C%2C%2C%2C%2C%2C%2C%2C%2C%2C%2C%2C%2C%2C%2C%2C%2C%2C%2C%2C%2C%2C%2C%2C%2C%2C%2C%2C%2C%2C%2C%2C%2C%2C%2C%2C%2C%2C%2C%2C%2C%2C%2C%2C%2C%2C%2C%2C%2C%2C%2C%2C%2C%2C%2C%2C%29">source file for tuples in GHC</a> defined tuples with up to 62 elements.
 Below the last declaration is a large block of perhaps 20 more declarations which is commented out, with a note above saying &#8220;Manuel says: Including one more declaration gives a segmentation fault.&#8221;</td></tr>
+</tbody>
+</table>
+<table class="docutils footnote" frame="void" id="unused-type-variables" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label"><a class="fn-backref" href="#id7">[3]</a></td><td><p class="first">It is possible to declare type variables on the left and then <em>not</em> use them on the right.
+This is often used to tag types with other types, but this is a topic for later.</p>
+<p class="last">There are also a language extensions which let you use type variables which only occur on the right side, however this is a very advanced topic.
+For now we may simply assume that this is never necessary.</p>
+</td></tr>
 </tbody>
 </table>
 </div>
@@ -469,6 +494,7 @@ Below the last declaration is a large block of perhaps 20 more declarations whic
 <li><a class="reference internal" href="#aliases">4.2.1. Aliases</a></li>
 <li><a class="reference internal" href="#algebraic-datatypes">4.2.2. Algebraic datatypes</a></li>
 <li><a class="reference internal" href="#newtypes">4.2.3. Newtypes</a></li>
+<li><a class="reference internal" href="#using-type-variables">4.2.4. Using type variables</a></li>
 </ul>
 </li>
 <li><a class="reference internal" href="#the-case-construct">4.3. The <code class="docutils literal"><span class="pre">case</span></code> construct</a><ul>
