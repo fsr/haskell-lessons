@@ -63,7 +63,7 @@ You&#8217;ll then be able to use this function in the subsequent tasks to look a
 <h2>5.4.2. Creating html from strings<a class="headerlink" href="#creating-html-from-strings" title="Permalink to this headline">¶</a></h2>
 <p>Now we need the user to be able to crete <code class="docutils literal"><span class="pre">Html</span></code> values from strings, but we want that to be safe.
 First we will enable them to create just html text nodes.
-Html text nodes may not contain any of the special html characters like <code class="docutils literal"><span class="pre">&amp;</span></code>, <code class="docutils literal"><span class="pre">&lt;</span></code>, <code class="docutils literal"><span class="pre">&gt;</span></code>, <code class="docutils literal"><span class="pre">&quot;</span></code> and <code class="docutils literal"><span class="pre">'</span></code>.
+Html text nodes may not contain any of the special html characters like <code class="docutils literal"><span class="pre">&amp;</span></code>, <code class="docutils literal"><span class="pre">&lt;</span></code>, <code class="docutils literal"><span class="pre">&gt;</span></code>.
 Write a function <code class="docutils literal"><span class="pre">mkTextNode</span></code> which takes a <code class="docutils literal"><span class="pre">String</span></code> as input and verifies that none of the above mentioned characters are in it. <a class="footnote-reference" href="#verifying" id="id3">[3]</a>
 If one of the characters is found raise an <code class="docutils literal"><span class="pre">error</span></code> and if not return a <code class="docutils literal"><span class="pre">Html</span></code> value containing the string.</p>
 </div>
@@ -139,6 +139,33 @@ Implement the following queries as functions (they all return <code class="docut
 <li>How many attributes does the node have? (assuming no attribute occurs twice in the attribute list) <a class="footnote-reference" href="#num-attrs" id="id11">[11]</a></li>
 <li>Does the node have a specific attribute (hint: the type signature should be <code class="docutils literal"><span class="pre">::</span> <span class="pre">String</span> <span class="pre">-&gt;</span> <span class="pre">Html</span> <span class="pre">-&gt;</span> <span class="pre">Bool</span></code>) <a class="footnote-reference" href="#finding" id="id12">[12]</a></li>
 </ul>
+</div>
+<div class="section" id="escaping-advanced">
+<h2>5.4.8. Escaping (advanced)<a class="headerlink" href="#escaping-advanced" title="Permalink to this headline">¶</a></h2>
+<p>Change the text node creation so it doesn&#8217;t fail when illegal characters are found but instead replaces them with the xml escape sequences.
+The important thing to keep in mind here is that you need to replace single characters by strings of characters. <a class="footnote-reference" href="#replacing" id="id13">[13]</a></p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="50%" />
+<col width="50%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Character</th>
+<th class="head">Escape</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td><code class="docutils literal"><span class="pre">&amp;</span></code></td>
+<td><code class="docutils literal"><span class="pre">&amp;amp;</span></code></td>
+</tr>
+<tr class="row-odd"><td><code class="docutils literal"><span class="pre">&lt;</span></code></td>
+<td><code class="docutils literal"><span class="pre">&amp;lt;</span></code></td>
+</tr>
+<tr class="row-even"><td><code class="docutils literal"><span class="pre">&gt;</span></code></td>
+<td><code class="docutils literal"><span class="pre">&amp;gt;</span></code></td>
+</tr>
+</tbody>
+</table>
 <p class="rubric">footnotes</p>
 <table class="docutils footnote" frame="void" id="defining-html" rules="none">
 <colgroup><col class="label" /><col /></colgroup>
@@ -226,6 +253,12 @@ Either using <code class="docutils literal"><span class="pre">map</span></code> 
 I leave you to find out how to use these ;)</td></tr>
 </tbody>
 </table>
+<table class="docutils footnote" frame="void" id="replacing" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label"><a class="fn-backref" href="#id13">[13]</a></td><td>I&#8217;d recommend either to use <code class="docutils literal"><span class="pre">concatMap</span></code> or <code class="docutils literal"><span class="pre">foldr</span></code>.</td></tr>
+</tbody>
+</table>
 </div>
 </div>
 
@@ -245,6 +278,7 @@ I leave you to find out how to use these ;)</td></tr>
 <li><a class="reference internal" href="#html-documents">5.4.5. Html documents</a></li>
 <li><a class="reference internal" href="#making-the-html-editable">5.4.6. Making the html editable</a></li>
 <li><a class="reference internal" href="#doing-some-inspection">5.4.7. Doing some inspection</a></li>
+<li><a class="reference internal" href="#escaping-advanced">5.4.8. Escaping (advanced)</a></li>
 </ul>
 </li>
 </ul>

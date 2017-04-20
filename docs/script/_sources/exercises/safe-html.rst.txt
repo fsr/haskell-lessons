@@ -28,7 +28,7 @@ Creating html from strings
 
 Now we need the user to be able to crete ``Html`` values from strings, but we want that to be safe.
 First we will enable them to create just html text nodes.
-Html text nodes may not contain any of the special html characters like ``&``, ``<``, ``>``, ``"`` and ``'``.
+Html text nodes may not contain any of the special html characters like ``&``, ``<``, ``>``.
 Write a function ``mkTextNode`` which takes a ``String`` as input and verifies that none of the above mentioned characters are in it. [#verifying]_
 If one of the characters is found raise an ``error`` and if not return a ``Html`` value containing the string.
 
@@ -106,6 +106,22 @@ Implement the following queries as functions (they all return ``Bool``).
 * How many attributes does the node have? (assuming no attribute occurs twice in the attribute list) [#num_attrs]_
 * Does the node have a specific attribute (hint: the type signature should be ``:: String -> Html -> Bool``) [#finding]_
 
+Escaping (advanced)
+-------------------
+
+Change the text node creation so it doesn't fail when illegal characters are found but instead replaces them with the xml escape sequences.
+The important thing to keep in mind here is that you need to replace single characters by strings of characters. [#replacing]_
+
+
+========= =========
+Character Escape
+========= =========
+``&``     ``&amp;``
+--------- ---------
+``<``     ``&lt;``
+--------- ---------
+``>``     ``&gt;``
+========= =========
 
 .. rubric:: footnotes
 
@@ -152,3 +168,5 @@ Implement the following queries as functions (they all return ``Bool``).
     To see if an element of a list satisfies a predicate there are two ways.
     Either using ``map`` and ``any`` or using ``find``.
     I leave you to find out how to use these ;)
+
+.. [#replacing] I'd recommend either to use ``concatMap`` or ``foldr``.

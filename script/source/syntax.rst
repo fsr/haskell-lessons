@@ -155,7 +155,7 @@ For instance we can assign the result of ``if`` to a binding.
 
 Parentheses are not required and one may write any expression on the branches and for the condition of an ``if``.
 
-Function Application
+Function application
 --------------------
 
 The syntax for applying functions to arguments in Haskell is the simplest imaginable.
