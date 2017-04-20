@@ -7,7 +7,7 @@ We want to build a library which we can use to programmatically build a html web
 My recommendation is to implement the code in a file (``Something.hs``) then open ``ghci`` and load the file with the ``:load FileName.hs`` (this has autocompletion for the file name as well) command.
 After that the types and functions you defined in the file will be in scope and you can play around with them.
 
-*Note:* In ghci bindings must be created with ``let binsing = expr``.
+*Note:* In ghci bindings must be created with ``let binding = expr``.
 
 A base type
 -----------
