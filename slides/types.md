@@ -21,7 +21,7 @@ date: 20.04.2017
 ```haskell
 data Either a b = Left a | Right b
 
-x :: :: Either String b
+x :: Either String b
 x = Left "A String" 
 y :: Either a Int
 y = Right 1 
