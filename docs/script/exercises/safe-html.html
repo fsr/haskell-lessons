@@ -61,7 +61,7 @@ You&#8217;ll then be able to use this function in the subsequent tasks to look a
 </div>
 <div class="section" id="creating-html-from-strings">
 <h2>5.4.2. Creating html from strings<a class="headerlink" href="#creating-html-from-strings" title="Permalink to this headline">¶</a></h2>
-<p>Now we need the user to be able to crete <code class="docutils literal"><span class="pre">Html</span></code> values from strings, but we want that to be safe.
+<p>Now we need the user to be able to create <code class="docutils literal"><span class="pre">Html</span></code> values from strings, but we want that to be safe.
 First we will enable them to create just html text nodes.
 Html text nodes may not contain any of the special html characters like <code class="docutils literal"><span class="pre">&amp;</span></code>, <code class="docutils literal"><span class="pre">&lt;</span></code>, <code class="docutils literal"><span class="pre">&gt;</span></code>.
 Write a function <code class="docutils literal"><span class="pre">mkTextNode</span></code> which takes a <code class="docutils literal"><span class="pre">String</span></code> as input and verifies that none of the above mentioned characters are in it. <a class="footnote-reference" href="#verifying" id="id3">[3]</a>
@@ -80,7 +80,7 @@ Write at least two functions which implement one of the html containers like <co
 I recommend calling the <code class="docutils literal"><span class="pre">mkDiv</span></code> and <code class="docutils literal"><span class="pre">mkSpan</span></code> etc.
 For now we will not add any attributes to these containers.
 They should accept a <code class="docutils literal"><span class="pre">Html</span></code> value as input and return a <code class="docutils literal"><span class="pre">Html</span></code> value.
-And what they should do is add the respective opening and closing tags around the html value they have recieved as input. <a class="footnote-reference" href="#containers" id="id5">[5]</a></p>
+And what they should do is add the respective opening and closing tags around the html value they have received as input. <a class="footnote-reference" href="#containers" id="id5">[5]</a></p>
 </div>
 <div class="section" id="html-documents">
 <h2>5.4.5. Html documents<a class="headerlink" href="#html-documents" title="Permalink to this headline">¶</a></h2>
@@ -114,10 +114,10 @@ This allows us to manipulate the fields later.</p>
 </div>
 <div class="section" id="making-the-html-editable">
 <h2>5.4.6. Making the html editable<a class="headerlink" href="#making-the-html-editable" title="Permalink to this headline">¶</a></h2>
-<p>Unitl now we have only used <code class="docutils literal"><span class="pre">String</span></code> for the internal html.
+<p>Until now we have only used <code class="docutils literal"><span class="pre">String</span></code> for the internal html.
 However we can do better.
 We want to be able to edit our html safely after we have created it.
-Also we want support for attrbutes.</p>
+Also we want support for attributes.</p>
 <ol class="arabic simple">
 <li>Change the <code class="docutils literal"><span class="pre">Html</span></code> datatype such that <a class="footnote-reference" href="#new-html-type" id="id6">[8]</a><ol class="arabic">
 <li>It can either be a text node which contains only a <code class="docutils literal"><span class="pre">String</span></code></li>
@@ -126,7 +126,7 @@ Use a record here with the mentioned field names.</li>
 </ol>
 </li>
 <li>Rewrite the <code class="docutils literal"><span class="pre">render</span></code> function to use the new type, and also render the attributes. <a class="footnote-reference" href="#new-rendering" id="id9">[9]</a></li>
-<li>Rewrite the <code class="docutils literal"><span class="pre">mkDiv</span></code> etc functions to create the new type. <a class="footnote-reference" href="#partial-application" id="id10">[10]</a></li>
+<li>Rewrite the <code class="docutils literal"><span class="pre">mkDiv</span></code> etc. functions to create the new type. <a class="footnote-reference" href="#partial-application" id="id10">[10]</a></li>
 </ol>
 </div>
 <div class="section" id="doing-some-inspection">
@@ -170,7 +170,7 @@ The important thing to keep in mind here is that you need to replace single char
 <table class="docutils footnote" frame="void" id="defining-html" rules="none">
 <colgroup><col class="label" /><col /></colgroup>
 <tbody valign="top">
-<tr><td class="label"><a class="fn-backref" href="#id1">[1]</a></td><td>You can use a <code class="docutils literal"><span class="pre">data</span></code> declaration, however since we only have one field in it youn should use a <code class="docutils literal"><span class="pre">newtype</span></code>.</td></tr>
+<tr><td class="label"><a class="fn-backref" href="#id1">[1]</a></td><td>You can use a <code class="docutils literal"><span class="pre">data</span></code> declaration, however since we only have one field in it you should use a <code class="docutils literal"><span class="pre">newtype</span></code>.</td></tr>
 </tbody>
 </table>
 <table class="docutils footnote" frame="void" id="exposing" rules="none">

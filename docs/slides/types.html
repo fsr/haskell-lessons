@@ -74,7 +74,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 
 <ul>
 <li>parameterizes a type</li>
-<li>similar to gernerics</li>
+<li>similar to generics</li>
 <li>naming rules the same as bindings</li>
 <li><code>TypeName t0 t1 ...</code></li>
 <li><code>TypeName (AnotherType t0) t1 ...</code></li>
@@ -173,7 +173,7 @@ y <span class="fu">=</span> <span class="dt">Right</span> <span class="dv">1</sp
 map (<span class="dt">LongAndLat</span> <span class="dv">9</span>) [<span class="dv">0</span>,<span class="dv">9</span>,<span class="dv">15</span>] <span class="fu">==</span> [<span class="dt">LongAndLat</span> <span class="dv">9</span> <span class="dv">0</span>, <span class="dt">LongAndLat</span> <span class="dv">9</span> <span class="dv">9</span>, <span class="dt">LongAndLat</span> <span class="dv">9</span> <span class="dv">15</span>]</code></pre></div>
 <aside class="notes">
 <ul>
-<li>its impotant to know the difference between type and constructor</li>
+<li>its important to know the difference between type and constructor</li>
 <li>type and constructor with same name can be in scope</li>
 <li>place of occurrence allows distinction</li>
 </ul>
@@ -356,7 +356,7 @@ field2 (<span class="dt">Constructor</span> _ s) <span class="fu">=</span> s</co
 </section><section class="slide level2">
 
 <p>And enables record creation and update syntax</p>
-<div class="sourceCode"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="kw">data</span> <span class="dt">TyType</span> <span class="fu">=</span> 
+<div class="sourceCode"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="kw">data</span> <span class="dt">MyType</span> <span class="fu">=</span> 
     <span class="dt">Constructor</span> {<span class="ot"> field1 ::</span> <span class="dt">Int</span>
                 ,<span class="ot"> field2 ::</span> <span class="dt">String</span>
                 }
@@ -411,7 +411,7 @@ addTheInts _            _            <span class="fu">=</span> <span class="dv">
 </section></section>
 <section><section id="misc" class="titleslide slide level1"><h1>Misc</h1></section><section id="error" class="slide level2">
 <h1>Error</h1>
-<p>You can use the <code>error</code> function to throw an exception on Haskell.</p>
+<p>You can use the <code>error</code> function to throw an exception in Haskell.</p>
 <p>Or use the <code>undefined</code> value (which itself is an <code>error</code>).</p>
 <p>If these are ever evaluated an exception is raised.</p>
 <div class="sourceCode"><pre class="sourceCode haskell"><code class="sourceCode haskell">error <span class="st">&quot;Something went wrong&quot;</span></code></pre></div>

@@ -171,7 +171,7 @@ data Maybe a = Just a | Nothing
 data Either a b = Left a | Right b
 
 newtype SetWrapper a = SetWrapper (Set a)
-````
+```
 
 
 # The `case` construct

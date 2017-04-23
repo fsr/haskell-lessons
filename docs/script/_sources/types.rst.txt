@@ -35,9 +35,9 @@ Note that if you wish to annotate a type which uses type variables you will have
 An example:
 
 As you can see from the definition of ``Either`` each type variable is used in one of the constructors.
-If you now create one of theses values and whish to annotate it with a type you have to fill in the respective typ variable.
+If you now create one of theses values and wish to annotate it with a type you have to fill in the respective type variable.
 However you do not have to fill in the second variable.
-For instance if you create a ``Left`` value, lets say containing a ``String`` it does not matter what type ``b`` is in the resulting ``Either``, becuase the ``Left`` constructor only uses the ``a`` variable and therefore the compiler will allow you to write anything for ``a`` including a type variable (which means it can be anything).
+For instance if you create a ``Left`` value, lets say containing a ``String`` it does not matter what type ``b`` is in the resulting ``Either``, because the ``Left`` constructor only uses the ``a`` variable and therefore the compiler will allow you to write anything for ``a`` including a type variable (which means it can be anything).
 If however you have an expression like the ``if`` which may either return ``Left`` or ``Right`` you have to fill in both types properly.
 
 ::
@@ -79,7 +79,7 @@ Therefore is is usually advisable to leave the type unspecified unless necessary
     x_and_y = if someBool then x else y
 
 
-If you don't know the type of an expression but wish to annotate it or you dont know the value of one of the type variables you can use a so called "type hole" to have the compiler figure it out for you.
+If you don't know the type of an expression but wish to annotate it or you don't know the value of one of the type variables you can use a so called "type hole" to have the compiler figure it out for you.
 If you annotate an expression with ``_`` the compiler will throw an error and tell you what it infers the type for ``_`` to be.
 You can use multiple ``_`` at the same time each of which will cause a compile error with information about the inferred type.
 This can be used for full type signatures or even just parts of it, including type variables.
@@ -135,7 +135,7 @@ This can have two different purposes:
 
         type MyMap = Map
 
-As you can see from these examples like in function signatures type aliases support polymorphism via type variables and the type varables support partial application like functions.
+As you can see from these examples like in function signatures type aliases support polymorphism via type variables and the type variables support partial application like functions.
 
 .. _algebraic datatypes:
 
@@ -143,7 +143,7 @@ Algebraic datatypes
 ^^^^^^^^^^^^^^^^^^^
 
 Algebraic datatypes are the "normal" user defined datatypes in Haskell.
-They are richer than datatypes from other laguages such as Java classes or C structs in that each type can have more (or less) than one representation.
+They are richer than datatypes from other languages such as Java classes or C structs in that each type can have more (or less) than one representation.
 Some modern languages such as Rust and Swift also support those types of data.
 They call them Enums.
 
@@ -162,7 +162,7 @@ The naming constraints for the constructor are the same as for :ref:`types`.[#ty
 Constructors serve two purposes.
 
 #. They are used, through normal function application, to *construct* a value of their type.
-    You can think of any constructor (like ``Coordinates``) as a function, wich takes arguments according to the number and type of its fields and produces a value of its type.
+    You can think of any constructor (like ``Coordinates``) as a function, which takes arguments according to the number and type of its fields and produces a value of its type.
 
     ::
 
@@ -180,7 +180,7 @@ Constructors serve two purposes.
 
 It is very important to know the difference between a *type(name)* and a *constructor* in Haskell.
 Also not that it is allowed for a type and a constructor with the same name to be in scope, as the distinction between the two can be made from the context in which they are used.
-Type names only ever occur in a place where a type can occur, such as in the definition of another type and type signatures whereas a *Constructor* can occur in any epression.
+Type names only ever occur in a place where a type can occur, such as in the definition of another type and type signatures whereas a *Constructor* can occur in any expression.
 
 .. _newtypes:
 
@@ -201,7 +201,7 @@ It is typically used to impose some restrictions on the creation of a type.
 Whereas aliases created with ``type`` may be used in just the same way that the type they alias can be used a ``newtype`` creates a completely new type and the functions which work on the inner type *do not* work on the new type.
 
 In the following example for instance we force the user to go through the ``createEmail`` function to construct an ``Email`` type.
-if we used a ``type`` alias the user could simply pass a ``String`` to the ``sendEmail`` function, becuase it is just an alias, but types created with ``newtype`` are distinct from the type they wrap and thus ths would cause a type error.
+If we used a ``type`` alias the user could simply pass a ``String`` to the ``sendEmail`` function, because it is just an alias, but types created with ``newtype`` are distinct from the type they wrap and thus this would cause a type error.
 
 ::
 
@@ -243,7 +243,7 @@ The ``case`` construct
 ----------------------
 
 The ``case`` construct together with function application basically comprises everything which you can do in Haskell.
-The ``case`` construct is used to deconstruct a type and gain access to the data contained withtin.
+The ``case`` construct is used to deconstruct a type and gain access to the data contained within.
 
 
 This is easiest to see with a user defined type
@@ -352,7 +352,7 @@ A very common pattern in Haskell is to have a function and then directly perform
 There is some syntactic sugar to make this more convenient.
 
 If you define your function with the syntax where the arguments come before the ``=`` you can directly perform a pattern match on them there.
-Mutliple ``case`` options are hereby achieved by defining the function once for each option.
+Multiple ``case`` options are hereby achieved by defining the function once for each option.
 Note that in this pattern match constructors with more than zero fields need to be parenthesized (otherwise how can the compiler distinguish between field bindings and the next argument?).
 
 ::

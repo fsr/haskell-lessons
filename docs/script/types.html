@@ -67,9 +67,9 @@ The compiler will infer the concrete values of the type variables for you.</p>
 <p>Note that if you wish to annotate a type which uses type variables you will have to fill in the concrete types for those variables <em>unless</em> they are unused.
 An example:</p>
 <p>As you can see from the definition of <code class="docutils literal"><span class="pre">Either</span></code> each type variable is used in one of the constructors.
-If you now create one of theses values and whish to annotate it with a type you have to fill in the respective typ variable.
+If you now create one of theses values and wish to annotate it with a type you have to fill in the respective type variable.
 However you do not have to fill in the second variable.
-For instance if you create a <code class="docutils literal"><span class="pre">Left</span></code> value, lets say containing a <code class="docutils literal"><span class="pre">String</span></code> it does not matter what type <code class="docutils literal"><span class="pre">b</span></code> is in the resulting <code class="docutils literal"><span class="pre">Either</span></code>, becuase the <code class="docutils literal"><span class="pre">Left</span></code> constructor only uses the <code class="docutils literal"><span class="pre">a</span></code> variable and therefore the compiler will allow you to write anything for <code class="docutils literal"><span class="pre">a</span></code> including a type variable (which means it can be anything).
+For instance if you create a <code class="docutils literal"><span class="pre">Left</span></code> value, lets say containing a <code class="docutils literal"><span class="pre">String</span></code> it does not matter what type <code class="docutils literal"><span class="pre">b</span></code> is in the resulting <code class="docutils literal"><span class="pre">Either</span></code>, because the <code class="docutils literal"><span class="pre">Left</span></code> constructor only uses the <code class="docutils literal"><span class="pre">a</span></code> variable and therefore the compiler will allow you to write anything for <code class="docutils literal"><span class="pre">a</span></code> including a type variable (which means it can be anything).
 If however you have an expression like the <code class="docutils literal"><span class="pre">if</span></code> which may either return <code class="docutils literal"><span class="pre">Left</span></code> or <code class="docutils literal"><span class="pre">Right</span></code> you have to fill in both types properly.</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">data</span> <span class="n">Either</span> <span class="n">a</span> <span class="n">b</span> <span class="o">=</span> <span class="n">Left</span> <span class="n">a</span> <span class="o">|</span> <span class="n">Right</span> <span class="n">b</span>
 
@@ -106,7 +106,7 @@ Therefore is is usually advisable to leave the type unspecified unless necessary
 <span class="n">x_and_y</span> <span class="o">=</span> <span class="k">if</span> <span class="n">someBool</span> <span class="n">then</span> <span class="n">x</span> <span class="k">else</span> <span class="n">y</span>
 </pre></div>
 </div>
-<p>If you don&#8217;t know the type of an expression but wish to annotate it or you dont know the value of one of the type variables you can use a so called &#8220;type hole&#8221; to have the compiler figure it out for you.
+<p>If you don&#8217;t know the type of an expression but wish to annotate it or you don&#8217;t know the value of one of the type variables you can use a so called &#8220;type hole&#8221; to have the compiler figure it out for you.
 If you annotate an expression with <code class="docutils literal"><span class="pre">_</span></code> the compiler will throw an error and tell you what it infers the type for <code class="docutils literal"><span class="pre">_</span></code> to be.
 You can use multiple <code class="docutils literal"><span class="pre">_</span></code> at the same time each of which will cause a compile error with information about the inferred type.
 This can be used for full type signatures or even just parts of it, including type variables.
@@ -156,15 +156,15 @@ type MyMap = HashMap
 </dl>
 </li>
 </ol>
-<p>As you can see from these examples like in function signatures type aliases support polymorphism via type variables and the type varables support partial application like functions.</p>
+<p>As you can see from these examples like in function signatures type aliases support polymorphism via type variables and the type variables support partial application like functions.</p>
 </div>
 <div class="section" id="algebraic-datatypes">
 <span id="id5"></span><h3>4.2.2. Algebraic datatypes<a class="headerlink" href="#algebraic-datatypes" title="Permalink to this headline">¶</a></h3>
 <p>Algebraic datatypes are the &#8220;normal&#8221; user defined datatypes in Haskell.
-They are richer than datatypes from other laguages such as Java classes or C structs in that each type can have more (or less) than one representation.
+They are richer than datatypes from other languages such as Java classes or C structs in that each type can have more (or less) than one representation.
 Some modern languages such as Rust and Swift also support those types of data.
 They call them Enums.</p>
-<p>A type is defined using the <code class="docutils literal"><span class="pre">data</span></code> keyword, followed by the name of the type, which must begin with an upper case letter (see also <a class="reference internal" href="syntax.html#types"><span class="std std-ref">here</span></a>), followed by an equal sign.
+<p>A type is defined using the <code class="docutils literal"><span class="pre">data</span></code> keyword, followed by the name of the type, which must begin with an upper case letter (see also <a class="reference internal" href="#types"><span class="std std-ref">here</span></a>), followed by an equal sign.
 This is followed by any number of <code class="docutils literal"><span class="pre">|</span></code> separated <em>constructor definitions</em>.</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">data</span> <span class="n">Coordinates</span> <span class="o">=</span> <span class="n">LongAndLat</span> <span class="n">Int</span> <span class="n">Int</span>
 
@@ -172,12 +172,12 @@ This is followed by any number of <code class="docutils literal"><span class="pr
 </pre></div>
 </div>
 <p>A constructor definition takes the form of first the constructor itself, followed by any number of type arguments, which are the types of the fields in the constructor.
-The naming constraints for the constructor are the same as for <a class="reference internal" href="syntax.html#types"><span class="std std-ref">Type literals</span></a>.[#type-operators]</p>
+The naming constraints for the constructor are the same as for <a class="reference internal" href="#types"><span class="std std-ref">Types</span></a>.[#type-operators]</p>
 <p>Constructors serve two purposes.</p>
 <ol class="arabic">
 <li><dl class="first docutils">
 <dt>They are used, through normal function application, to <em>construct</em> a value of their type.</dt>
-<dd><p class="first">You can think of any constructor (like <code class="docutils literal"><span class="pre">Coordinates</span></code>) as a function, wich takes arguments according to the number and type of its fields and produces a value of its type.</p>
+<dd><p class="first">You can think of any constructor (like <code class="docutils literal"><span class="pre">Coordinates</span></code>) as a function, which takes arguments according to the number and type of its fields and produces a value of its type.</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">LongAndLat</span> <span class="p">::</span> <span class="n">Int</span> <span class="o">-&gt;</span> <span class="n">Int</span> <span class="o">-&gt;</span> <span class="n">Coordinates</span>
 </pre></div>
 </div>
@@ -195,7 +195,7 @@ The naming constraints for the constructor are the same as for <a class="referen
 </ol>
 <p>It is very important to know the difference between a <em>type(name)</em> and a <em>constructor</em> in Haskell.
 Also not that it is allowed for a type and a constructor with the same name to be in scope, as the distinction between the two can be made from the context in which they are used.
-Type names only ever occur in a place where a type can occur, such as in the definition of another type and type signatures whereas a <em>Constructor</em> can occur in any epression.</p>
+Type names only ever occur in a place where a type can occur, such as in the definition of another type and type signatures whereas a <em>Constructor</em> can occur in any expression.</p>
 </div>
 <div class="section" id="newtypes">
 <span id="id6"></span><h3>4.2.3. Newtypes<a class="headerlink" href="#newtypes" title="Permalink to this headline">¶</a></h3>
@@ -210,7 +210,7 @@ To be more concrete a <code class="docutils literal"><span class="pre">newtype</
 It is typically used to impose some restrictions on the creation of a type.</p>
 <p>Whereas aliases created with <code class="docutils literal"><span class="pre">type</span></code> may be used in just the same way that the type they alias can be used a <code class="docutils literal"><span class="pre">newtype</span></code> creates a completely new type and the functions which work on the inner type <em>do not</em> work on the new type.</p>
 <p>In the following example for instance we force the user to go through the <code class="docutils literal"><span class="pre">createEmail</span></code> function to construct an <code class="docutils literal"><span class="pre">Email</span></code> type.
-if we used a <code class="docutils literal"><span class="pre">type</span></code> alias the user could simply pass a <code class="docutils literal"><span class="pre">String</span></code> to the <code class="docutils literal"><span class="pre">sendEmail</span></code> function, becuase it is just an alias, but types created with <code class="docutils literal"><span class="pre">newtype</span></code> are distinct from the type they wrap and thus ths would cause a type error.</p>
+If we used a <code class="docutils literal"><span class="pre">type</span></code> alias the user could simply pass a <code class="docutils literal"><span class="pre">String</span></code> to the <code class="docutils literal"><span class="pre">sendEmail</span></code> function, because it is just an alias, but types created with <code class="docutils literal"><span class="pre">newtype</span></code> are distinct from the type they wrap and thus this would cause a type error.</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">newtype</span> <span class="n">Email</span> <span class="o">=</span> <span class="n">Email</span> <span class="n">String</span>
 
 <span class="n">createEmail</span> <span class="p">::</span> <span class="n">String</span> <span class="o">-&gt;</span> <span class="n">Either</span> <span class="n">String</span> <span class="n">Email</span>
@@ -246,7 +246,7 @@ Basically on the left you declare which variables the type is abstracted over an
 <div class="section" id="the-case-construct">
 <span id="case"></span><h2>4.3. The <code class="docutils literal"><span class="pre">case</span></code> construct<a class="headerlink" href="#the-case-construct" title="Permalink to this headline">¶</a></h2>
 <p>The <code class="docutils literal"><span class="pre">case</span></code> construct together with function application basically comprises everything which you can do in Haskell.
-The <code class="docutils literal"><span class="pre">case</span></code> construct is used to deconstruct a type and gain access to the data contained withtin.</p>
+The <code class="docutils literal"><span class="pre">case</span></code> construct is used to deconstruct a type and gain access to the data contained within.</p>
 <p>This is easiest to see with a user defined type</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">data</span> <span class="n">MyType</span> <span class="o">=</span> <span class="n">Constr1</span> <span class="n">Int</span>
 
@@ -334,7 +334,7 @@ The following definitions are equivalent</p>
 <p>A very common pattern in Haskell is to have a function and then directly perform a <code class="docutils literal"><span class="pre">case</span></code> match on one or more of the arguments.
 There is some syntactic sugar to make this more convenient.</p>
 <p>If you define your function with the syntax where the arguments come before the <code class="docutils literal"><span class="pre">=</span></code> you can directly perform a pattern match on them there.
-Mutliple <code class="docutils literal"><span class="pre">case</span></code> options are hereby achieved by defining the function once for each option.
+Multiple <code class="docutils literal"><span class="pre">case</span></code> options are hereby achieved by defining the function once for each option.
 Note that in this pattern match constructors with more than zero fields need to be parenthesized (otherwise how can the compiler distinguish between field bindings and the next argument?).</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">data</span> <span class="n">MyType</span> <span class="o">=</span> <span class="n">Constr1</span> <span class="n">Int</span> <span class="o">|</span> <span class="n">Constr2</span> <span class="n">String</span>
 
