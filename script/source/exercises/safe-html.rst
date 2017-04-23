@@ -26,7 +26,7 @@ You'll then be able to use this function in the subsequent tasks to look at the 
 Creating html from strings
 --------------------------
 
-Now we need the user to be able to crete ``Html`` values from strings, but we want that to be safe.
+Now we need the user to be able to create ``Html`` values from strings, but we want that to be safe.
 First we will enable them to create just html text nodes.
 Html text nodes may not contain any of the special html characters like ``&``, ``<``, ``>``.
 Write a function ``mkTextNode`` which takes a ``String`` as input and verifies that none of the above mentioned characters are in it. [#verifying]_
@@ -48,7 +48,7 @@ Write at least two functions which implement one of the html containers like ``i
 I recommend calling the ``mkDiv`` and ``mkSpan`` etc.
 For now we will not add any attributes to these containers.
 They should accept a ``Html`` value as input and return a ``Html`` value.
-And what they should do is add the respective opening and closing tags around the html value they have recieved as input. [#containers]_
+And what they should do is add the respective opening and closing tags around the html value they have received as input. [#containers]_
 
 Html documents
 --------------
@@ -79,10 +79,10 @@ First we will need to model the doctype.
 Making the html editable
 ------------------------
 
-Unitl now we have only used ``String`` for the internal html.
+Until now we have only used ``String`` for the internal html.
 However we can do better.
 We want to be able to edit our html safely after we have created it.
-Also we want support for attrbutes.
+Also we want support for attributes.
 
 #. Change the ``Html`` datatype such that [#new_html_type]_
 
@@ -92,7 +92,7 @@ Also we want support for attrbutes.
 
 #. Rewrite the ``render`` function to use the new type, and also render the attributes. [#new_rendering]_
 
-#. Rewrite the ``mkDiv`` etc functions to create the new type. [#partial_application]_
+#. Rewrite the ``mkDiv`` etc. functions to create the new type. [#partial_application]_
 
 
 Doing some inspection
@@ -125,7 +125,7 @@ Character Escape
 
 .. rubric:: footnotes
 
-.. [#defining_html] You can use a ``data`` declaration, however since we only have one field in it youn should use a ``newtype``.
+.. [#defining_html] You can use a ``data`` declaration, however since we only have one field in it you should use a ``newtype``.
 
 .. [#exposing] Use the export list in your module to only export the type, not the constructor.
 
