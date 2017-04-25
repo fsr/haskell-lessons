@@ -18,6 +18,8 @@ Some links to motivational Haskell source files:
    syntax
    functions
    types
+   typeclasses
+   simple-io
    exercises/index
 
 

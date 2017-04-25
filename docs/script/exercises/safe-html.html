@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>5.4. Implementing a library for safe html construction &#8212; Haskell Lessons 0.1 documentation</title>
+    <title>7.4. Implementing a library for safe html construction &#8212; Haskell Lessons 0.1 documentation</title>
     
     <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
@@ -26,7 +26,7 @@
     <script type="text/javascript" src="../_static/doctools.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="prev" title="5.3. A custom boolean" href="custom-boolean.html" />
+    <link rel="prev" title="7.3. A custom boolean" href="custom-boolean.html" />
    
   <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
   
@@ -43,14 +43,14 @@
           <div class="body" role="main">
             
   <div class="section" id="implementing-a-library-for-safe-html-construction">
-<h1>5.4. Implementing a library for safe html construction<a class="headerlink" href="#implementing-a-library-for-safe-html-construction" title="Permalink to this headline">¶</a></h1>
+<h1>7.4. Implementing a library for safe html construction<a class="headerlink" href="#implementing-a-library-for-safe-html-construction" title="Permalink to this headline">¶</a></h1>
 <p>We want to build a library which we can use to programmatically build a html website in Haskell and then render it.</p>
 <p><em>Note:</em> this exercise is intended to be solved using both a Haskell source file and ghci.
 My recommendation is to implement the code in a file (<code class="docutils literal"><span class="pre">Something.hs</span></code>) then open <code class="docutils literal"><span class="pre">ghci</span></code> and load the file with the <code class="docutils literal"><span class="pre">:load</span> <span class="pre">FileName.hs</span></code> (this has autocompletion for the file name as well) command.
 After that the types and functions you defined in the file will be in scope and you can play around with them.</p>
 <p><em>Note:</em> In ghci bindings must be created with <code class="docutils literal"><span class="pre">let</span> <span class="pre">binding</span> <span class="pre">=</span> <span class="pre">expr</span></code>.</p>
 <div class="section" id="a-base-type">
-<h2>5.4.1. A base type<a class="headerlink" href="#a-base-type" title="Permalink to this headline">¶</a></h2>
+<h2>7.4.1. A base type<a class="headerlink" href="#a-base-type" title="Permalink to this headline">¶</a></h2>
 <p>First we need a basic <code class="docutils literal"><span class="pre">Html</span></code> type.
 For now this is just going to be a wrapper around a <code class="docutils literal"><span class="pre">String</span></code> containing the actiual html.</p>
 <p>Define the <code class="docutils literal"><span class="pre">Html</span></code> type as a wrapper around <code class="docutils literal"><span class="pre">String</span></code>. <a class="footnote-reference" href="#defining-html" id="id1">[1]</a></p>
@@ -60,7 +60,7 @@ In this case that&#8217;s simply the <code class="docutils literal"><span class=
 You&#8217;ll then be able to use this function in the subsequent tasks to look at the <code class="docutils literal"><span class="pre">Html</span></code> values and verify you have implemented your manipulation functions correctly.</p>
 </div>
 <div class="section" id="creating-html-from-strings">
-<h2>5.4.2. Creating html from strings<a class="headerlink" href="#creating-html-from-strings" title="Permalink to this headline">¶</a></h2>
+<h2>7.4.2. Creating html from strings<a class="headerlink" href="#creating-html-from-strings" title="Permalink to this headline">¶</a></h2>
 <p>Now we need the user to be able to create <code class="docutils literal"><span class="pre">Html</span></code> values from strings, but we want that to be safe.
 First we will enable them to create just html text nodes.
 Html text nodes may not contain any of the special html characters like <code class="docutils literal"><span class="pre">&amp;</span></code>, <code class="docutils literal"><span class="pre">&lt;</span></code>, <code class="docutils literal"><span class="pre">&gt;</span></code>.
@@ -68,13 +68,13 @@ Write a function <code class="docutils literal"><span class="pre">mkTextNode</sp
 If one of the characters is found raise an <code class="docutils literal"><span class="pre">error</span></code> and if not return a <code class="docutils literal"><span class="pre">Html</span></code> value containing the string.</p>
 </div>
 <div class="section" id="concatenating-html">
-<h2>5.4.3. Concatenating html<a class="headerlink" href="#concatenating-html" title="Permalink to this headline">¶</a></h2>
+<h2>7.4.3. Concatenating html<a class="headerlink" href="#concatenating-html" title="Permalink to this headline">¶</a></h2>
 <p>Html elements can also be consecutive.
 Like <code class="docutils literal"><span class="pre">&lt;div&gt;...&lt;/div&gt;&lt;span&gt;...&lt;/span&gt;</span></code>.</p>
 <p>Write a function which takes as input <em>two</em> <code class="docutils literal"><span class="pre">Html</span></code> values and returns a <code class="docutils literal"><span class="pre">Html</span></code> value which is the concatenation of the two input <code class="docutils literal"><span class="pre">Html</span></code> values. <a class="footnote-reference" href="#concatenating" id="id4">[4]</a></p>
 </div>
 <div class="section" id="html-containers">
-<h2>5.4.4. Html containers<a class="headerlink" href="#html-containers" title="Permalink to this headline">¶</a></h2>
+<h2>7.4.4. Html containers<a class="headerlink" href="#html-containers" title="Permalink to this headline">¶</a></h2>
 <p>Now we want to be able to use things like html <code class="docutils literal"><span class="pre">div</span></code> and <code class="docutils literal"><span class="pre">span</span></code>.
 Write at least two functions which implement one of the html containers like <code class="docutils literal"><span class="pre">i</span></code>, <code class="docutils literal"><span class="pre">div</span></code> or <code class="docutils literal"><span class="pre">span</span></code>.
 I recommend calling the <code class="docutils literal"><span class="pre">mkDiv</span></code> and <code class="docutils literal"><span class="pre">mkSpan</span></code> etc.
@@ -83,7 +83,7 @@ They should accept a <code class="docutils literal"><span class="pre">Html</span
 And what they should do is add the respective opening and closing tags around the html value they have received as input. <a class="footnote-reference" href="#containers" id="id5">[5]</a></p>
 </div>
 <div class="section" id="html-documents">
-<h2>5.4.5. Html documents<a class="headerlink" href="#html-documents" title="Permalink to this headline">¶</a></h2>
+<h2>7.4.5. Html documents<a class="headerlink" href="#html-documents" title="Permalink to this headline">¶</a></h2>
 <p>Now we want to model a whole html document.
 First we will need to model the doctype.</p>
 <ol class="arabic">
@@ -113,7 +113,7 @@ This allows us to manipulate the fields later.</p>
 </ol>
 </div>
 <div class="section" id="making-the-html-editable">
-<h2>5.4.6. Making the html editable<a class="headerlink" href="#making-the-html-editable" title="Permalink to this headline">¶</a></h2>
+<h2>7.4.6. Making the html editable<a class="headerlink" href="#making-the-html-editable" title="Permalink to this headline">¶</a></h2>
 <p>Until now we have only used <code class="docutils literal"><span class="pre">String</span></code> for the internal html.
 However we can do better.
 We want to be able to edit our html safely after we have created it.
@@ -130,7 +130,7 @@ Use a record here with the mentioned field names.</li>
 </ol>
 </div>
 <div class="section" id="doing-some-inspection">
-<h2>5.4.7. Doing some inspection<a class="headerlink" href="#doing-some-inspection" title="Permalink to this headline">¶</a></h2>
+<h2>7.4.7. Doing some inspection<a class="headerlink" href="#doing-some-inspection" title="Permalink to this headline">¶</a></h2>
 <p>Now that we have this fancier Html tree we can do interesting things.
 Implement the following queries as functions (they all return <code class="docutils literal"><span class="pre">Bool</span></code>).</p>
 <ul class="simple">
@@ -141,7 +141,7 @@ Implement the following queries as functions (they all return <code class="docut
 </ul>
 </div>
 <div class="section" id="escaping-advanced">
-<h2>5.4.8. Escaping (advanced)<a class="headerlink" href="#escaping-advanced" title="Permalink to this headline">¶</a></h2>
+<h2>7.4.8. Escaping (advanced)<a class="headerlink" href="#escaping-advanced" title="Permalink to this headline">¶</a></h2>
 <p>Change the text node creation so it doesn&#8217;t fail when illegal characters are found but instead replaces them with the xml escape sequences.
 The important thing to keep in mind here is that you need to replace single characters by strings of characters. <a class="footnote-reference" href="#replacing" id="id13">[13]</a></p>
 <table border="1" class="docutils">
@@ -270,15 +270,15 @@ I leave you to find out how to use these ;)</td></tr>
         <div class="sphinxsidebarwrapper">
   <h3><a href="../index.html">Table Of Contents</a></h3>
   <ul>
-<li><a class="reference internal" href="#">5.4. Implementing a library for safe html construction</a><ul>
-<li><a class="reference internal" href="#a-base-type">5.4.1. A base type</a></li>
-<li><a class="reference internal" href="#creating-html-from-strings">5.4.2. Creating html from strings</a></li>
-<li><a class="reference internal" href="#concatenating-html">5.4.3. Concatenating html</a></li>
-<li><a class="reference internal" href="#html-containers">5.4.4. Html containers</a></li>
-<li><a class="reference internal" href="#html-documents">5.4.5. Html documents</a></li>
-<li><a class="reference internal" href="#making-the-html-editable">5.4.6. Making the html editable</a></li>
-<li><a class="reference internal" href="#doing-some-inspection">5.4.7. Doing some inspection</a></li>
-<li><a class="reference internal" href="#escaping-advanced">5.4.8. Escaping (advanced)</a></li>
+<li><a class="reference internal" href="#">7.4. Implementing a library for safe html construction</a><ul>
+<li><a class="reference internal" href="#a-base-type">7.4.1. A base type</a></li>
+<li><a class="reference internal" href="#creating-html-from-strings">7.4.2. Creating html from strings</a></li>
+<li><a class="reference internal" href="#concatenating-html">7.4.3. Concatenating html</a></li>
+<li><a class="reference internal" href="#html-containers">7.4.4. Html containers</a></li>
+<li><a class="reference internal" href="#html-documents">7.4.5. Html documents</a></li>
+<li><a class="reference internal" href="#making-the-html-editable">7.4.6. Making the html editable</a></li>
+<li><a class="reference internal" href="#doing-some-inspection">7.4.7. Doing some inspection</a></li>
+<li><a class="reference internal" href="#escaping-advanced">7.4.8. Escaping (advanced)</a></li>
 </ul>
 </li>
 </ul>
@@ -286,8 +286,8 @@ I leave you to find out how to use these ;)</td></tr>
 <h3>Related Topics</h3>
 <ul>
   <li><a href="../index.html">Documentation overview</a><ul>
-  <li><a href="index.html">5. Exercises</a><ul>
-      <li>Previous: <a href="custom-boolean.html" title="previous chapter">5.3. A custom boolean</a></li>
+  <li><a href="index.html">7. Exercises</a><ul>
+      <li>Previous: <a href="custom-boolean.html" title="previous chapter">7.3. A custom boolean</a></li>
   </ul></li>
   </ul></li>
 </ul>
