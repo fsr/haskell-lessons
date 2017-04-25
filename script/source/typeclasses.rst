@@ -13,21 +13,23 @@ Defininig classes
 The class is defined with the keyword ``class`` (think ``interface`` in Java) followed by a name for the class. [#class_names]_
 Following this is a type variable [#multi_param_classes]_ which is a reference for the actual type.
 This variable is subsequently used in the method signatures to reference the type.
+For instance ``Ord`` is used to implement ordering for values.
 
 :: 
 
-    class MyTypeClass typeReference where
+    class Ord a where
 
 In the body of the definition follows a number of declaraions for whats called *methods*.
 Methods are functions which must be implemented for a type to be member of this class.
+Below is an excerpt of the ``Ord`` typeclass as an example.
 
 ::
 
-    class MyTypeClass typeReference where
+    class Ord a where
 
-        theFirstMethod :: typeReference -> String
-
-        theSecondMethod :: String -> typeReference
+        compare :: a -> a -> Ordering
+        (<=) :: a -> a -> Bool
+        max :: a -> a -> a
 
 Classes can have a so called *superclasses*. 
 This essentially just defines another class to be a dependency for the declaration of an instance of this class.
@@ -35,30 +37,29 @@ In short: A class can depend on another class.
 
 ::
 
-    class TheSuperclass typeReference => MyTypeClass typeReference where
+    class Eq a => Ord a where
 
-        theFirstMethod :: typeReference -> String
-
-        theSecondMethod :: String -> typeReference
+        compare :: a -> a -> Ordering
+        (<=) :: a -> a -> Bool
+        max :: a -> a -> a
 
 Lastly methods of the class can have default implementation in which may use both other methods of the class or methods of the superclasses.
 
 ::
 
-    class Monad m => MonadState m where
-        type State m
-        get :: m (State m)
-        get = state (\s -> (s, s))
+    class Eq a => Ord a where
 
-        put :: State m -> m ()
-        put s = state (\_ -> ((), s))
+        compare :: a -> a -> Ordering
+        compare x y = if x == y then EQ
+                    else if x <= y then LT
+                    else GT
 
-        state :: (State m -> (a, State m)) -> m a
-        state f = do
-            s <- get
-            let ~(a, s') = f s
-            put s'
-            return a
+        (<=) :: a -> a -> Bool
+        x <= y = case compare x y of { GT -> False; _ -> True }
+
+        max :: a -> a -> a
+        max x y = if x <= y then y else x
+
 
 Constraining types
 ------------------
@@ -69,18 +70,56 @@ The advantage of this is that we can require *multiple* classes for a single typ
 Implementing classes
 --------------------
 
+The Haskell model of implementing classes is similar to that of `Rust`_ and `Swift`_.
+Like in those languages an instance of the class (interface) can be declared anywhere.
+It does not have to happen at the place where the type is defined.
+The only constraint is that there must not be an existing instance to the class in scope.
+Typically the instances of the class are either defined where the type is defined or where the class is defined.
+This prevents situations where two instances of the same class for the same type are in scope.
+
 Implementations of the class are done using the ``instance`` keyword otherwise are very similar to the class declaration.
-The ``instance`` keyword is followed by the class name ant then the type name for which the instance is to be declared.
+The ``instance`` keyword is followed by the class name and then the type name for which the instance is to be declared.
+
+.. _Rust: https://www.rust-lang.org
+.. _Scala: https://www.scala-lang.org
+.. _Swift: https://swift.org
 
 ::
 
-    instance MyTypeClass AType where
+    data MyType = TheSmallest | TheMiddle | TheLargest
+
+    instance Eq MyType where
+
+    instance Ord MyType where
+        
 
 In the body of the declaration follow definitions for each of the methods of the class.
 
 ::
 
-    instance MyTypeClass AType where
+    data MyType = TheSmallest | TheMiddle | TheLargest
+
+    instance Eq MyType where
+        TheSmallest == TheSmallest = True
+        TheMiddle   == TheMiddle   = True
+        TheLargest  == TheLargest  = True
+        _           == _           = False
+
+    instance Ord MyType where
+
+        compare TheSmallest TheSmallest = EQ -- EQual
+        compare TheLargest TheLargest = EQ 
+        compare TheMiddle TheMiddle = EQ
+        compare TheSmallest _ = LT -- Less Then
+        compare TheLargest  _ = GT -- Greater Then
+        compare _ TheLargest = LT
+        compare _ TheSmallest = GT
+
+        TheSmallest <= _ = True
+        _ <= TheLargest = True
+        TheLargest <= _ = False
+        _ <= TheSmallest = False
+
 
 
 
