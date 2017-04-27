@@ -125,7 +125,7 @@ A typeclass for rendering
 Define a typeclass for our render function. 
 I propose to call the typeclass ``Renderable r``, with one member function ``render :: r -> String``.
 
-Implement the ``Renderable`` typeclass for ``Html`` and ``Document``.
+Implement the ``Renderable`` typeclass for ``Html``, ``Doctype`` and ``Document``. [#renderable]_
 
 
 Escaping (advanced)
@@ -192,3 +192,7 @@ Character Escape
     I leave you to find out how to use these ;)
 
 .. [#replacing] I'd recommend either to use ``concatMap`` or ``foldr``.
+
+.. [#renderable] 
+    You can use the ``render`` function for other types or nested data inside the definition of ``render``.
+    For instance when rendering ``Document`` you can use ``render`` on the ``Doctype`` or a ``Html`` value to render it.

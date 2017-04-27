@@ -140,10 +140,24 @@ Implement the following queries as functions (they all return <code class="docut
 <li>Does the node have a specific attribute (hint: the type signature should be <code class="docutils literal"><span class="pre">::</span> <span class="pre">String</span> <span class="pre">-&gt;</span> <span class="pre">Html</span> <span class="pre">-&gt;</span> <span class="pre">Bool</span></code>) <a class="footnote-reference" href="#finding" id="id12">[12]</a></li>
 </ul>
 </div>
+<div class="section" id="implement-a-monoid">
+<h2>7.4.8. Implement a monoid<a class="headerlink" href="#implement-a-monoid" title="Permalink to this headline">¶</a></h2>
+<p>Implement the <code class="docutils literal"><span class="pre">Data.Monoid.Monoid</span></code> typeclass for <code class="docutils literal"><span class="pre">Html</span></code>.</p>
+<p><code class="docutils literal"><span class="pre">mappend</span></code> stands for <em>append</em>. The <code class="docutils literal"><span class="pre">m</span></code> is only added so it does not clash names.
+Think about which of the functions we have already implemented that appends.</p>
+<p><code class="docutils literal"><span class="pre">mempty</span></code> stands for <em>empty</em>. Think about what an empty element for <code class="docutils literal"><span class="pre">Html</span></code> would be.</p>
+<p>Hint: The empty element should be such that appending an empty element to anything it should no change the original thing.</p>
+</div>
+<div class="section" id="a-typeclass-for-rendering">
+<h2>7.4.9. A typeclass for rendering<a class="headerlink" href="#a-typeclass-for-rendering" title="Permalink to this headline">¶</a></h2>
+<p>Define a typeclass for our render function.
+I propose to call the typeclass <code class="docutils literal"><span class="pre">Renderable</span> <span class="pre">r</span></code>, with one member function <code class="docutils literal"><span class="pre">render</span> <span class="pre">::</span> <span class="pre">r</span> <span class="pre">-&gt;</span> <span class="pre">String</span></code>.</p>
+<p>Implement the <code class="docutils literal"><span class="pre">Renderable</span></code> typeclass for <code class="docutils literal"><span class="pre">Html</span></code>, <code class="docutils literal"><span class="pre">Doctype</span></code> and <code class="docutils literal"><span class="pre">Document</span></code>. <a class="footnote-reference" href="#renderable" id="id13">[14]</a></p>
+</div>
 <div class="section" id="escaping-advanced">
-<h2>7.4.8. Escaping (advanced)<a class="headerlink" href="#escaping-advanced" title="Permalink to this headline">¶</a></h2>
+<h2>7.4.10. Escaping (advanced)<a class="headerlink" href="#escaping-advanced" title="Permalink to this headline">¶</a></h2>
 <p>Change the text node creation so it doesn&#8217;t fail when illegal characters are found but instead replaces them with the xml escape sequences.
-The important thing to keep in mind here is that you need to replace single characters by strings of characters. <a class="footnote-reference" href="#replacing" id="id13">[13]</a></p>
+The important thing to keep in mind here is that you need to replace single characters by strings of characters. <a class="footnote-reference" href="#replacing" id="id14">[13]</a></p>
 <table border="1" class="docutils">
 <colgroup>
 <col width="50%" />
@@ -256,7 +270,14 @@ I leave you to find out how to use these ;)</td></tr>
 <table class="docutils footnote" frame="void" id="replacing" rules="none">
 <colgroup><col class="label" /><col /></colgroup>
 <tbody valign="top">
-<tr><td class="label"><a class="fn-backref" href="#id13">[13]</a></td><td>I&#8217;d recommend either to use <code class="docutils literal"><span class="pre">concatMap</span></code> or <code class="docutils literal"><span class="pre">foldr</span></code>.</td></tr>
+<tr><td class="label"><a class="fn-backref" href="#id14">[13]</a></td><td>I&#8217;d recommend either to use <code class="docutils literal"><span class="pre">concatMap</span></code> or <code class="docutils literal"><span class="pre">foldr</span></code>.</td></tr>
+</tbody>
+</table>
+<table class="docutils footnote" frame="void" id="renderable" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label"><a class="fn-backref" href="#id13">[14]</a></td><td>You can use the <code class="docutils literal"><span class="pre">render</span></code> function for other types or nested data inside the definition of <code class="docutils literal"><span class="pre">render</span></code>.
+For instance when rendering <code class="docutils literal"><span class="pre">Document</span></code> you can use <code class="docutils literal"><span class="pre">render</span></code> on the <code class="docutils literal"><span class="pre">Doctype</span></code> or a <code class="docutils literal"><span class="pre">Html</span></code> value to render it.</td></tr>
 </tbody>
 </table>
 </div>
@@ -278,7 +299,9 @@ I leave you to find out how to use these ;)</td></tr>
 <li><a class="reference internal" href="#html-documents">7.4.5. Html documents</a></li>
 <li><a class="reference internal" href="#making-the-html-editable">7.4.6. Making the html editable</a></li>
 <li><a class="reference internal" href="#doing-some-inspection">7.4.7. Doing some inspection</a></li>
-<li><a class="reference internal" href="#escaping-advanced">7.4.8. Escaping (advanced)</a></li>
+<li><a class="reference internal" href="#implement-a-monoid">7.4.8. Implement a monoid</a></li>
+<li><a class="reference internal" href="#a-typeclass-for-rendering">7.4.9. A typeclass for rendering</a></li>
+<li><a class="reference internal" href="#escaping-advanced">7.4.10. Escaping (advanced)</a></li>
 </ul>
 </li>
 </ul>

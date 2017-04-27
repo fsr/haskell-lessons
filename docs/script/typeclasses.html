@@ -45,7 +45,7 @@
             
   <div class="section" id="typeclasses">
 <h1>5. Typeclasses<a class="headerlink" href="#typeclasses" title="Permalink to this headline">¶</a></h1>
-<p>In addition to the <code class="docutils literal"><span class="pre">ad-hoc</span></code> polymorphism of type variables Haskell offers another type of polymorphism via a concept called <em>type classes</em>.
+<p>In addition to the <em>parametric</em> polymorphism of type variables Haskell offers <em>ad-hoc</em> polymorphism via a concept called <em>type classes</em>.
 Conceptually a <em>type class</em> groups a set of types for which there exists a common behaviour.</p>
 <p>Practically a typeclass is the same as an interface in Java or C#.
 It defines a set of methods which a must be implemented for a certain type.</p>
@@ -53,61 +53,121 @@ It defines a set of methods which a must be implemented for a certain type.</p>
 <h2>5.1. Defininig classes<a class="headerlink" href="#defininig-classes" title="Permalink to this headline">¶</a></h2>
 <p>The class is defined with the keyword <code class="docutils literal"><span class="pre">class</span></code> (think <code class="docutils literal"><span class="pre">interface</span></code> in Java) followed by a name for the class. <a class="footnote-reference" href="#class-names" id="id1">[1]</a>
 Following this is a type variable <a class="footnote-reference" href="#multi-param-classes" id="id2">[2]</a> which is a reference for the actual type.
-This variable is subsequently used in the method signatures to reference the type.</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">MyTypeClass</span> <span class="n">typeReference</span> <span class="n">where</span>
+This variable is subsequently used in the method signatures to reference the type.
+For instance <code class="docutils literal"><span class="pre">Ord</span></code> is used to implement ordering for values.</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Ord</span> <span class="n">a</span> <span class="n">where</span>
 </pre></div>
 </div>
+<div class="section" id="member-functions">
+<h3>5.1.1. Member functions<a class="headerlink" href="#member-functions" title="Permalink to this headline">¶</a></h3>
 <p>In the body of the definition follows a number of declaraions for whats called <em>methods</em>.
-Methods are functions which must be implemented for a type to be member of this class.</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">MyTypeClass</span> <span class="n">typeReference</span> <span class="n">where</span>
+Methods are functions which must be implemented for a type to be member of this class.
+Below is an excerpt of the <code class="docutils literal"><span class="pre">Ord</span></code> typeclass as an example.</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Ord</span> <span class="n">a</span> <span class="n">where</span>
 
-    <span class="n">theFirstMethod</span> <span class="p">::</span> <span class="n">typeReference</span> <span class="o">-&gt;</span> <span class="n">String</span>
-
-    <span class="n">theSecondMethod</span> <span class="p">::</span> <span class="n">String</span> <span class="o">-&gt;</span> <span class="n">typeReference</span>
+    <span class="n">compare</span> <span class="p">::</span> <span class="n">a</span> <span class="o">-&gt;</span> <span class="n">a</span> <span class="o">-&gt;</span> <span class="n">Ordering</span>
+    <span class="p">(</span><span class="o">&lt;=</span><span class="p">)</span> <span class="p">::</span> <span class="n">a</span> <span class="o">-&gt;</span> <span class="n">a</span> <span class="o">-&gt;</span> <span class="n">Bool</span>
+    <span class="nb">max</span> <span class="p">::</span> <span class="n">a</span> <span class="o">-&gt;</span> <span class="n">a</span> <span class="o">-&gt;</span> <span class="n">a</span>
 </pre></div>
 </div>
+</div>
+<div class="section" id="superclasses">
+<h3>5.1.2. Superclasses<a class="headerlink" href="#superclasses" title="Permalink to this headline">¶</a></h3>
 <p>Classes can have a so called <em>superclasses</em>.
 This essentially just defines another class to be a dependency for the declaration of an instance of this class.
 In short: A class can depend on another class.</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">TheSuperclass</span> <span class="n">typeReference</span> <span class="o">=&gt;</span> <span class="n">MyTypeClass</span> <span class="n">typeReference</span> <span class="n">where</span>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Eq</span> <span class="n">a</span> <span class="o">=&gt;</span> <span class="n">Ord</span> <span class="n">a</span> <span class="n">where</span>
 
-    <span class="n">theFirstMethod</span> <span class="p">::</span> <span class="n">typeReference</span> <span class="o">-&gt;</span> <span class="n">String</span>
-
-    <span class="n">theSecondMethod</span> <span class="p">::</span> <span class="n">String</span> <span class="o">-&gt;</span> <span class="n">typeReference</span>
+    <span class="n">compare</span> <span class="p">::</span> <span class="n">a</span> <span class="o">-&gt;</span> <span class="n">a</span> <span class="o">-&gt;</span> <span class="n">Ordering</span>
+    <span class="p">(</span><span class="o">&lt;=</span><span class="p">)</span> <span class="p">::</span> <span class="n">a</span> <span class="o">-&gt;</span> <span class="n">a</span> <span class="o">-&gt;</span> <span class="n">Bool</span>
+    <span class="nb">max</span> <span class="p">::</span> <span class="n">a</span> <span class="o">-&gt;</span> <span class="n">a</span> <span class="o">-&gt;</span> <span class="n">a</span>
 </pre></div>
 </div>
+</div>
+<div class="section" id="default-implementations">
+<h3>5.1.3. Default implementations<a class="headerlink" href="#default-implementations" title="Permalink to this headline">¶</a></h3>
 <p>Lastly methods of the class can have default implementation in which may use both other methods of the class or methods of the superclasses.</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Monad</span> <span class="n">m</span> <span class="o">=&gt;</span> <span class="n">MonadState</span> <span class="n">m</span> <span class="n">where</span>
-    <span class="nb">type</span> <span class="n">State</span> <span class="n">m</span>
-    <span class="n">get</span> <span class="p">::</span> <span class="n">m</span> <span class="p">(</span><span class="n">State</span> <span class="n">m</span><span class="p">)</span>
-    <span class="n">get</span> <span class="o">=</span> <span class="n">state</span> <span class="p">(</span>\<span class="n">s</span> <span class="o">-&gt;</span> <span class="p">(</span><span class="n">s</span><span class="p">,</span> <span class="n">s</span><span class="p">))</span>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Eq</span> <span class="n">a</span> <span class="o">=&gt;</span> <span class="n">Ord</span> <span class="n">a</span> <span class="n">where</span>
 
-    <span class="n">put</span> <span class="p">::</span> <span class="n">State</span> <span class="n">m</span> <span class="o">-&gt;</span> <span class="n">m</span> <span class="p">()</span>
-    <span class="n">put</span> <span class="n">s</span> <span class="o">=</span> <span class="n">state</span> <span class="p">(</span>\<span class="n">_</span> <span class="o">-&gt;</span> <span class="p">((),</span> <span class="n">s</span><span class="p">))</span>
+    <span class="n">compare</span> <span class="p">::</span> <span class="n">a</span> <span class="o">-&gt;</span> <span class="n">a</span> <span class="o">-&gt;</span> <span class="n">Ordering</span>
+    <span class="n">compare</span> <span class="n">x</span> <span class="n">y</span> <span class="o">=</span> <span class="k">if</span> <span class="n">x</span> <span class="o">==</span> <span class="n">y</span> <span class="n">then</span> <span class="n">EQ</span>
+                <span class="k">else</span> <span class="k">if</span> <span class="n">x</span> <span class="o">&lt;=</span> <span class="n">y</span> <span class="n">then</span> <span class="n">LT</span>
+                <span class="k">else</span> <span class="n">GT</span>
 
-    <span class="n">state</span> <span class="p">::</span> <span class="p">(</span><span class="n">State</span> <span class="n">m</span> <span class="o">-&gt;</span> <span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">State</span> <span class="n">m</span><span class="p">))</span> <span class="o">-&gt;</span> <span class="n">m</span> <span class="n">a</span>
-    <span class="n">state</span> <span class="n">f</span> <span class="o">=</span> <span class="n">do</span>
-        <span class="n">s</span> <span class="o">&lt;-</span> <span class="n">get</span>
-        <span class="n">let</span> <span class="o">~</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">s</span><span class="s1">&#39;) = f s</span>
-        <span class="n">put</span> <span class="n">s</span><span class="s1">&#39;</span>
-        <span class="k">return</span> <span class="n">a</span>
+    <span class="p">(</span><span class="o">&lt;=</span><span class="p">)</span> <span class="p">::</span> <span class="n">a</span> <span class="o">-&gt;</span> <span class="n">a</span> <span class="o">-&gt;</span> <span class="n">Bool</span>
+    <span class="n">x</span> <span class="o">&lt;=</span> <span class="n">y</span> <span class="o">=</span> <span class="n">case</span> <span class="n">compare</span> <span class="n">x</span> <span class="n">y</span> <span class="n">of</span> <span class="p">{</span> <span class="n">GT</span> <span class="o">-&gt;</span> <span class="kc">False</span><span class="p">;</span> <span class="n">_</span> <span class="o">-&gt;</span> <span class="kc">True</span> <span class="p">}</span>
+
+    <span class="nb">max</span> <span class="p">::</span> <span class="n">a</span> <span class="o">-&gt;</span> <span class="n">a</span> <span class="o">-&gt;</span> <span class="n">a</span>
+    <span class="nb">max</span> <span class="n">x</span> <span class="n">y</span> <span class="o">=</span> <span class="k">if</span> <span class="n">x</span> <span class="o">&lt;=</span> <span class="n">y</span> <span class="n">then</span> <span class="n">y</span> <span class="k">else</span> <span class="n">x</span>
 </pre></div>
+</div>
 </div>
 </div>
 <div class="section" id="constraining-types">
 <h2>5.2. Constraining types<a class="headerlink" href="#constraining-types" title="Permalink to this headline">¶</a></h2>
 <p>Unlike in Java where, if we wish to use an interface, we simply declare the type to <em>be</em> the interface in Haskell we <em>constrain</em> the type to <em>implement</em> the class.
-The advantage of this is that we can require <em>multiple</em> classes for a single type.</p>
+Constraints precede the arguments and return type in a type signature.
+Constraints are always placed on <em>type variables</em>.
+An ascii double arrow separates the constraints and the rest of the type signature.</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span>max3 :: Ord a =&gt; a -&gt; a -&gt; a -&gt; a
+max3 a1 a2 a3 = a1 `max` a2 `max` a3
+</pre></div>
+</div>
+<p>The advantage of this is that we can require <em>multiple</em> classes for a single type.
+In this case the constraints are listed comma separated and surrounded by parentheses.</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">showMax3</span> <span class="p">::</span> <span class="p">(</span><span class="n">Show</span> <span class="n">a</span><span class="p">,</span> <span class="n">Ord</span> <span class="n">a</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="n">a</span> <span class="o">-&gt;</span> <span class="n">a</span> <span class="o">-&gt;</span> <span class="n">a</span> <span class="o">-&gt;</span> <span class="n">String</span>
+<span class="n">showMax3</span> <span class="n">a1</span> <span class="n">a2</span> <span class="n">a3</span> <span class="o">=</span> <span class="n">show</span> <span class="p">(</span><span class="n">max3</span> <span class="n">a1</span> <span class="n">a2</span> <span class="n">a3</span><span class="p">)</span>
+</pre></div>
+</div>
 </div>
 <div class="section" id="implementing-classes">
 <h2>5.3. Implementing classes<a class="headerlink" href="#implementing-classes" title="Permalink to this headline">¶</a></h2>
-<p>Implementations of the class are done using the <code class="docutils literal"><span class="pre">instance</span></code> keyword otherwise are very similar to the class declaration.
-The <code class="docutils literal"><span class="pre">instance</span></code> keyword is followed by the class name ant then the type name for which the instance is to be declared.</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">instance</span> <span class="n">MyTypeClass</span> <span class="n">AType</span> <span class="n">where</span>
+<p>The Haskell model of implementing classes is similar to that of <a class="reference external" href="https://www.rust-lang.org">Rust</a> and <a class="reference external" href="https://swift.org">Swift</a>.
+Like in those languages an instance of the class (interface) can be declared anywhere.
+It does not have to happen at the place where the type is defined.
+The only constraint is that there must not be an existing instance to the class in scope.
+Typically the instances of the class are either defined where the type is defined or where the class is defined.
+This prevents situations where two instances of the same class for the same type are in scope.</p>
+<p>Implementations of the class are done using the <code class="docutils literal"><span class="pre">instance</span></code> keyword, otherwise they are very similar to the class declaration.
+The <code class="docutils literal"><span class="pre">instance</span></code> keyword is followed by the class name and then the type name for which the instance is to be declared.</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">data</span> <span class="n">MyType</span> <span class="o">=</span> <span class="n">TheSmallest</span> <span class="o">|</span> <span class="n">TheMiddle</span> <span class="o">|</span> <span class="n">TheLargest</span>
+
+<span class="n">instance</span> <span class="n">Eq</span> <span class="n">MyType</span> <span class="n">where</span>
+
+<span class="n">instance</span> <span class="n">Ord</span> <span class="n">MyType</span> <span class="n">where</span>
 </pre></div>
 </div>
 <p>In the body of the declaration follow definitions for each of the methods of the class.</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">instance</span> <span class="n">MyTypeClass</span> <span class="n">AType</span> <span class="n">where</span>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">data</span> <span class="n">MyType</span> <span class="o">=</span> <span class="n">TheSmallest</span> <span class="o">|</span> <span class="n">TheMiddle</span> <span class="o">|</span> <span class="n">TheLargest</span>
+
+<span class="n">instance</span> <span class="n">Eq</span> <span class="n">MyType</span> <span class="n">where</span>
+    <span class="n">TheSmallest</span> <span class="o">==</span> <span class="n">TheSmallest</span> <span class="o">=</span> <span class="kc">True</span>
+    <span class="n">TheMiddle</span>   <span class="o">==</span> <span class="n">TheMiddle</span>   <span class="o">=</span> <span class="kc">True</span>
+    <span class="n">TheLargest</span>  <span class="o">==</span> <span class="n">TheLargest</span>  <span class="o">=</span> <span class="kc">True</span>
+    <span class="n">_</span>           <span class="o">==</span> <span class="n">_</span>           <span class="o">=</span> <span class="kc">False</span>
+
+<span class="n">instance</span> <span class="n">Ord</span> <span class="n">MyType</span> <span class="n">where</span>
+
+    <span class="n">compare</span> <span class="n">TheSmallest</span> <span class="n">TheSmallest</span> <span class="o">=</span> <span class="n">EQ</span> <span class="o">--</span> <span class="n">EQual</span>
+    <span class="n">compare</span> <span class="n">TheLargest</span> <span class="n">TheLargest</span> <span class="o">=</span> <span class="n">EQ</span>
+    <span class="n">compare</span> <span class="n">TheMiddle</span> <span class="n">TheMiddle</span> <span class="o">=</span> <span class="n">EQ</span>
+    <span class="n">compare</span> <span class="n">TheSmallest</span> <span class="n">_</span> <span class="o">=</span> <span class="n">LT</span> <span class="o">--</span> <span class="n">Less</span> <span class="n">Then</span>
+    <span class="n">compare</span> <span class="n">TheLargest</span>  <span class="n">_</span> <span class="o">=</span> <span class="n">GT</span> <span class="o">--</span> <span class="n">Greater</span> <span class="n">Then</span>
+    <span class="n">compare</span> <span class="n">_</span> <span class="n">TheLargest</span> <span class="o">=</span> <span class="n">LT</span>
+    <span class="n">compare</span> <span class="n">_</span> <span class="n">TheSmallest</span> <span class="o">=</span> <span class="n">GT</span>
+
+    <span class="n">TheSmallest</span> <span class="o">&lt;=</span> <span class="n">_</span> <span class="o">=</span> <span class="kc">True</span>
+    <span class="n">_</span> <span class="o">&lt;=</span> <span class="n">TheLargest</span> <span class="o">=</span> <span class="kc">True</span>
+    <span class="n">TheLargest</span> <span class="o">&lt;=</span> <span class="n">_</span> <span class="o">=</span> <span class="kc">False</span>
+    <span class="n">_</span> <span class="o">&lt;=</span> <span class="n">TheSmallest</span> <span class="o">=</span> <span class="kc">False</span>
+</pre></div>
+</div>
+<div class="section" id="deriving-classes">
+<h3>5.3.1. Deriving classes<a class="headerlink" href="#deriving-classes" title="Permalink to this headline">¶</a></h3>
+<p>For some classes like <code class="docutils literal"><span class="pre">Eq</span></code>, <code class="docutils literal"><span class="pre">Ord</span></code>, <code class="docutils literal"><span class="pre">Show</span></code> and <code class="docutils literal"><span class="pre">Read</span></code> you may let GHC automatically define an instance for you.
+This is done using the <code class="docutils literal"><span class="pre">deriving</span></code> keyword after the type definition.
+The exact semantics of those derived classes can be found in the <a class="reference external" href="https://downloads.haskell.org/~ghc/latest/docs/html/users_guide/">ghc manual</a>.</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">data</span> <span class="n">T</span> <span class="o">=</span> <span class="n">A</span> <span class="o">|</span> <span class="n">B</span> <span class="n">Int</span> <span class="n">deriving</span> <span class="p">(</span><span class="n">Show</span><span class="p">,</span> <span class="n">Eq</span><span class="p">,</span> <span class="n">Ord</span><span class="p">)</span>
 </pre></div>
 </div>
 <p class="rubric">footnotes</p>
@@ -125,6 +185,7 @@ The <code class="docutils literal"><span class="pre">instance</span></code> keyw
 </table>
 </div>
 </div>
+</div>
 
 
           </div>
@@ -135,9 +196,17 @@ The <code class="docutils literal"><span class="pre">instance</span></code> keyw
   <h3><a href="index.html">Table Of Contents</a></h3>
   <ul>
 <li><a class="reference internal" href="#">5. Typeclasses</a><ul>
-<li><a class="reference internal" href="#defininig-classes">5.1. Defininig classes</a></li>
+<li><a class="reference internal" href="#defininig-classes">5.1. Defininig classes</a><ul>
+<li><a class="reference internal" href="#member-functions">5.1.1. Member functions</a></li>
+<li><a class="reference internal" href="#superclasses">5.1.2. Superclasses</a></li>
+<li><a class="reference internal" href="#default-implementations">5.1.3. Default implementations</a></li>
+</ul>
+</li>
 <li><a class="reference internal" href="#constraining-types">5.2. Constraining types</a></li>
-<li><a class="reference internal" href="#implementing-classes">5.3. Implementing classes</a></li>
+<li><a class="reference internal" href="#implementing-classes">5.3. Implementing classes</a><ul>
+<li><a class="reference internal" href="#deriving-classes">5.3.1. Deriving classes</a></li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>

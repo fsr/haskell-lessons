@@ -19,6 +19,9 @@ For instance ``Ord`` is used to implement ordering for values.
 
     class Ord a where
 
+Member functions
+^^^^^^^^^^^^^^^^
+
 In the body of the definition follows a number of declaraions for whats called *methods*.
 Methods are functions which must be implemented for a type to be member of this class.
 Below is an excerpt of the ``Ord`` typeclass as an example.
@@ -31,6 +34,9 @@ Below is an excerpt of the ``Ord`` typeclass as an example.
         (<=) :: a -> a -> Bool
         max :: a -> a -> a
 
+Superclasses
+^^^^^^^^^^^^
+
 Classes can have a so called *superclasses*. 
 This essentially just defines another class to be a dependency for the declaration of an instance of this class.
 In short: A class can depend on another class.
@@ -42,6 +48,9 @@ In short: A class can depend on another class.
         compare :: a -> a -> Ordering
         (<=) :: a -> a -> Bool
         max :: a -> a -> a
+
+Default implementations
+^^^^^^^^^^^^^^^^^^^^^^^
 
 Lastly methods of the class can have default implementation in which may use both other methods of the class or methods of the superclasses.
 
@@ -72,7 +81,7 @@ An ascii double arrow separates the constraints and the rest of the type signatu
 ::
 
     max3 :: Ord a => a -> a -> a -> a
-    max3 a1 a2 a3 = a1 `max` a2 `max a3
+    max3 a1 a2 a3 = a1 `max` a2 `max` a3
 
 The advantage of this is that we can require *multiple* classes for a single type.
 In this case the constraints are listed comma separated and surrounded by parentheses.
@@ -136,6 +145,16 @@ In the body of the declaration follow definitions for each of the methods of the
         _ <= TheSmallest = False
 
 
+Deriving classes
+^^^^^^^^^^^^^^^^
+
+For some classes like ``Eq``, ``Ord``, ``Show`` and ``Read`` you may let GHC automatically define an instance for you.
+This is done using the ``deriving`` keyword after the type definition.
+The exact semantics of those derived classes can be found in the `ghc manual <https://downloads.haskell.org/~ghc/latest/docs/html/users_guide/>`__.
+
+::
+
+    data T = A | B Int deriving (Show, Eq, Ord)
 
 
 

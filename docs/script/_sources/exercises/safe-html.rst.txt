@@ -106,6 +106,28 @@ Implement the following queries as functions (they all return ``Bool``).
 * How many attributes does the node have? (assuming no attribute occurs twice in the attribute list) [#num_attrs]_
 * Does the node have a specific attribute (hint: the type signature should be ``:: String -> Html -> Bool``) [#finding]_
 
+Implement a monoid
+------------------
+
+Implement the ``Data.Monoid.Monoid`` typeclass for ``Html``.
+
+``mappend`` stands for *append*. The ``m`` is only added so it does not clash names.
+Think about which of the functions we have already implemented that appends.
+
+``mempty`` stands for *empty*. Think about what an empty element for ``Html`` would be.
+
+Hint: The empty element should be such that appending an empty element to anything it should no change the original thing.
+
+
+A typeclass for rendering
+-------------------------
+
+Define a typeclass for our render function. 
+I propose to call the typeclass ``Renderable r``, with one member function ``render :: r -> String``.
+
+Implement the ``Renderable`` typeclass for ``Html``, ``Doctype`` and ``Document``. [#renderable]_
+
+
 Escaping (advanced)
 -------------------
 
@@ -170,3 +192,7 @@ Character Escape
     I leave you to find out how to use these ;)
 
 .. [#replacing] I'd recommend either to use ``concatMap`` or ``foldr``.
+
+.. [#renderable] 
+    You can use the ``render`` function for other types or nested data inside the definition of ``render``.
+    For instance when rendering ``Document`` you can use ``render`` on the ``Doctype`` or a ``Html`` value to render it.
