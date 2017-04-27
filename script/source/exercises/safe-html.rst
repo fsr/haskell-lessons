@@ -116,7 +116,16 @@ Think about which of the functions we have already implemented that appends.
 
 ``mempty`` stands for *empty*. Think about what an empty element for ``Html`` would be.
 
-Hint: The empty element should be such that appending an empty element to anything it should no change th original thing.
+Hint: The empty element should be such that appending an empty element to anything it should no change the original thing.
+
+
+A typeclass for rendering
+-------------------------
+
+Define a typeclass for our render function. 
+I propose to call the typeclass ``Renderable r``, with one member function ``render :: r -> String``.
+
+Implement the ``Renderable`` typeclass for ``Html`` and ``Document``.
 
 
 Escaping (advanced)
