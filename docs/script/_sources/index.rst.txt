@@ -18,6 +18,7 @@ Some links to motivational Haskell source files:
    syntax
    functions
    types
+   modules
    typeclasses
    simple-io
    exercises/index

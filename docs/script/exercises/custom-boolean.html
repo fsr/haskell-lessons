@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>7.3. A custom boolean &#8212; Haskell Lessons 0.1 documentation</title>
+    <title>8.3. A custom boolean &#8212; Haskell Lessons 0.1 documentation</title>
     
     <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
@@ -26,8 +26,8 @@
     <script type="text/javascript" src="../_static/doctools.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="7.4. Implementing a library for safe html construction" href="safe-html.html" />
-    <link rel="prev" title="7.2. Basics" href="basics.html" />
+    <link rel="next" title="8.4. Implementing a library for safe html construction" href="safe-html.html" />
+    <link rel="prev" title="8.2. Basics" href="basics.html" />
    
   <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
   
@@ -44,7 +44,7 @@
           <div class="body" role="main">
             
   <div class="section" id="a-custom-boolean">
-<h1>7.3. A custom boolean<a class="headerlink" href="#a-custom-boolean" title="Permalink to this headline">¶</a></h1>
+<h1>8.3. A custom boolean<a class="headerlink" href="#a-custom-boolean" title="Permalink to this headline">¶</a></h1>
 <p>We want to define a boolean type.
 The standard library already has a type <code class="docutils literal"><span class="pre">Bool</span></code> but we will make your own.</p>
 <p><em>Note:</em> this exercise is intended to be solved using both a Haskell source file and ghci.
@@ -52,11 +52,11 @@ My recommendation is to implement the code in a file (<code class="docutils lite
 After that the types and functions you defined in the file will be in scope and you can play around with them.</p>
 <p><em>Note:</em> In ghci bindings must be created with <code class="docutils literal"><span class="pre">let</span> <span class="pre">binding</span> <span class="pre">=</span> <span class="pre">expr</span></code>.</p>
 <div class="section" id="defining-the-type">
-<h2>7.3.1. Defining the type<a class="headerlink" href="#defining-the-type" title="Permalink to this headline">¶</a></h2>
+<h2>8.3.1. Defining the type<a class="headerlink" href="#defining-the-type" title="Permalink to this headline">¶</a></h2>
 <p>Define a new type called <code class="docutils literal"><span class="pre">Boolean</span></code> with two constructors <code class="docutils literal"><span class="pre">Yes</span></code> and <code class="docutils literal"><span class="pre">No</span></code>. <a class="footnote-reference" href="#defining" id="id1">[1]</a></p>
 </div>
 <div class="section" id="if">
-<h2>7.3.2. <code class="docutils literal"><span class="pre">if</span></code><a class="headerlink" href="#if" title="Permalink to this headline">¶</a></h2>
+<h2>8.3.2. <code class="docutils literal"><span class="pre">if</span></code><a class="headerlink" href="#if" title="Permalink to this headline">¶</a></h2>
 <p>Booleans are used for <code class="docutils literal"><span class="pre">if</span></code> expressions.
 Therefore we will define our own <code class="docutils literal"><span class="pre">if</span></code>.
 Since <code class="docutils literal"><span class="pre">if</span></code> is a keyword in Haskell you can use a name like <code class="docutils literal"><span class="pre">if_</span></code> or <code class="docutils literal"><span class="pre">if'</span></code> or something else.</p>
@@ -72,7 +72,7 @@ Since <code class="docutils literal"><span class="pre">if</span></code> is a key
 </ol>
 </div>
 <div class="section" id="boolean-operations">
-<h2>7.3.3. Boolean operations<a class="headerlink" href="#boolean-operations" title="Permalink to this headline">¶</a></h2>
+<h2>8.3.3. Boolean operations<a class="headerlink" href="#boolean-operations" title="Permalink to this headline">¶</a></h2>
 <p>We also need to be able to define more complex interactions.
 Implement a <code class="docutils literal"><span class="pre">not'</span></code>, <code class="docutils literal"><span class="pre">or'</span></code> and <code class="docutils literal"><span class="pre">and'</span></code> operation which, as the names suggest, do boolean <em>not</em>, <em>and</em> and <em>or</em>. <a class="footnote-reference" href="#id5" id="id4">[4]</a></p>
 <p>Finally play around some with the operations you have defined.
@@ -115,10 +115,10 @@ Alternatively you can match on both booleans simultaneously if you wrap them in 
         <div class="sphinxsidebarwrapper">
   <h3><a href="../index.html">Table Of Contents</a></h3>
   <ul>
-<li><a class="reference internal" href="#">7.3. A custom boolean</a><ul>
-<li><a class="reference internal" href="#defining-the-type">7.3.1. Defining the type</a></li>
-<li><a class="reference internal" href="#if">7.3.2. <code class="docutils literal"><span class="pre">if</span></code></a></li>
-<li><a class="reference internal" href="#boolean-operations">7.3.3. Boolean operations</a></li>
+<li><a class="reference internal" href="#">8.3. A custom boolean</a><ul>
+<li><a class="reference internal" href="#defining-the-type">8.3.1. Defining the type</a></li>
+<li><a class="reference internal" href="#if">8.3.2. <code class="docutils literal"><span class="pre">if</span></code></a></li>
+<li><a class="reference internal" href="#boolean-operations">8.3.3. Boolean operations</a></li>
 </ul>
 </li>
 </ul>
@@ -126,9 +126,9 @@ Alternatively you can match on both booleans simultaneously if you wrap them in 
 <h3>Related Topics</h3>
 <ul>
   <li><a href="../index.html">Documentation overview</a><ul>
-  <li><a href="index.html">7. Exercises</a><ul>
-      <li>Previous: <a href="basics.html" title="previous chapter">7.2. Basics</a></li>
-      <li>Next: <a href="safe-html.html" title="next chapter">7.4. Implementing a library for safe html construction</a></li>
+  <li><a href="index.html">8. Exercises</a><ul>
+      <li>Previous: <a href="basics.html" title="previous chapter">8.2. Basics</a></li>
+      <li>Next: <a href="safe-html.html" title="next chapter">8.4. Implementing a library for safe html construction</a></li>
   </ul></li>
   </ul></li>
 </ul>

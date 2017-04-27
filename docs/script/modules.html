@@ -1,0 +1,146 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>5. Modules &#8212; Haskell Lessons 0.1 documentation</title>
+    
+    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '0.1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="6. Typeclasses" href="typeclasses.html" />
+    <link rel="prev" title="4. Types" href="types.html" />
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head>
+  <body role="document">
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="modules">
+<h1>5. Modules<a class="headerlink" href="#modules" title="Permalink to this headline">¶</a></h1>
+<p>Haskell source code is structured into units which we call modules.
+When you type <code class="docutils literal"><span class="pre">import</span> <span class="pre">Data.List</span></code> you import the <code class="docutils literal"><span class="pre">Data.List</span></code> module and bring the definitions contained in that module into scope.</p>
+<p>There belongs a source file to each module.
+The name of the source file is the name of the module and ends with <code class="docutils literal"><span class="pre">.hs</span></code>.
+For instance the <code class="docutils literal"><span class="pre">Prelude</span></code> module would be in a file called <code class="docutils literal"><span class="pre">Prelude.hs</span></code>.</p>
+<p>Hierarchical modules, such as <code class="docutils literal"><span class="pre">Data.List</span></code> have a path matching the module name.
+For instance <code class="docutils literal"><span class="pre">Data.List</span></code> would be <code class="docutils literal"><span class="pre">List.hs</span></code> in a directory called <code class="docutils literal"><span class="pre">Data</span></code>.</p>
+<p>A source file which is to be a Haskell module always starts with a module header.
+The module header is the keyword <code class="docutils literal"><span class="pre">module</span></code> followed by the name of the module, and optional export list and the keyword <code class="docutils literal"><span class="pre">where</span></code>.</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">module</span> <span class="n">Data</span><span class="o">.</span><span class="n">Bool</span> <span class="p">(</span><span class="n">Bool</span><span class="p">(</span><span class="kc">True</span><span class="p">,</span> <span class="kc">False</span><span class="p">),</span> <span class="nb">bool</span><span class="p">,</span> <span class="ow">not</span><span class="p">)</span> <span class="n">where</span>
+</pre></div>
+</div>
+<p>This header proceeds any other code in the source file.</p>
+<div class="section" id="exporting">
+<h2>5.1. Exporting<a class="headerlink" href="#exporting" title="Permalink to this headline">¶</a></h2>
+<p>The export list, which follows the module name is a comma separated list of items to export.
+These items may be types, cosntructors, functions, type aliases, type classes and record fields/accessors.
+Only items which are exported in this list will be available when the module is imported.</p>
+<p>Therefore the export list may be used to hide certain implementation detail from the importer.
+If the export list is omitted all top level declarations will be exported.</p>
+<p>For types we can export just the type alone <code class="docutils literal"><span class="pre">Bool</span></code> or we export any number of constructors <code class="docutils literal"><span class="pre">Bool(False)</span></code>, <code class="docutils literal"><span class="pre">Bool(True,</span> <span class="pre">False)</span></code>.</p>
+</div>
+<div class="section" id="importing">
+<h2>5.2. Importing<a class="headerlink" href="#importing" title="Permalink to this headline">¶</a></h2>
+<p>To use the exported items from a module one must <em>import</em> them.
+The keyword for this is <code class="docutils literal"><span class="pre">import</span></code>.
+The import definitions follow the module header.</p>
+<p>Similarly to the module definition an import declaration can have an optional import list.
+Only items in the import list will be in scope.</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">module</span> <span class="n">MyModule</span> <span class="n">where</span>
+
+<span class="kn">import</span> <span class="nn">Data.Bool</span> <span class="p">(</span><span class="ow">not</span><span class="p">,</span> <span class="p">(</span><span class="o">||</span><span class="p">))</span>
+</pre></div>
+</div>
+<p>If the import list is omitted all exported items from the module will be imported.</p>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">5. Modules</a><ul>
+<li><a class="reference internal" href="#exporting">5.1. Exporting</a></li>
+<li><a class="reference internal" href="#importing">5.2. Importing</a></li>
+</ul>
+</li>
+</ul>
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a><ul>
+      <li>Previous: <a href="types.html" title="previous chapter">4. Types</a></li>
+      <li>Next: <a href="typeclasses.html" title="next chapter">6. Typeclasses</a></li>
+  </ul></li>
+</ul>
+</div>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/modules.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2017, Justus Adam.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.5.1</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.9</a>
+      
+      |
+      <a href="_sources/modules.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>
