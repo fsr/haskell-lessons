@@ -1,7 +1,7 @@
 Typeclasses
 ===========
 
-In addition to the *ad-hoc* polymorphism of type variables Haskell offers another type of polymorphism via a concept called *type classes*.
+In addition to the *parametric* polymorphism of type variables Haskell offers *ad-hoc* polymorphism via a concept called *type classes*.
 Conceptually a *type class* groups a set of types for which there exists a common behaviour.
 
 Practically a typeclass is the same as an interface in Java or C#.
@@ -65,7 +65,22 @@ Constraining types
 ------------------
 
 Unlike in Java where, if we wish to use an interface, we simply declare the type to *be* the interface in Haskell we *constrain* the type to *implement* the class.
+Constraints precede the arguments and return type in a type signature.
+Constraints are always placed on *type variables*.
+An ascii double arrow separates the constraints and the rest of the type signature.
+
+::
+
+    max3 :: Ord a => a -> a -> a -> a
+    max3 a1 a2 a3 = a1 `max` a2 `max a3
+
 The advantage of this is that we can require *multiple* classes for a single type.
+In this case the constraints are listed comma separated and surrounded by parentheses.
+
+::
+
+    showMax3 :: (Show a, Ord a) => a -> a -> a -> String
+    showMax3 a1 a2 a3 = show (max3 a1 a2 a3)
 
 Implementing classes
 --------------------
@@ -77,7 +92,7 @@ The only constraint is that there must not be an existing instance to the class 
 Typically the instances of the class are either defined where the type is defined or where the class is defined.
 This prevents situations where two instances of the same class for the same type are in scope.
 
-Implementations of the class are done using the ``instance`` keyword otherwise are very similar to the class declaration.
+Implementations of the class are done using the ``instance`` keyword, otherwise they are very similar to the class declaration.
 The ``instance`` keyword is followed by the class name and then the type name for which the instance is to be declared.
 
 .. _Rust: https://www.rust-lang.org

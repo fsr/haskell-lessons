@@ -106,6 +106,19 @@ Implement the following queries as functions (they all return ``Bool``).
 * How many attributes does the node have? (assuming no attribute occurs twice in the attribute list) [#num_attrs]_
 * Does the node have a specific attribute (hint: the type signature should be ``:: String -> Html -> Bool``) [#finding]_
 
+Implement a monoid
+------------------
+
+Implement the ``Data.Monoid.Monoid`` typeclass for ``Html``.
+
+``mappend`` stands for *append*. The ``m`` is only added so it does not clash names.
+Think about which of the functions we have already implemented that appends.
+
+``mempty`` stands for *empty*. Think about what an empty element for ``Html`` would be.
+
+Hint: The empty element should be such that appending an empty element to anything it should no change th original thing.
+
+
 Escaping (advanced)
 -------------------
 
