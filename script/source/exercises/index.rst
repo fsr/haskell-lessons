@@ -11,3 +11,4 @@ Exercises
     basics
     custom-boolean
     safe-html
+    io

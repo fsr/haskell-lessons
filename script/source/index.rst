@@ -20,7 +20,7 @@ Some links to motivational Haskell source files:
    types
    modules
    typeclasses
-   simple-io
+   io
    exercises/index
 
 

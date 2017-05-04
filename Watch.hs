@@ -25,7 +25,7 @@ reloadChrome = "tell application \"Google Chrome\"\n\
                 \  end tell\n\
                 \end tell\n\
                 \\n\
-                \tell application \"Code\" to activate\n\
+                \tell application \"Sublime Text\" to activate\n\
                 \"
 
 main = do

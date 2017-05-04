@@ -1,0 +1,186 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>7. I/O and do notation &#8212; Haskell Lessons 0.1 documentation</title>
+    
+    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '0.1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="8. Exercises" href="exercises/index.html" />
+    <link rel="prev" title="6. Typeclasses" href="typeclasses.html" />
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head>
+  <body role="document">
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="i-o-and-do-notation">
+<h1>7. I/O and <code class="docutils literal"><span class="pre">do</span></code> notation<a class="headerlink" href="#i-o-and-do-notation" title="Permalink to this headline">¶</a></h1>
+<p>The Haskell language is very self contained due to its pure nature.
+Consecutive calls to a function with the same input <em>has</em> to produce the same result.
+This does not allow for interactions with the stateful environment, like accessing the hard disk, network or database.</p>
+<p>To separate these stateful actions from the pure Haskell has a type called <code class="docutils literal"><span class="pre">IO</span></code>.
+The <code class="docutils literal"><span class="pre">IO</span></code> type is used to tag functions and values.
+For instance <code class="docutils literal"><span class="pre">IO</span> <span class="pre">Int</span></code> means that we can obtain an <code class="docutils literal"><span class="pre">Int</span></code> from this value if we let it execute some interaction with the environment.</p>
+<p>A very common type is <code class="docutils literal"><span class="pre">IO</span> <span class="pre">()</span></code> this means the function does I/O and then returns the <code class="docutils literal"><span class="pre">()</span></code> (unit) value.
+This value contains no information (similar to <code class="docutils literal"><span class="pre">null</span></code>) and <code class="docutils literal"><span class="pre">IO</span> <span class="pre">()</span></code> is basically equivalent to <code class="docutils literal"><span class="pre">void</span></code>.
+It marks a function which we only want for its <em>effect</em>, not its returned <em>value</em>.</p>
+<p>An nice example of this is the <code class="docutils literal"><span class="pre">getLine</span></code> function.
+As you may imagine it reads a single line from stdin and gives us back what was entered.
+Its type <code class="docutils literal"><span class="pre">IO</span> <span class="pre">String</span></code> then means that it returns a string after doing some interactions with the environment, in this case reading from the <code class="docutils literal"><span class="pre">stdin</span></code> handle.</p>
+<div class="section" id="do-ing-io">
+<h2>7.1. <code class="docutils literal"><span class="pre">do</span></code> ing IO<a class="headerlink" href="#do-ing-io" title="Permalink to this headline">¶</a></h2>
+<p>IO actions can be chained using the <code class="docutils literal"><span class="pre">do</span></code> syntax.
+<code class="docutils literal"><span class="pre">do</span></code> syntax is basically what every function body in an imperative language is, a series of statemens and assignments.
+One important thing to note is that all statements in a <code class="docutils literal"><span class="pre">do</span></code> block are executed in sequence.</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">main</span> <span class="o">=</span> <span class="n">do</span>
+    <span class="n">putStrLn</span> <span class="s2">&quot;Starting work&quot;</span>
+    <span class="n">writeFile</span> <span class="s2">&quot;Output&quot;</span> <span class="s2">&quot;work work work&quot;</span>
+    <span class="n">putStrLn</span> <span class="s2">&quot;Finished work&quot;</span>
+</pre></div>
+</div>
+<p>As you can see we can use <code class="docutils literal"><span class="pre">do</span></code> to execute several <code class="docutils literal"><span class="pre">IO</span></code> actions in sequence.
+We can also obtain the values in from inside those tagged with <code class="docutils literal"><span class="pre">IO</span></code>.</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">main</span> <span class="o">=</span> <span class="n">do</span>
+    <span class="n">l</span> <span class="o">&lt;-</span> <span class="n">getLine</span>
+    <span class="n">putStrLn</span> <span class="p">(</span><span class="s2">&quot;You entered the line: &quot;</span> <span class="o">++</span> <span class="n">l</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>The <code class="docutils literal"><span class="pre">binding</span> <span class="pre">&lt;-</span> <span class="pre">ioExpr</span></code> syntax means &#8220;execute the I/O from <code class="docutils literal"><span class="pre">ioExpr</span></code> and bind the result to <code class="docutils literal"><span class="pre">binding</span></code>&#8221;.
+Since <code class="docutils literal"><span class="pre">&lt;-</span></code> is only for <code class="docutils literal"><span class="pre">IO</span></code> tagged values you cannot use it for pure ones.
+To handle pure values use the statement for of <code class="docutils literal"><span class="pre">let</span></code>: <code class="docutils literal"><span class="pre">let</span> <span class="pre">binding</span> <span class="pre">=</span> <span class="pre">expr</span></code> (notice no <code class="docutils literal"><span class="pre">in</span></code>).</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">action</span> <span class="p">::</span> <span class="n">IO</span> <span class="p">()</span>
+<span class="n">actions</span> <span class="o">=</span> <span class="n">do</span>
+    <span class="n">l</span> <span class="o">&lt;-</span> <span class="n">getLine</span>
+    <span class="n">let</span> <span class="n">computed</span> <span class="o">=</span> <span class="n">computeStruff</span> <span class="n">l</span>
+    <span class="k">return</span> <span class="n">computed</span>
+</pre></div>
+</div>
+<p>The <code class="docutils literal"><span class="pre">do</span></code> syntax does however not actualy execute the <code class="docutils literal"><span class="pre">IO</span></code>.
+It merely combines several <code class="docutils literal"><span class="pre">IO</span></code> actions into a larger <code class="docutils literal"><span class="pre">IO</span></code> action.
+The value from the last statement in a <code class="docutils literal"><span class="pre">do</span></code> block is what the whole thing returns.
+For instance if the last statement was <cite>putStrLn &#8220;some string&#8221;</cite> the type of the whole block would be <code class="docutils literal"><span class="pre">IO</span> <span class="pre">()</span></code> (void).
+If it was <code class="docutils literal"><span class="pre">getLine</span></code> the type would be <code class="docutils literal"><span class="pre">IO</span> <span class="pre">String</span></code>.
+You can also return non-I/O values from within <code class="docutils literal"><span class="pre">do</span></code> by tagging them with <code class="docutils literal"><span class="pre">IO</span></code> using the <code class="docutils literal"><span class="pre">return</span></code> funciton.</p>
+</div>
+<div class="section" id="running-io">
+<h2>7.2. Running <code class="docutils literal"><span class="pre">IO</span></code><a class="headerlink" href="#running-io" title="Permalink to this headline">¶</a></h2>
+<p>To execute the action there are two ways.</p>
+<ol class="arabic">
+<li><p class="first">GHCi
+If you type an <code class="docutils literal"><span class="pre">IO</span></code> action into ghci it will execute it for you and print the returned value.</p>
+</li>
+<li><p class="first">The <code class="docutils literal"><span class="pre">main</span></code> function.</p>
+<p>When you compile and run a Haskell program or interactively run a Haskell source file the compiler will search for a <code class="docutils literal"><span class="pre">main</span></code> function of type <code class="docutils literal"><span class="pre">IO</span> <span class="pre">()</span></code> and execute all the I/O inside it.
+This means you must tie all the I/O you want to do somehow back to the main function.
+This is similar to a C program for instance where the <code class="docutils literal"><span class="pre">int</span> <span class="pre">main()</span></code> function is the only one automatically executed and all other routines have to be called from within it.</p>
+</li>
+</ol>
+</div>
+<div class="section" id="do-overload">
+<h2>7.3. <code class="docutils literal"><span class="pre">do</span></code> Overload<a class="headerlink" href="#do-overload" title="Permalink to this headline">¶</a></h2>
+<p>There are more container and tag types which can be used similar to <code class="docutils literal"><span class="pre">IO</span></code>.
+To be more precise they can be used with the <code class="docutils literal"><span class="pre">do</span></code> notation, just like <code class="docutils literal"><span class="pre">IO</span></code> can.</p>
+<p>Examples of such structures are <code class="docutils literal"><span class="pre">[a]</span></code>, <code class="docutils literal"><span class="pre">Maybe</span> <span class="pre">a</span></code>, <code class="docutils literal"><span class="pre">State</span> <span class="pre">s</span> <span class="pre">a</span></code> and <code class="docutils literal"><span class="pre">Reader</span> <span class="pre">e</span> <span class="pre">a</span></code>.
+Like <code class="docutils literal"><span class="pre">IO</span></code> all these structures represent some kind of context for the contained value <code class="docutils literal"><span class="pre">a</span></code>.</p>
+<p>We will explore this in more detail later.</p>
+<p>For now it suffices that in Haskell these structures are generalized with a typeclass called <code class="docutils literal"><span class="pre">Monad</span></code>.
+The <code class="docutils literal"><span class="pre">Monad</span> <span class="pre">m</span></code> typeclass requires two capabilities: <code class="docutils literal"><span class="pre">return</span> <span class="pre">::</span> <span class="pre">a</span> <span class="pre">-&gt;</span> <span class="pre">m</span> <span class="pre">a</span></code> to wrap a value <code class="docutils literal"><span class="pre">a</span></code> into the monad <code class="docutils literal"><span class="pre">m</span></code> and bind <code class="docutils literal"><span class="pre">(&gt;&gt;=)</span> <span class="pre">::</span> <span class="pre">m</span> <span class="pre">a</span> <span class="pre">-&gt;</span> <span class="pre">(a</span> <span class="pre">-&gt;</span> <span class="pre">m</span> <span class="pre">b)</span> <span class="pre">-&gt;</span> <span class="pre">m</span> <span class="pre">b</span></code> which basically states that the computations with context (the <em>Monad</em>) can be chained.</p>
+<p>This is all that is necessary to enable them to use the <code class="docutils literal"><span class="pre">do</span></code> notation.</p>
+<p>There is a nice library called <a class="reference external" href="https://www.stackage.org/haddock/lts-8.13/monad-loops-0.4.3/Control-Monad-Loops.html">monad-loops</a> which implements many of the control structures one is used to from imperative languages in terms of <code class="docutils literal"><span class="pre">Monad</span></code>.</p>
+<p>Also of interest should be the <a class="reference external" href="base_monad">Control.Monad</a> module from the base library which also contains some generic interactions for monads.
+For now it is enough to know that functions with the <code class="docutils literal"><span class="pre">::</span> <span class="pre">Monad</span> <span class="pre">m</span> <span class="pre">=&gt;</span></code> requirement can be used with <code class="docutils literal"><span class="pre">IO</span></code>.</p>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">7. I/O and <code class="docutils literal"><span class="pre">do</span></code> notation</a><ul>
+<li><a class="reference internal" href="#do-ing-io">7.1. <code class="docutils literal"><span class="pre">do</span></code> ing IO</a></li>
+<li><a class="reference internal" href="#running-io">7.2. Running <code class="docutils literal"><span class="pre">IO</span></code></a></li>
+<li><a class="reference internal" href="#do-overload">7.3. <code class="docutils literal"><span class="pre">do</span></code> Overload</a></li>
+</ul>
+</li>
+</ul>
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a><ul>
+      <li>Previous: <a href="typeclasses.html" title="previous chapter">6. Typeclasses</a></li>
+      <li>Next: <a href="exercises/index.html" title="next chapter">8. Exercises</a></li>
+  </ul></li>
+</ul>
+</div>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/io.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2017, Justus Adam.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.5.1</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.9</a>
+      
+      |
+      <a href="_sources/io.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>
