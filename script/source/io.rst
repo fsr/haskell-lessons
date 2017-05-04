@@ -46,7 +46,7 @@ To handle pure values use the statement for of ``let``: ``let binding = expr`` (
 
 ::
 
-    action :: IO ()
+    action :: IO String
     actions = do
         l <- getLine
         let computed = computeStruff l

@@ -110,11 +110,11 @@ actions <span class="fu">=</span> <span class="kw">do</span>
 <li><code>let</code> statement to handle pure values</li>
 <li><code>return</code> to return pure values</li>
 </ul>
-<div class="sourceCode"><pre class="sourceCode hs"><code class="sourceCode haskell"><span class="ot">action ::</span> <span class="dt">IO</span> ()
+<div class="sourceCode"><pre class="sourceCode hs"><code class="sourceCode haskell"><span class="ot">action ::</span> <span class="dt">IO</span> <span class="dt">String</span>
 actions <span class="fu">=</span> <span class="kw">do</span>
     l <span class="ot">&lt;-</span> getLine
     <span class="kw">let</span> computed <span class="fu">=</span> computeSomething l
-    return l</code></pre></div>
+    return computed</code></pre></div>
 </section><section id="running-io" class="slide level2">
 <h1>Running <code>IO</code></h1>
 <ul>
@@ -123,6 +123,17 @@ actions <span class="fu">=</span> <span class="kw">do</span>
 </ul>
 </section></section>
 <section><section id="overloaded-do" class="titleslide slide level1"><h1>Overloaded <code>do</code></h1></section><section class="slide level2">
+
+<ul>
+<li>more container/tag types
+<ul>
+<li><code>[a]</code></li>
+<li><code>State state a</code></li>
+<li><code>Reader env a</code></li>
+</ul></li>
+<li>generalized via <code>Monad</code> typeclass</li>
+</ul>
+</section><section class="slide level2">
 
 <p>Any <code>Monad</code> can use the <code>do</code> notation.</p>
 <div class="sourceCode"><pre class="sourceCode hs"><code class="sourceCode haskell"><span class="kw">class</span> <span class="dt">Monad</span> m <span class="kw">where</span>

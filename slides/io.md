@@ -56,11 +56,11 @@ actions = do
 - `return` to return pure values
 
 ```hs
-action :: IO ()
+action :: IO String
 actions = do
     l <- getLine
     let computed = computeSomething l
-    return l
+    return computed
 ```
 
 ## Running `IO`
@@ -69,6 +69,8 @@ actions = do
 - the `main` function
 
 # Overloaded `do`
+
+---
 
 - more container/tag types
     + `[a]`

@@ -78,7 +78,7 @@ We can also obtain the values in from inside those tagged with <code class="docu
 <p>The <code class="docutils literal"><span class="pre">binding</span> <span class="pre">&lt;-</span> <span class="pre">ioExpr</span></code> syntax means &#8220;execute the I/O from <code class="docutils literal"><span class="pre">ioExpr</span></code> and bind the result to <code class="docutils literal"><span class="pre">binding</span></code>&#8221;.
 Since <code class="docutils literal"><span class="pre">&lt;-</span></code> is only for <code class="docutils literal"><span class="pre">IO</span></code> tagged values you cannot use it for pure ones.
 To handle pure values use the statement for of <code class="docutils literal"><span class="pre">let</span></code>: <code class="docutils literal"><span class="pre">let</span> <span class="pre">binding</span> <span class="pre">=</span> <span class="pre">expr</span></code> (notice no <code class="docutils literal"><span class="pre">in</span></code>).</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">action</span> <span class="p">::</span> <span class="n">IO</span> <span class="p">()</span>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">action</span> <span class="p">::</span> <span class="n">IO</span> <span class="n">String</span>
 <span class="n">actions</span> <span class="o">=</span> <span class="n">do</span>
     <span class="n">l</span> <span class="o">&lt;-</span> <span class="n">getLine</span>
     <span class="n">let</span> <span class="n">computed</span> <span class="o">=</span> <span class="n">computeStruff</span> <span class="n">l</span>
